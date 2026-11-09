@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seva Computer Nerad</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#eef3ff;
+ color:#172033;
+}
+header{
+ background:linear-gradient(135deg,#10245c,#2563eb);
+ color:white;
+ text-align:center;
+ padding:28px 15px;
+}
+header h1{margin:0;font-size:27px}
+.container{max-width:650px;margin:auto;padding:14px}
+.card{
+ background:white;
+ padding:18px;
+ margin:14px 0;
+ border-radius:15px;
+ box-shadow:0 3px 12px #0001;
+}
+h2{color:#1746a2;font-size:20px}
+.services{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+}
+.service{
+ background:#edf3ff;
+ padding:13px 8px;
+ border-radius:10px;
+ text-align:center;
+ font-weight:bold;
+ font-size:14px;
+}
+.price{
+ color:#087a3c;
+ font-size:17px;
+ margin-top:5px;
+}
+input,select,button{
+ width:100%;
+ padding:13px;
+ margin:7px 0;
+ border:1px solid #ccd5e5;
+ border-radius:9px;
+ font-size:16px;
+}
+button{
+ background:#1558d6;
+ color:white;
+ border:0;
+ font-weight:bold;
+}
+.whatsapp{background:#168b49}
+.qr{
+ width:220px;
+ display:block;
+ margin:15px auto;
+}
+.fee{
+ background:#e8f7ed;
+ padding:12px;
+ border-radius:10px;
+ text-align:center;
+ font-weight:bold;
+}
+footer{
+ background:#10245c;
+ color:white;
+ text-align:center;
+ padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>सेवा कॉम्पुटर नेरड</h1>
+<p>आपली सेवा • आपला विश्वास</p>
+<p>सर्व ऑनलाइन सेवा एकाच ठिकाणी</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>🙏 आपले स्वागत आहे!</h2>
+<p>सर्व प्रकारच्या ऑनलाइन सेवा, सरकारी योजना,
+प्रिंट, झेरॉक्स व लॅमिनेशन सुविधा उपलब्ध.</p>
+</div>
+
+<div class="card">
+<h2>💰 आमचे सेवा दर</h2>
+
+<div class="services">
+
+<div class="service">Maha ID<div class="price">₹100</div></div>
+<div class="service">Farmer ID<div class="price">₹59</div></div>
+<div class="service">PAN Card<div class="price">₹250</div></div>
+<div class="service">Ayushman Card<div class="price">₹50</div></div>
+<div class="service">ABHA Card<div class="price">₹70</div></div>
+<div class="service">महिला शेतकरी प्रमाणपत्र प्रिंट + लॅमिनेशन<div class="price">₹50</div></div>
+<div class="service">e-Shram Card<div class="price">₹100</div></div>
+<div class="service">Voter Card<div class="price">₹150</div></div>
+<div class="service">सातबारा<div class="price">₹50</div></div>
+<div class="service">आठ-अ<div class="price">₹50</div></div>
+<div class="service">Xerox<div class="price">₹5</div></div>
+<div class="service">A4 पेज लॅमिनेशन<div class="price">₹30</div></div>
+<div class="service">ID कार्ड लॅमिनेशन<div class="price">₹10</div></div>
+<div class="service">ब्लॅक प्रिंट<div class="price">₹10</div></div>
+<div class="service">कलर प्रिंट<div class="price">₹20</div></div>
+
+</div>
+</div>
+
+<div class="card">
+<h2>📝 ग्राहक Registration</h2>
+
+<input id="name" placeholder="आपले पूर्ण नाव">
+<input id="mobile" placeholder="मोबाईल नंबर" maxlength="10">
+
+<select id="service" onchange="showFee()">
+<option value="">सेवा निवडा</option>
+<option value="Maha ID" data-fee="100">Maha ID - ₹100</option>
+<option value="Farmer ID" data-fee="59">Farmer ID - ₹59</option>
+<option value="PAN Card" data-fee="250">PAN Card - ₹250</option>
+<option value="Ayushman Card" data-fee="50">Ayushman Card - ₹50</option>
+<option value="ABHA Card" data-fee="70">ABHA Card - ₹70</option>
+<option value="महिला शेतकरी प्रमाणपत्र प्रिंट + लॅमिनेशन" data-fee="50">महिला शेतकरी - ₹50</option>
+<option value="e-Shram Card" data-fee="100">e-Shram - ₹100</option>
+<option value="Voter Card" data-fee="150">Voter Card - ₹150</option>
+<option value="सातबारा" data-fee="50">सातबारा - ₹50</option>
+<option value="आठ-अ" data-fee="50">आठ-अ - ₹50</option>
+<option value="Xerox" data-fee="5">Xerox - ₹5</option>
+<option value="A4 पेज लॅमिनेशन" data-fee="30">A4 लॅमिनेशन - ₹30</option>
+<option value="ID कार्ड लॅमिनेशन" data-fee="10">ID लॅमिनेशन - ₹10</option>
+<option value="ब्लॅक प्रिंट" data-fee="10">ब्लॅक प्रिंट - ₹10</option>
+<option value="कलर प्रिंट" data-fee="20">कलर प्रिंट - ₹20</option>
+</select>
+
+<div class="fee" id="fee">आपली सेवा फी येथे दिसेल</div>
+
+<button onclick="register()">Registration करा</button>
+</div>
+
+<div class="card">
+<h2>💳 Online Payment</h2>
+<p style="text-align:center">QR Code स्कॅन करून पेमेंट करा.</p>
+
+<img src="qr.jpeg" class="qr" alt="Payment QR Code">
+
+<p style="text-align:center">पेमेंट झाल्यावर WhatsApp वर माहिती पाठवा.</p>
+</div>
+
+<div class="card">
+<h2>📞 संपर्क करा</h2>
+<p><b>सेवा कॉम्पुटर नेरड</b></p>
+<p>मोबाईल: 9623557142</p>
+<button class="whatsapp" onclick="contact()">WhatsApp संपर्क करा</button>
+</div>
+
+</div>
+
+<footer>
+<p>सेवा कॉम्पुटर नेरड</p>
+<p>आपली सेवा • आपला विश्वास</p>
+</footer>
+
+<script>
+
+function showFee(){
+ let s=document.getElementById("service");
+ let option=s.options[s.selectedIndex];
+ let fee=option.getAttribute("data-fee");
+
+ document.getElementById("fee").innerText=
+ fee ? "आपली सेवा फी: ₹"+fee :
+ "आपली सेवा फी येथे दिसेल";
+}
+
+function register(){
+
+ let name=document.getElementById("name").value.trim();
+ let mobile=document.getElementById("mobile").value.trim();
+ let s=document.getElementById("service");
+ let service=s.value;
+ let option=s.options[s.selectedIndex];
+ let fee=option.getAttribute("data-fee");
+
+ if(!name || !mobile || !service){
+  alert("कृपया सर्व माहिती भरा");
+  return;
+ }
+
+ if(!/^[0-9]{10}$/.test(mobile)){
+  alert("योग्य 10 अंकी मोबाईल नंबर टाका");
+  return;
+ }
+
+ let message=
+ "नवीन ग्राहक Registration\n"+
+ "नाव: "+name+"\n"+
+ "मोबाईल: "+mobile+"\n"+
+ "सेवा: "+service+"\n"+
+ "फी: ₹"+fee;
+
+ window.open(
+ "https://wa.me/919623557142?text="+
+ encodeURIComponent(message),
+ "_blank"
+ );
+}
+
+function contact(){
+ window.open("https://wa.me/919623557142","_blank");
+}
+
+</script>
+
+</body>
+</html>
