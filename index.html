@@ -2,259 +2,225 @@
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seva Computer Nerad</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seva Computer & Xerox,print, Lamination Services</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f5f9;
- color:#172554;
+body{font-family:Arial,sans-serif;background:#f1f4f9;margin:0;padding:15px;color:#222}
+.container{max-width:650px;margin:auto}
+.header{background:#123c70;color:white;text-align:center;padding:22px;border-radius:12px}
+.header h2{margin:0 0 8px}
+.card{background:white;padding:18px;margin-top:15px;border-radius:12px;box-shadow:0 2px 9px #ddd}
+h3{color:#123c70;margin-top:0}
+.service{display:flex;justify-content:space-between;align-items:center;padding:11px 5px;border-bottom:1px solid #eee;gap:8px}
+.service label{flex:1}
+input[type=checkbox]{width:19px;height:19px}
+input[type=text],input[type=tel]{
+width:100%;padding:13px;margin:7px 0 13px;
+border:1px solid #bbb;border-radius:7px;font-size:16px
 }
-header{
- background:linear-gradient(135deg,#102a83,#2563eb);
- color:white;
- text-align:center;
- padding:25px 12px;
-}
-header h1{margin:0;font-size:27px}
-header p{margin:8px 0 0}
-.container{
- max-width:700px;
- margin:18px auto;
- padding:12px;
-}
-.section{
- background:white;
- border-radius:12px;
- padding:15px;
- margin-bottom:15px;
- box-shadow:0 2px 8px #0001;
-}
-.section h2{
- color:#1d4ed8;
- font-size:19px;
- border-bottom:2px solid #dbeafe;
- padding-bottom:9px;
-}
-.service{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:8px;
- padding:12px 3px;
- border-bottom:1px solid #eee;
-}
-.service label{
- display:flex;
- align-items:center;
- gap:9px;
- flex:1;
- font-size:15px;
-}
-.service input{width:19px;height:19px}
-.price{
- color:#15803d;
- font-weight:bold;
- white-space:nowrap;
-}
-.total{
- background:#dbeafe;
- padding:16px;
- text-align:center;
- border-radius:10px;
- font-size:21px;
- font-weight:bold;
-}
-button{
- width:100%;
- padding:15px;
- border:0;
- border-radius:9px;
- background:#16a34a;
- color:white;
- font-size:17px;
- font-weight:bold;
- margin-top:12px;
- cursor:pointer;
-}
-.note{
- background:#fff7ed;
- color:#9a3412;
- padding:13px;
- border-radius:9px;
- line-height:1.7;
-}
-footer{
- background:#102a83;
- color:white;
- text-align:center;
- padding:20px;
- margin-top:20px;
-}
+button{background:#1264b0;color:white;border:0;padding:13px;
+border-radius:7px;width:100%;font-size:16px;margin-top:8px}
+button:active{opacity:.8}
+.total{font-size:21px;font-weight:bold;color:green;text-align:center;padding:15px}
+.hidden{display:none}
+.record{background:#f4f7fb;padding:12px;border-radius:8px;margin:8px 0}
+.small{font-size:13px;color:#666}
 </style>
 </head>
-
 <body>
-
-<header>
-<h1>सेवा कॉम्पुटर नेरड</h1>
-<p>आपली सेवा, आमचा विश्वास!</p>
-<p>सर्व ऑनलाइन सेवा एकाच ठिकाणी</p>
-</header>
-
 <div class="container">
 
-<div class="section">
-<h2>शासकीय कार्ड व प्रमाणपत्रे</h2>
-<div id="cards"></div>
+<div class="header">
+<h2>सेवा कॉम्पुटर नेरड</h2>
+<p>आपले ऑनलाइन सेवा केंद्र</p>
+<b>मो. 9623557142</b>
 </div>
 
-<div class="section">
-<h2>शेतकरी व सरकारी योजना</h2>
-<div id="schemes"></div>
+<div class="card">
+<h3>1. सेवा निवडा</h3>
+<div id="services"></div>
+<div class="total">एकूण बिल: ₹<span id="total">0</span></div>
 </div>
 
-<div class="section">
-<h2>प्रिंटिंग व इतर सेवा</h2>
-<div id="printing"></div>
+<div class="card hidden" id="customerBox">
+<h3>2. ग्राहकाची माहिती</h3>
+
+<label>ग्राहकाचे नाव</label>
+<input type="text" id="customerName" placeholder="ग्राहकाचे पूर्ण नाव">
+
+<label>मोबाईल नंबर</label>
+<input type="tel" id="mobile" maxlength="10" placeholder="10 अंकी मोबाईल नंबर">
+
+<button onclick="saveCustomer()">ग्राहक माहिती सेव्ह करा</button>
+<p class="small">माहिती या डिव्हाइसच्या ब्राउझरमध्ये सेव्ह होईल.</p>
 </div>
 
-<div class="section">
-<h2>आपली निवड</h2>
-<div id="selected">अजून कोणतीही सेवा निवडलेली नाही.</div>
-<div class="total">
-एकूण रक्कम: ₹<span id="total">0</span>
-</div>
-<button onclick="sendOrder()">
-WhatsApp वर ऑर्डर पाठवा
-</button>
+<div class="card">
+<h3>3. ग्राहकांची नोंद</h3>
+<div id="records"></div>
+<button onclick="downloadData()">ग्राहक यादी डाउनलोड करा</button>
 </div>
 
-<div class="note">
-<strong>घरपोच सुविधा उपलब्ध!</strong><br>
-घरपोच सुविधेसाठी अंतरानुसार (KM) वेगळी फी आकारली जाईल.<br>
-अधिक माहितीसाठी WhatsApp वर संपर्क करा.
+<div class="card">
+<h3>इतर पर्याय</h3>
+<button onclick="location.href='register.html'">ग्राहक नोंदणी</button>
+<button onclick="location.href='payment.html'">Payment QR Code</button>
+<button onclick="location.href='admin.html'">Admin Page</button>
 </div>
 
 </div>
-
-<footer>
-<h3>सेवा कॉम्पुटर नेरड</h3>
-<p>संपर्क: 9623557142</p>
-<p>धन्यवाद! 🙏</p>
-</footer>
 
 <script>
-
-const services = {
-cards:[
+const serviceList = [
+["सर्वसाधारण ID कार्ड",70],
+["पीक पाहणी",100],
+["Voting Card",100],
+["PM Kisan Registration",250],
+["Xerox Black & White",5],
+["Xerox Colour",10],
+["Print",10],
+["अर्जंट फोटो 12 कॉपी",50],
+["Maha DBT फॉर्म",70],
+["लाडकी बहीण Registration",70],
+["पीक विमा",100],
+["eKYC",50],
+["ई-श्रम कार्ड",100],
 ["महिला शेतकरी प्रमाणपत्र",50],
-["आभा कार्ड",50],
-["आयुष्यमान कार्ड",50],
-["महा ID",70],
-["वोटिंग कार्ड",100],
-["ई-श्रम",100],
-["पॅन कार्ड",250],
-["हरवलेले / दुरुस्ती पॅन कार्ड",300],
-["सातबारा / आठ-अ",50]
-],
+["नवीन PAN कार्ड",250],
+["PAN दुरुस्ती / हरवलेले",350]
+];
 
-schemes:[
-["प्रोत्साहन eKYC / सरकारी कोणतीही eKYC",50],
-["PM किसान रजिस्ट्रेशन",250],
-["नमो शेतकरी रजिस्ट्रेशन",250],
-["शासकीय योजना",100],
-["शासकीय नोकरी फॉर्म",100],
-["MahaDBT फार्मर फॉर्म",70]
-],
+let selected = [];
 
-printing:[
-["झेरॉक्स",5],
-["प्रिंट",10],
-["रंगीत प्रिंट",20],
-["लॅमिनेशन A4 पेज",30],
-["आयडी कार्ड लॅमिनेशन",10],
-["अर्जंट पासपोर्ट फोटो 12 कॉपी",70]
-]
-};
-
-let selected=[];
-
-function showServices(id,list){
- let html="";
- list.forEach((item,i)=>{
- html+=`
+function showServices(){
+ const box=document.getElementById("services");
+ box.innerHTML="";
+ serviceList.forEach((s,i)=>{
+ box.innerHTML+=`
  <div class="service">
- <label>
- <input type="checkbox"
- onchange="choose('${id}',${i},this.checked)">
- ${item[0]}
- </label>
- <span class="price">₹${item[1]}</span>
+ <input type="checkbox" onchange="toggleService(${i},this.checked)">
+ <label>${s[0]}</label>
+ <b>₹${s[1]}</b>
  </div>`;
  });
- document.getElementById(id).innerHTML=html;
 }
 
-showServices("cards",services.cards);
-showServices("schemes",services.schemes);
-showServices("printing",services.printing);
-
-function choose(group,index,checked){
- let item=services[group][index];
-
+function toggleService(i,checked){
  if(checked){
- selected.push({
- name:item[0],
- price:item[1]
- });
+ selected.push(i);
  }else{
- let pos=selected.findIndex(x=>x.name===item[0]);
- if(pos!==-1) selected.splice(pos,1);
+ selected=selected.filter(x=>x!==i);
  }
+ document.getElementById("total").innerText=
+ selected.reduce((sum,x)=>sum+serviceList[x][1],0);
 
- updateTotal();
+ document.getElementById("customerBox").classList.toggle(
+ "hidden",selected.length===0
+ );
 }
 
-function updateTotal(){
- let total=selected.reduce((sum,x)=>sum+x.price,0);
+function saveCustomer(){
+ const name=document.getElementById("customerName").value.trim();
+ const mobile=document.getElementById("mobile").value.trim();
 
- document.getElementById("total").innerText=total;
-
- document.getElementById("selected").innerHTML=
- selected.length
- ? selected.map(x=>`${x.name} - ₹${x.price}`).join("<br>")
- : "अजून कोणतीही सेवा निवडलेली नाही.";
-}
-
-function sendOrder(){
-
+ if(!name){
+ alert("ग्राहकाचे नाव भरा");
+ return;
+ }
+ if(!/^[0-9]{10}$/.test(mobile)){
+ alert("योग्य 10 अंकी मोबाईल नंबर भरा");
+ return;
+ }
  if(selected.length===0){
- alert("कृपया आधी सेवा निवडा!");
+ alert("सेवा निवडा");
  return;
  }
 
- let total=selected.reduce((sum,x)=>sum+x.price,0);
+ const services=selected.map(i=>({
+ name:serviceList[i][0],
+ price:serviceList[i][1]
+ }));
 
- let message="नमस्कार सेवा कॉम्पुटर नेरड,%0A";
- message+="मला खालील सेवा पाहिजे आहेत:%0A%0A";
+ const total=services.reduce((s,x)=>s+x.price,0);
 
- selected.forEach((x,i)=>{
- message+=(i+1)+". "+x.name+" - ₹"+x.price+"%0A";
- });
+ const customer={
+ id:Date.now(),
+ name:name,
+ mobile:mobile,
+ services:services,
+ total:total,
+ date:new Date().toLocaleString("mr-IN")
+ };
 
- message+="%0Aएकूण रक्कम: ₹"+total;
- message+="%0A%0Aमाझे नाव आणि पत्ता: ";
+ let records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
+ records.unshift(customer);
+ localStorage.setItem("sevaCustomers",JSON.stringify(records));
 
- let url="https://wa.me/919623557142?text="+message;
+ alert("ग्राहकाची माहिती सेव्ह झाली!");
 
- window.open(url,"_blank");
+ document.getElementById("customerName").value="";
+ document.getElementById("mobile").value="";
+ selected=[];
+ document.getElementById("total").innerText="0";
+ document.getElementById("customerBox").classList.add("hidden");
+ showServices();
+ showRecords();
 }
 
-</script>
+function showRecords(){
+ const records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
+ const box=document.getElementById("records");
 
+ if(records.length===0){
+ box.innerHTML="<p>अजून ग्राहकांची नोंद नाही.</p>";
+ return;
+ }
+
+ box.innerHTML=records.map(c=>`
+ <div class="record">
+ <b>${escapeHTML(c.name)}</b><br>
+ मोबाईल: ${escapeHTML(c.mobile)}<br>
+ सेवा: ${c.services.map(s=>escapeHTML(s.name)).join(", ")}<br>
+ एकूण: ₹${c.total}<br>
+ <span class="small">${escapeHTML(c.date)}</span>
+ </div>
+ `).join("");
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function downloadData(){
+ const records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
+ if(!records.length){
+ alert("ग्राहकांची नोंद उपलब्ध नाही");
+ return;
+ }
+ const data=records.map(c=>({
+ नाव:c.name,
+ मोबाईल:c.mobile,
+ सेवा:c.services.map(s=>s.name).join(", "),
+ रक्कम:c.total,
+ तारीख:c.date
+ }));
+ const blob=new Blob(
+ ["\uFEFF"+JSON.stringify(data,null,2)],
+ {type:"application/json;charset=utf-8"}
+ );
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="Seva-Computer-Customers.json";
+ a.click();
+ URL.revokeObjectURL(url);
+}
+
+showServices();
+showRecords();
+</script>
 </body>
 </html>
