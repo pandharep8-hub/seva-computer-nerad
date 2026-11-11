@@ -6,24 +6,23 @@
 <title>Seva Computer Nerad</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f1f5fb;color:#222}
-header{background:linear-gradient(135deg,#064b91,#0878c9);color:white;text-align:center;padding:30px 15px}
-header h1{margin:0;font-size:28px}
-header p{margin:10px 0 0}
-.container{max-width:950px;margin:auto;padding:15px}
-.section{background:white;padding:18px;border-radius:13px;margin:15px 0;box-shadow:0 3px 12px #0001}
-h2{color:#0755a5;text-align:center}
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-.service{border:1px solid #dce5ef;border-radius:10px;padding:14px;background:#fff}
-.service strong{display:block;font-size:16px}
-.price{color:#087a39;font-weight:bold;font-size:19px;margin-top:8px}
-.delivery{background:#e9f4ff;padding:15px;border-radius:10px;line-height:1.8}
-.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-a.btn{display:block;text-align:center;text-decoration:none;color:white;background:#0872bd;padding:15px;border-radius:9px;font-weight:bold}
-a.admin{background:#333}
-.contact{text-align:center;line-height:1.8}
-footer{text-align:center;background:#073d70;color:white;padding:18px;margin-top:20px}
-@media(max-width:450px){.buttons{grid-template-columns:1fr}}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172554}
+header{background:linear-gradient(135deg,#075985,#2563eb);color:white;text-align:center;padding:25px 12px}
+header h1{margin:0;font-size:27px}
+header p{margin:9px 0 0}
+nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:15px}
+nav a{background:#0f766e;color:white;text-decoration:none;padding:11px 15px;border-radius:8px;font-weight:bold}
+.container{max-width:950px;margin:auto;padding:12px}
+h2{color:#075985;border-bottom:2px solid #bae6fd;padding-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
+.card{background:white;padding:15px;border-radius:12px;text-align:center;box-shadow:0 2px 8px #0001}
+.card h3{font-size:16px;margin:5px 0 10px}
+.price{font-weight:bold;color:#047857;font-size:17px}
+.small{font-size:13px;color:#64748b}
+.delivery{background:#e0f2fe;padding:15px;border-radius:12px;margin-top:15px}
+.contact{background:#075985;color:white;text-align:center;padding:20px;margin-top:20px;border-radius:12px}
+.contact a{color:white;font-weight:bold}
+footer{text-align:center;padding:18px;color:#64748b}
 </style>
 </head>
 <body>
@@ -31,64 +30,80 @@ footer{text-align:center;background:#073d70;color:white;padding:18px;margin-top:
 <header>
 <h1>सेवा कॉम्प्युटर नेरड</h1>
 <p>सेवा तुमच्या दारी, विश्वास आमचा!</p>
-<p>ऑनलाइन सेवा | कार्ड | पीक विमा | प्रिंट</p>
+<p>ऑनलाइन सेवा • प्रिंट • झेरॉक्स • लॅमिनेशन</p>
 </header>
+
+<nav>
+<a href="register.html">ग्राहक Registration</a>
+<a href="payment.html">Payment QR Code</a>
+<a href="admin.html">Admin Login</a>
+</nav>
 
 <div class="container">
 
-<div class="section">
-<h2>आमच्या सेवा व दर</h2>
-<div class="services">
-
-<div class="service"><strong>आभा कार्ड</strong><div class="price">₹50</div></div>
-<div class="service"><strong>आयुष्मान कार्ड</strong><div class="price">₹50</div></div>
-<div class="service"><strong>आयुष्मान कार्ड दुरुस्ती</strong><div class="price">₹50</div></div>
-<div class="service"><strong>महा ID कार्ड</strong><div class="price">₹70</div></div>
-<div class="service"><strong>वोटिंग कार्ड</strong><div class="price">₹100</div></div>
-<div class="service"><strong>ई-श्रम कार्ड</strong><div class="price">₹100</div></div>
-<div class="service"><strong>पॅन कार्ड</strong><div class="price">₹250</div></div>
-<div class="service"><strong>दुरुस्ती / हरवलेले पॅन कार्ड</strong><div class="price">₹300</div></div>
-<div class="service"><strong>महिला शेतकरी प्रमाणपत्र</strong><div class="price">₹50</div></div>
-
-<div class="service"><strong>खरीप पीक विमा</strong><div class="price">₹100</div></div>
-<div class="service"><strong>रब्बी पीक विमा</strong><div class="price">₹100</div></div>
-
-<div class="service"><strong>WhatsApp / Gmail ब्लॅक प्रिंट</strong><div class="price">₹10</div></div>
-<div class="service"><strong>WhatsApp / Gmail रंगीत प्रिंट</strong><div class="price">₹20</div></div>
-
-</div>
+<h2>🪪 आधार व ओळखपत्र सेवा</h2>
+<div class="grid">
+<div class="card"><h3>सर्वसाधारण ID कार्ड</h3><div class="price">₹70</div></div>
+<div class="card"><h3>आधार प्रिंट व लॅमिनेशन</h3><div class="price">₹70</div></div>
+<div class="card"><h3>आभा कार्ड</h3><div class="price">₹50</div></div>
+<div class="card"><h3>आयुष्मान कार्ड</h3><div class="price">₹50</div></div>
+<div class="card"><h3>आयुष्मान कार्ड दुरुस्ती</h3><div class="price">₹50</div></div>
+<div class="card"><h3>महा ID कार्ड</h3><div class="price">₹70</div></div>
+<div class="card"><h3>वोटिंग कार्ड</h3><div class="price">₹100</div></div>
+<div class="card"><h3>ई-श्रम कार्ड</h3><div class="price">₹100</div></div>
+<div class="card"><h3>पॅन कार्ड</h3><div class="price">₹250</div></div>
+<div class="card"><h3>पॅन दुरुस्ती / हरवलेले</h3><div class="price">₹300</div></div>
 </div>
 
-<div class="section">
-<h2>घरपोच सेवा</h2>
+<h2>🌾 शेतकरी योजना</h2>
+<div class="grid">
+<div class="card"><h3>पीक पाहणी</h3><div class="price">₹100</div></div>
+<div class="card"><h3>खरीप पीक विमा</h3><div class="price">₹100</div></div>
+<div class="card"><h3>रब्बी पीक विमा</h3><div class="price">₹100</div></div>
+<div class="card"><h3>PM किसान नोंदणी</h3><div class="price">₹250</div></div>
+<div class="card"><h3>महिला शेतकरी प्रमाणपत्र</h3><div class="price">₹50</div></div>
+<div class="card"><h3>Farmer ID</h3><div class="price">दर संपर्क करा</div></div>
+</div>
+
+<h2>📋 सरकारी फॉर्म व eKYC</h2>
+<div class="grid">
+<div class="card"><h3>Maha DBT फॉर्म</h3><div class="price">₹70</div></div>
+<div class="card"><h3>लाडकी बहीण</h3><div class="price">₹70</div></div>
+<div class="card"><h3>eKYC सेवा</h3><div class="price">₹50</div></div>
+<div class="card"><h3>नोकरीचे फॉर्म</h3><div class="price">दर संपर्क करा</div></div>
+<div class="card"><h3>शिष्यवृत्ती फॉर्म</h3><div class="price">दर संपर्क करा</div></div>
+<div class="card"><h3>शाळेचे प्रोजेक्ट प्रिंट</h3><div class="price">दर संपर्क करा</div></div>
+</div>
+
+<h2>🖨️ प्रिंट, झेरॉक्स व लॅमिनेशन</h2>
+<div class="grid">
+<div class="card"><h3>Xerox ब्लॅक अँड व्हाईट</h3><div class="price">₹5</div></div>
+<div class="card"><h3>Xerox रंगीत</h3><div class="price">₹10</div></div>
+<div class="card"><h3>प्रिंट</h3><div class="price">₹10</div></div>
+<div class="card"><h3>WhatsApp / Gmail ब्लॅक प्रिंट</h3><div class="price">₹10</div></div>
+<div class="card"><h3>WhatsApp / Gmail रंगीत प्रिंट</h3><div class="price">₹20</div></div>
+<div class="card"><h3>अर्जंट फोटो 12 कॉपी</h3><div class="price">₹50</div></div>
+<div class="card"><h3>लॅमिनेशन</h3><div class="price">दर संपर्क करा</div></div>
+</div>
+
 <div class="delivery">
-<strong>नेरड गावात:</strong> ₹20 अतिरिक्त<br>
-<strong>इतर गावात:</strong> प्रति 1 KM ₹10<br>
-<strong>घरपोच नाही:</strong> ₹0<br>
-<p>इतर गावांसाठी अंतर ग्राहक नोंदणी करताना स्वतः भरावे. Google Maps वापरले जात नाही.</p>
-</div>
-</div>
-
-<div class="section">
-<h2>ग्राहकांसाठी</h2>
-<div class="buttons">
-<a class="btn" href="register.html">ग्राहक नोंदणी करा</a>
-<a class="btn admin" href="admin.html">Admin Login</a>
-</div>
+<h2>🏠 घरपोच सेवा</h2>
+<p><b>नेरड गावात:</b> ₹20</p>
+<p><b>इतर गावांसाठी:</b> ₹10 प्रति KM</p>
+<p class="small">अंतर ग्राहकाने दिलेल्या KM नुसार मोजले जाईल.</p>
 </div>
 
-<div class="section contact">
-<h2>संपर्क</h2>
-<p><strong>सेवा कॉम्प्युटर नेरड</strong></p>
-<p>मोबाईल: 9623557142</p>
-<a class="btn" href="https://wa.me/919623557142">WhatsApp संपर्क करा</a>
+<div class="contact">
+<h2 style="color:white;border:0">सेवा कॉम्प्युटर नेरड</h2>
+<p>आपले काम करून घेण्यासाठी संपर्क करा.</p>
+<p>मोबाईल: <a href="tel:9623557142">9623557142</a></p>
+<a href="https://wa.me/919623557142">WhatsApp वर संपर्क करा</a>
 </div>
 
 </div>
 
 <footer>
-सेवा कॉम्प्युटर नेरड<br>
-आपली सेवा, आपला विश्वास!
+© Seva Computer Nerad
 </footer>
 
 </body>
