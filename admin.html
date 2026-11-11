@@ -5,21 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Seva Computer Admin</title>
 <style>
-body{font-family:Arial;background:#f2f5f9;padding:20px}
-.box{max-width:420px;margin:40px auto;background:white;padding:22px;border-radius:12px}
-input,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
-button{background:#0759b5;color:white;border:0;border-radius:6px}
+body{font-family:Arial;background:#f2f5f9;padding:15px}
+.box{max-width:900px;margin:20px auto;background:white;padding:18px;border-radius:12px}
+input,button{padding:12px;margin:6px 0;box-sizing:border-box}
+input{width:100%}
+button{background:#0759b5;color:white;border:0;border-radius:6px;cursor:pointer}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{border:1px solid #ddd;padding:8px;text-align:left}
+th{background:#0759b5;color:white}
+#dashboard{display:none}
 #msg{color:#b00020}
 </style>
 </head>
 <body>
-<div class="box">
-<h2>Admin Login</h2>
+
+<div class="box" id="loginBox">
+<h2>Seva Computer Admin Login</h2>
 <input id="email" type="email" placeholder="Admin Email">
 <input id="password" type="password" placeholder="Password">
 <button id="loginBtn">Login</button>
 <button id="resetBtn">Forgot Password</button>
 <p id="msg"></p>
+</div>
+
+<div class="box" id="dashboard">
+<h2>ग्राहकांची यादी</h2>
+<button id="logoutBtn">Logout</button>
+<button id="csvBtn">Download CSV</button>
+<input id="search" placeholder="ग्राहकाचे नाव किंवा मोबाईल शोधा">
+
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>नाव</th>
+<th>मोबाईल</th>
+<th>सेवा</th>
+<th>रक्कम</th>
+<th>दिनांक</th>
+</tr>
+</thead>
+<tbody id="customerList"></tbody>
+</table>
+</div>
+<p id="status"></p>
 </div>
 
 <script type="module">
@@ -28,11 +57,15 @@ import { initializeApp } from
 
 import {
  getAuth, signInWithEmailAndPassword,
- sendPasswordResetEmail
+ sendPasswordResetEmail, signOut, onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+import {
+ getFirestore, collection, getDocs, query, orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
- apiKey: "AIzaSyBxmhE4xEyQ5IWtOn2j812eIrIPrHnPIIw",
+  apiKey: "AIzaSyBxmhE4xEyQ5IWtOn2j812eIrIPrHnPIIw",
   authDomain: "seva-computer-nerad-48174.firebaseapp.com",
   projectId: "seva-computer-nerad-48174",
   storageBucket: "seva-computer-nerad-48174.firebasestorage.app",
@@ -42,17 +75,41 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
+let customers = [];
+
+const loginBox = document.getElementById("loginBox");
+const dashboard = document.getElementById("dashboard");
 const msg = document.getElementById("msg");
+const status = document.getElementById("status");
+
+const ADMIN_EMAIL = "YOUR_ADMIN_EMAIL";
+
+function showDashboard(){
+ loginBox.style.display = "none";
+ dashboard.style.display = "block";
+}
+
+function showLogin(){
+ dashboard.style.display = "none";
+ loginBox.style.display = "block";
+}
 
 document.getElementById("loginBtn").onclick = async () => {
  const email = document.getElementById("email").value.trim();
  const password = document.getElementById("password").value;
 
  try {
-   await signInWithEmailAndPassword(auth,email,password);
-   msg.textContent = "Login यशस्वी!";
-   window.location.href = "admin.html";
+   const result = await signInWithEmailAndPassword(auth,email,password);
+
+   if(result.user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
+     await signOut(auth);
+     msg.textContent = "तुम्हाला Admin परवानगी नाही.";
+     return;
+   }
+
+   msg.textContent = "";
  } catch(error) {
    msg.textContent = "Login अयशस्वी: " + error.message;
  }
@@ -68,10 +125,94 @@ document.getElementById("resetBtn").onclick = async () => {
 
  try {
    await sendPasswordResetEmail(auth,email);
-   msg.textContent = "पासवर्ड रीसेट लिंक ईमेलवर पाठवली आहे.";
+   msg.textContent = "रीसेट लिंक ईमेलवर पाठवली आहे.";
  } catch(error) {
    msg.textContent = "Error: " + error.message;
  }
+};
+
+onAuthStateChanged(auth, async (user) => {
+ if(!user){
+   showLogin();
+   return;
+ }
+
+ if(!ADMIN_EMAIL || user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
+   await signOut(auth);
+   showLogin();
+   msg.textContent = "Admin परवानगी नाही.";
+   return;
+ }
+
+ showDashboard();
+ await loadCustomers();
+});
+
+async function loadCustomers(){
+ status.textContent = "माहिती लोड होत आहे...";
+ try {
+   const q = query(collection(db,"customers"),orderBy("createdAt","desc"));
+   const snapshot = await getDocs(q);
+   customers = snapshot.docs.map(doc => doc.data());
+   displayCustomers(customers);
+   status.textContent = "एकूण ग्राहक: " + customers.length;
+ } catch(error) {
+   status.textContent = "माहिती मिळाली नाही: " + error.message;
+ }
+}
+
+function displayCustomers(data){
+ const tbody = document.getElementById("customerList");
+ tbody.innerHTML = "";
+
+ data.forEach(c => {
+   const tr = document.createElement("tr");
+   const values = [
+     c.name || "",
+     c.phone || "",
+     c.service || "",
+     "₹" + (c.price ?? ""),
+     c.createdAt?.toDate ? c.createdAt.toDate().toLocaleString("en-IN") : ""
+   ];
+
+   values.forEach(value => {
+     const td = document.createElement("td");
+     td.textContent = value;
+     tr.appendChild(td);
+   });
+
+   tbody.appendChild(tr);
+ });
+}
+
+document.getElementById("search").oninput = (e) => {
+ const term = e.target.value.toLowerCase();
+ displayCustomers(customers.filter(c =>
+   (c.name || "").toLowerCase().includes(term) ||
+   (c.phone || "").includes(term)
+ ));
+};
+
+document.getElementById("csvBtn").onclick = () => {
+ const rows = [["Name","Mobile","Service","Price"]];
+ customers.forEach(c => rows.push([
+   c.name || "",c.phone || "",c.service || "",c.price ?? ""
+ ]));
+
+ const csv = "\uFEFF" + rows.map(row =>
+   row.map(v => '"' + String(v).replace(/"/g,'""') + '"').join(",")
+ ).join("\n");
+
+ const link = document.createElement("a");
+ link.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8;"}));
+ link.download = "customers.csv";
+ link.click();
+ URL.revokeObjectURL(link.href);
+};
+
+document.getElementById("logoutBtn").onclick = async () => {
+ await signOut(auth);
+ showLogin();
 };
 </script>
 </body>
