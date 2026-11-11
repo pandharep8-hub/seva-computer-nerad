@@ -1,0 +1,9 @@
+
+{
+  "name": "Seva Computer & Xerox, Lamination Services",
+  "short_name": "Seva Computer",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#123c70"
+}
