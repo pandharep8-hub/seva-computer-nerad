@@ -19,6 +19,15 @@ button:disabled{background:#94a3b8}
 .note{font-size:13px;color:#64748b}
 </style>
 </head>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Seva Computer App Ready"))
+      .catch(error => console.log("Service Worker Error:", error));
+  });
+}
+</script>
 <body>
 
 <div class="container">
