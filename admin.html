@@ -2,155 +2,135 @@
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seva Computer Nerad - Admin</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seva Computer Nerad Admin</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f1f4f9;
-  margin: 0;
-  padding: 15px;
-}
-.container {
-  max-width: 1100px;
-  margin: auto;
-}
-h2 { text-align: center; color: #123b70; }
-.box {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 12px 0;
-  box-shadow: 0 2px 8px #ddd;
-}
-input, button {
-  padding: 11px;
-  margin: 5px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-input { width: 100%; }
-button {
-  background: #0759a5;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-button:disabled { opacity: .6; }
-.green { background: #16833b; }
-.red { background: #c62828; }
-.whatsapp { background: #128c50; }
-.stats {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.stat {
-  flex: 1;
-  min-width: 130px;
-  background: #e4f1ff;
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-}
-.stat strong {
-  display: block;
-  font-size: 23px;
-  margin-top: 8px;
-}
-.table-wrap { overflow-x: auto; }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  min-width: 850px;
-}
-th, td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-th { background: #123b70; color: white; }
-.done { color: green; font-weight: bold; }
-.pending { color: #b56b00; font-weight: bold; }
-#dashboard { display: none; }
+body{font-family:Arial;background:#f2f4f8;margin:0;padding:15px}
+h2{color:#174b91}
+.card{background:white;padding:15px;margin:12px 0;border-radius:10px}
+input,select,button{padding:11px;margin:5px 0;border:1px solid #ccc;border-radius:7px;width:100%;box-sizing:border-box}
+button{background:#174b91;color:white;border:0;font-weight:bold}
+.danger{background:#c62828}.green{background:#16834a}
+table{width:100%;border-collapse:collapse;min-width:850px}
+th,td{padding:9px;border:1px solid #ddd;text-align:left;font-size:13px}
+.tablebox{overflow:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.stat{background:#e8f0ff;padding:12px;border-radius:8px}
+.stat b{display:block;font-size:21px;margin-top:5px}
+.hidden{display:none}
+@media print{.noprint,#login{display:none!important}.card{box-shadow:none}}
 </style>
 </head>
-
 <body>
-<div class="container">
 
-<h2>सेवा कॉम्पुटर नेरड</h2>
-<h3 style="text-align:center">Admin Dashboard</h3>
+<h2>सेवा कॉम्पुटर नेरड - Admin Panel</h2>
 
-<div class="box" id="loginBox">
-  <h3>Admin Login</h3>
-  <input id="email" type="email" placeholder="Admin Gmail">
-  <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-  <p id="loginMessage"></p>
+<div id="login" class="card">
+<h3>Admin Login</h3>
+<input id="email" type="email" placeholder="Admin Gmail">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
 </div>
 
-<div id="dashboard">
+<div id="app" class="hidden">
 
-  <div class="box">
-    <button class="red" onclick="logout()">Logout</button>
-    <button class="green" onclick="loadCustomers()">Refresh</button>
-    <button onclick="downloadCSV()">Download CSV</button>
-  </div>
+<div class="card noprint">
+<button onclick="loadData()">Refresh</button>
+<button onclick="downloadCSV()">CSV Download</button>
+<button onclick="window.print()">PDF / Print Report</button>
+<button class="danger" onclick="logout()">Logout</button>
+</div>
 
-  <div class="stats">
-    <div class="stat">
-      एकूण ग्राहक
-      <strong id="totalCustomers">0</strong>
-    </div>
-    <div class="stat">
-      एकूण रक्कम
-      <strong id="totalAmount">₹0</strong>
-    </div>
-    <div class="stat">
-      काम पूर्ण
-      <strong id="completedCount">0</strong>
-    </div>
-  </div>
+<div class="grid">
+<div class="stat">एकूण ग्राहक<b id="total">0</b></div>
+<div class="stat">एकूण सेवा फी<b id="fees">₹0</b></div>
+<div class="stat">मिळालेले पैसे<b id="paid">₹0</b></div>
+<div class="stat">बाकी रक्कम<b id="due">₹0</b></div>
+<div class="stat">काम बाकी<b id="pending">0</b></div>
+<div class="stat">काम पूर्ण<b id="completed">0</b></div>
+</div>
 
-  <div class="box">
-    <input id="search" placeholder="ग्राहक नाव किंवा मोबाईल शोधा"
-      oninput="showCustomers()">
-  </div>
+<div class="card noprint">
+<h3>ग्राहक शोधा</h3>
+<input id="search" placeholder="नाव / मोबाईल शोधा" oninput="showCustomers()">
+<select id="filter" onchange="showCustomers()">
+<option value="all">सर्व ग्राहक</option>
+<option value="pending">काम बाकी</option>
+<option value="completed">काम पूर्ण</option>
+<option value="due">पैसे बाकी</option>
+</select>
+</div>
 
-  <div class="box table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>क्र.</th>
-          <th>ग्राहक नाव</th>
-          <th>मोबाईल</th>
-          <th>सेवा</th>
-          <th>रक्कम</th>
-          <th>दिनांक</th>
-          <th>स्थिती</th>
-          <th>काम पूर्ण</th>
-          <th>WhatsApp</th>
-        </tr>
-      </thead>
-      <tbody id="customerTable"></tbody>
-    </table>
-  </div>
-
+<div class="card">
+<h3>ग्राहक यादी</h3>
+<div class="tablebox">
+<table>
+<thead>
+<tr>
+<th>नाव</th><th>मोबाईल</th><th>सेवा</th>
+<th>सेवा फी</th><th>मिळाले</th><th>बाकी</th>
+<th>दिनांक</th><th class="noprint">कृती</th>
+</tr>
+</thead>
+<tbody id="customerList"></tbody>
+</table>
 </div>
 </div>
 
-<!-- Firebase SDK -->
+<div class="card noprint">
+<h3>ग्राहक माहिती Edit करा</h3>
+<input type="hidden" id="editId">
+<input id="editName" placeholder="ग्राहकाचे नाव">
+<input id="editPhone" placeholder="मोबाईल नंबर" maxlength="10">
+<input id="editService" placeholder="सेवा">
+<input id="editPrice" type="number" placeholder="एकूण सेवा फी">
+<input id="editPaid" type="number" placeholder="मिळालेले पैसे">
+<button onclick="saveEdit()">माहिती Save करा</button>
+</div>
+
+<div class="card noprint">
+<h3>ग्राहकाकडून पैसे जमा करा</h3>
+<select id="payCustomer"></select>
+<input id="payAmount" type="number" placeholder="आज मिळालेले पैसे">
+<button onclick="addPayment()">पैसे जमा करा</button>
+</div>
+
+<div class="card noprint">
+<h3>व्यवसायाचा खर्च</h3>
+<input id="expenseTitle" placeholder="खर्चाचे कारण">
+<input id="expenseAmount" type="number" placeholder="खर्च रक्कम">
+<input id="expenseDate" type="date">
+<button onclick="addExpense()">खर्च Save करा</button>
+</div>
+
+<div class="card">
+<h3>उत्पन्न आणि महिन्याचा नफा</h3>
+<label>रिपोर्ट दिनांक</label>
+<input id="reportDate" type="date">
+<label>महिना</label>
+<input id="reportMonth" type="month">
+<div class="grid">
+<div class="stat">रोजचे उत्पन्न<b id="dailyIncome">₹0</b></div>
+<div class="stat">महिन्याचे उत्पन्न<b id="monthlyIncome">₹0</b></div>
+<div class="stat">महिन्याचा खर्च<b id="monthlyExpense">₹0</b></div>
+<div class="stat">महिन्याचा नफा<b id="monthlyProfit">₹0</b></div>
+</div>
+<h3>खर्च यादी</h3>
+<div class="tablebox">
+<table>
+<thead><tr><th>कारण</th><th>रक्कम</th><th>दिनांक</th><th class="noprint">कृती</th></tr></thead>
+<tbody id="expenseList"></tbody>
+</table>
+</div>
+</div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-
-// 1. तुमच्या जुन्या index.html मधील Firebase Config इथे टाका
+// तुमच्या जुन्या admin.html मधील Firebase config इथे भरा.
 const firebaseConfig = {
   apiKey: "AIzaSyBxmhE4xEyQ5IWtOn2j812eIrIPrHnPIIw",
   authDomain: "seva-computer-nerad-48174.firebaseapp.com",
@@ -161,264 +141,247 @@ const firebaseConfig = {
 };
 
 
-// 2. तुमचा Admin Gmail इथे टाका
 const ADMIN_EMAIL = "pandharep8@gmail.com";
 
 firebase.initializeApp(firebaseConfig);
-
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-let customers = [];
+let customers=[], payments=[], expenses=[];
 
-// Login
-async function login() {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-
-  try {
-    await auth.signInWithEmailAndPassword(email, password);
-    document.getElementById("loginMessage").innerText = "";
-  } catch (error) {
-    document.getElementById("loginMessage").innerText =
-      "Login Error: " + error.message;
-  }
+function money(n){
+ return "₹"+(Number(n)||0).toLocaleString("en-IN");
+}
+function today(){
+ const d=new Date();
+ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function due(c){
+ return Math.max(0,(Number(c.price)||0)-(Number(c.paidAmount)||0));
+}
+function dateValue(v){
+ if(!v)return "";
+ const d=v.toDate?v.toDate():new Date(v);
+ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]));
 }
 
-// Login तपासणी
-auth.onAuthStateChanged(async user => {
-  if (user && user.email === ADMIN_EMAIL) {
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    await loadCustomers();
-  } else {
-    document.getElementById("dashboard").style.display = "none";
-    document.getElementById("loginBox").style.display = "block";
-
-    if (user) {
-      await auth.signOut();
-      document.getElementById("loginMessage").innerText =
-        "Admin परवानगी नाही.";
-    }
+async function login(){
+ try{
+  const user=await auth.signInWithEmailAndPassword(
+   document.getElementById("email").value.trim(),
+   document.getElementById("password").value
+  );
+  if(user.user.email!==ADMIN_EMAIL){
+   await auth.signOut();
+   alert("Admin Gmail चुकीचा आहे.");
   }
+ }catch(e){alert("Login Error: "+e.message);}
+}
+
+function logout(){auth.signOut();}
+
+auth.onAuthStateChanged(user=>{
+ if(user && user.email===ADMIN_EMAIL){
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  loadData();
+ }else{
+  document.getElementById("login").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+ }
 });
 
-// Logout
-async function logout() {
-  await auth.signOut();
+async function loadData(){
+ try{
+  const [c,p,e]=await Promise.all([
+   db.collection("customers").orderBy("createdAt","desc").get(),
+   db.collection("payments").get(),
+   db.collection("expenses").get()
+  ]);
+  customers=c.docs.map(x=>({id:x.id,...x.data()}));
+  payments=p.docs.map(x=>({id:x.id,...x.data()}));
+  expenses=e.docs.map(x=>({id:x.id,...x.data()}));
+  updateStats();
+  showCustomers();
+  showExpenses();
+  report();
+ }catch(e){alert("Data Error: "+e.message);}
 }
 
-// ग्राहक माहिती आणा
-async function loadCustomers() {
-  const table = document.getElementById("customerTable");
-  table.innerHTML = "<tr><td colspan='9'>लोड होत आहे...</td></tr>";
+function updateStats(){
+ document.getElementById("total").textContent=customers.length;
+ document.getElementById("fees").textContent=money(customers.reduce((s,c)=>s+(Number(c.price)||0),0));
+ document.getElementById("paid").textContent=money(customers.reduce((s,c)=>s+(Number(c.paidAmount)||0),0));
+ document.getElementById("due").textContent=money(customers.reduce((s,c)=>s+due(c),0));
+ document.getElementById("pending").textContent=customers.filter(c=>!c.completed).length;
+ document.getElementById("completed").textContent=customers.filter(c=>c.completed).length;
 
-  try {
-    const snapshot = await db.collection("customers").get();
-
-    customers = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-
-    customers.sort((a, b) => {
-      const ta = a.createdAt?.toMillis
-        ? a.createdAt.toMillis() : 0;
-      const tb = b.createdAt?.toMillis
-        ? b.createdAt.toMillis() : 0;
-      return tb - ta;
-    });
-
-    showCustomers();
-
-  } catch (error) {
-    table.innerHTML =
-      "<tr><td colspan='9'>Error: " + escapeHTML(error.message) +
-      "</td></tr>";
-  }
+ document.getElementById("payCustomer").innerHTML=
+ '<option value="">ग्राहक निवडा</option>'+
+ customers.map(c=>`<option value="${c.id}">${esc(c.name)} - बाकी ${money(due(c))}</option>`).join("");
 }
 
-// सुरक्षित मजकूर
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+function showCustomers(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const f=document.getElementById("filter").value;
+ const list=customers.filter(c=>{
+  const text=[c.name,c.phone,c.service].join(" ").toLowerCase();
+  return (!q||text.includes(q)) &&
+   (f==="all"||(f==="pending"&&!c.completed)||
+   (f==="completed"&&c.completed)||(f==="due"&&due(c)>0));
+ });
+
+ document.getElementById("customerList").innerHTML=list.map(c=>`
+ <tr>
+ <td>${esc(c.name)}</td>
+ <td>${esc(c.phone)}</td>
+ <td>${esc(c.service)}</td>
+ <td>${money(c.price)}</td>
+ <td>${money(c.paidAmount)}</td>
+ <td>${money(due(c))}</td>
+ <td>${dateValue(c.createdAt)}</td>
+ <td class="noprint">
+ <button onclick="editCustomer('${c.id}')">Edit</button>
+ <button class="green" onclick="toggleComplete('${c.id}',${!!c.completed})">${c.completed?"पुन्हा बाकी":"काम पूर्ण"}</button>
+ <button class="danger" onclick="deleteCustomer('${c.id}')">Delete</button>
+ </td>
+ </tr>`).join("");
 }
 
-// ग्राहक दाखवा
-function showCustomers() {
-  const search = document.getElementById("search")
-    .value.toLowerCase().trim();
+function editCustomer(id){
+ const c=customers.find(x=>x.id===id);
+ if(!c)return;
+ document.getElementById("editId").value=id;
+ document.getElementById("editName").value=c.name||"";
+ document.getElementById("editPhone").value=c.phone||"";
+ document.getElementById("editService").value=c.service||"";
+ document.getElementById("editPrice").value=Number(c.price)||0;
+ document.getElementById("editPaid").value=Number(c.paidAmount)||0;
+ window.scrollTo(0,document.body.scrollHeight);
+}
 
-  const filtered = customers.filter(c =>
-    String(c.name || "").toLowerCase().includes(search) ||
-    String(c.phone || "").includes(search)
-  );
-
-  let total = 0;
-  let completed = 0;
-
-  customers.forEach(c => {
-    total += Number(c.price) || 0;
-    if (c.completed === true) completed++;
+async function saveEdit(){
+ const id=document.getElementById("editId").value;
+ const price=Number(document.getElementById("editPrice").value);
+ const paid=Number(document.getElementById("editPaid").value);
+ if(!id)return alert("आधी ग्राहक निवडा.");
+ if(price<0||paid<0||paid>price)return alert("मिळालेले पैसे सेवा फीपेक्षा जास्त असू शकत नाहीत.");
+ try{
+  await db.collection("customers").doc(id).update({
+   name:document.getElementById("editName").value.trim(),
+   phone:document.getElementById("editPhone").value.trim(),
+   service:document.getElementById("editService").value.trim(),
+   price,paidAmount:paid
   });
+  alert("माहिती अपडेट झाली.");
+  document.getElementById("editId").value="";
+  loadData();
+ }catch(e){alert(e.message);}
+}
 
-  document.getElementById("totalCustomers").innerText =
-    customers.length;
-
-  document.getElementById("totalAmount").innerText =
-    "₹" + total;
-
-  document.getElementById("completedCount").innerText =
-    completed;
-
-  const tbody = document.getElementById("customerTable");
-  tbody.innerHTML = "";
-
-  if (filtered.length === 0) {
-    tbody.innerHTML =
-      "<tr><td colspan='9'>ग्राहक सापडला नाही.</td></tr>";
-    return;
-  }
-
-  filtered.forEach((c, index) => {
-    const date = c.createdAt?.toDate
-      ? c.createdAt.toDate().toLocaleDateString("en-IN")
-      : "-";
-
-    const isDone = c.completed === true;
-
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${escapeHTML(c.name)}</td>
-      <td>${escapeHTML(c.phone)}</td>
-      <td>${escapeHTML(c.service)}</td>
-      <td>₹${Number(c.price) || 0}</td>
-      <td>${date}</td>
-      <td class="${isDone ? "done" : "pending"}">
-        ${isDone ? "काम पूर्ण" : "काम बाकी"}
-      </td>
-      <td>
-        <button class="${isDone ? "green" : ""}"
-          ${isDone ? "disabled" : ""}
-          onclick="markComplete('${c.id}')">
-          ${isDone ? "पूर्ण झाले" : "काम पूर्ण झाले"}
-        </button>
-      </td>
-      <td>
-        <button class="whatsapp"
-          onclick="sendWhatsApp('${c.id}')">
-          WhatsApp
-        </button>
-      </td>
-    `;
-
-    tbody.appendChild(tr);
+async function toggleComplete(id,was){
+ try{
+  await db.collection("customers").doc(id).update({
+   completed:!was,
+   completedAt:firebase.firestore.FieldValue.serverTimestamp()
   });
+  loadData();
+ }catch(e){alert(e.message);}
 }
 
-// काम पूर्ण स्थिती सेव्ह करा
-async function markComplete(id) {
-  const customer = customers.find(c => c.id === id);
-  if (!customer) return;
-
-  if (!confirm("या ग्राहकाचे काम पूर्ण झाले आहे का?")) return;
-
-  try {
-    await db.collection("customers").doc(id).update({
-      completed: true,
-      completedAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-    customer.completed = true;
-    showCustomers();
-
-    // काम पूर्ण केल्यानंतर WhatsApp उघडा
-    sendWhatsApp(id);
-
-  } catch (error) {
-    alert("स्थिती सेव्ह झाली नाही: " + error.message);
-  }
+async function deleteCustomer(id){
+ if(!confirm("ही ग्राहक नोंद कायमची Delete करायची?"))return;
+ try{
+  await db.collection("customers").doc(id).delete();
+  alert("नोंद Delete झाली.");
+  loadData();
+ }catch(e){alert(e.message);}
 }
 
-// WhatsApp मेसेज
-function sendWhatsApp(id) {
-  const c = customers.find(x => x.id === id);
-  if (!c) return;
-
-  let phone = String(c.phone || "").replace(/\D/g, "");
-
-  if (phone.length === 10) {
-    phone = "91" + phone;
-  }
-
-  if (phone.length !== 12 || !phone.startsWith("91")) {
-    alert("ग्राहकाचा मोबाईल नंबर योग्य नाही.");
-    return;
-  }
-
-  const message =
-    "नमस्कार " + (c.name || "") + "!\n\n" +
-    "आपले " + (c.service || "सेवेचे") +
-    " हे काम यशस्वीरित्या पूर्ण झाले आहे.\n\n" +
-    "सेवा कॉम्पुटर नेरड\nधन्यवाद!";
-
-  const url =
-    "https://wa.me/" + phone + "?text=" +
-    encodeURIComponent(message);
-
-  window.open(url, "_blank");
-}
-
-// CSV Download
-function downloadCSV() {
-  if (!customers.length) {
-    alert("ग्राहकांची माहिती उपलब्ध नाही.");
-    return;
-  }
-
-  const rows = [
-    ["ग्राहक नाव", "मोबाईल", "सेवा", "रक्कम", "दिनांक", "स्थिती"]
-  ];
-
-  customers.forEach(c => {
-    const date = c.createdAt?.toDate
-      ? c.createdAt.toDate().toLocaleDateString("en-IN")
-      : "";
-
-    rows.push([
-      c.name || "",
-      c.phone || "",
-      c.service || "",
-      c.price || 0,
-      date,
-      c.completed ? "काम पूर्ण" : "काम बाकी"
-    ]);
+async function addPayment(){
+ const id=document.getElementById("payCustomer").value;
+ const amount=Number(document.getElementById("payAmount").value);
+ const c=customers.find(x=>x.id===id);
+ if(!c||amount<=0)return alert("ग्राहक आणि रक्कम निवडा.");
+ if((Number(c.paidAmount)||0)+amount>Number(c.price||0))return alert("रक्कम सेवा फीपेक्षा जास्त आहे.");
+ try{
+  const batch=db.batch();
+  const payRef=db.collection("payments").doc();
+  batch.set(payRef,{
+   customerId:id,customerName:c.name,amount,date:today(),
+   createdAt:firebase.firestore.FieldValue.serverTimestamp()
   });
-
-  const csv = "\uFEFF" + rows.map(row =>
-    row.map(value =>
-      '"' + String(value).replace(/"/g, '""') + '"'
-    ).join(",")
-  ).join("\n");
-
-  const blob = new Blob([csv], {
-    type: "text/csv;charset=utf-8;"
+  batch.update(db.collection("customers").doc(id),{
+   paidAmount:(Number(c.paidAmount)||0)+amount
   });
-
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "Seva-Computer-Customers.csv";
-  link.click();
-  URL.revokeObjectURL(link.href);
+  await batch.commit();
+  document.getElementById("payAmount").value="";
+  alert("पैसे जमा झाले.");
+  loadData();
+ }catch(e){alert(e.message);}
 }
 
+async function addExpense(){
+ const title=document.getElementById("expenseTitle").value.trim();
+ const amount=Number(document.getElementById("expenseAmount").value);
+ const date=document.getElementById("expenseDate").value||today();
+ if(!title||amount<=0)return alert("खर्चाचे कारण आणि रक्कम भरा.");
+ try{
+  await db.collection("expenses").add({
+   title,amount,date,
+   createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+  document.getElementById("expenseTitle").value="";
+  document.getElementById("expenseAmount").value="";
+  alert("खर्च नोंदवला.");
+  loadData();
+ }catch(e){alert(e.message);}
+}
+
+function showExpenses(){
+ document.getElementById("expenseList").innerHTML=expenses.map(e=>`
+ <tr><td>${esc(e.title)}</td><td>${money(e.amount)}</td><td>${esc(e.date)}</td>
+ <td class="noprint"><button class="danger" onclick="deleteExpense('${e.id}')">Delete</button></td></tr>
+ `).join("");
+}
+
+async function deleteExpense(id){
+ if(!confirm("खर्च Delete करायचा?"))return;
+ try{
+  await db.collection("expenses").doc(id).delete();
+  loadData();
+ }catch(e){alert(e.message);}
+}
+
+function report(){
+ const day=document.getElementById("reportDate").value||today();
+ const month=document.getElementById("reportMonth").value||today().slice(0,7);
+ const di=payments.filter(p=>p.date===day).reduce((s,p)=>s+(Number(p.amount)||0),0);
+ const mi=payments.filter(p=>(p.date||"").startsWith(month)).reduce((s,p)=>s+(Number(p.amount)||0),0);
+ const me=expenses.filter(e=>(e.date||"").startsWith(month)).reduce((s,e)=>s+(Number(e.amount)||0),0);
+ document.getElementById("dailyIncome").textContent=money(di);
+ document.getElementById("monthlyIncome").textContent=money(mi);
+ document.getElementById("monthlyExpense").textContent=money(me);
+ document.getElementById("monthlyProfit").textContent=money(mi-me);
+}
+document.getElementById("reportDate").value=today();
+document.getElementById("reportMonth").value=today().slice(0,7);
+document.getElementById("reportDate").onchange=report;
+document.getElementById("reportMonth").onchange=report;
+document.getElementById("expenseDate").value=today();
+
+function downloadCSV(){
+ const rows=[["नाव","मोबाईल","सेवा","सेवा फी","मिळाले","बाकी","स्थिती"],
+ ...customers.map(c=>[c.name,c.phone,c.service,c.price,c.paidAmount||0,due(c),c.completed?"पूर्ण":"बाकी"])];
+ const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+ const a=document.createElement("a");
+ const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+ a.href=url;a.download="seva-computer-customers.csv";a.click();
+ URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
