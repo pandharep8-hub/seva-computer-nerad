@@ -4,282 +4,92 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seva Computer Nerad</title>
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f4f9;
- color:#222;
-}
-header{
- background:#172554;
- color:white;
- text-align:center;
- padding:22px 10px;
-}
-header h2{margin:0 0 8px}
-.container{
- max-width:650px;
- margin:20px auto;
- padding:0 12px;
-}
-.card{
- background:white;
- padding:20px;
- margin-bottom:16px;
- border-radius:14px;
- box-shadow:0 3px 12px #00000012;
-}
-h3{color:#172554;margin-top:0}
-label{
- display:block;
- font-weight:bold;
- margin:14px 0 6px;
-}
-input,select{
- width:100%;
- padding:13px;
- border:1px solid #bbb;
- border-radius:8px;
- font-size:16px;
-}
-button{
- width:100%;
- padding:14px;
- border:0;
- border-radius:8px;
- background:#172554;
- color:white;
- font-size:17px;
- margin-top:18px;
- cursor:pointer;
-}
-button:disabled{opacity:.6}
-a{
- display:block;
- margin:14px 0;
- color:#172554;
-}
-.qr-image{
- width:230px;
- max-width:100%;
- display:block;
- margin:15px auto;
- border-radius:10px;
- border:1px solid #ddd;
-}
-.qr-box{text-align:center}
-#message{
- margin-top:15px;
- padding:12px;
- border-radius:8px;
- display:none;
- overflow-wrap:anywhere;
-}
-.success{background:#dcfce7;color:#166534}
-.error{background:#fee2e2;color:#991b1b}
-.small{font-size:13px;color:#666}
-footer{
- text-align:center;
- padding:15px;
- color:#666;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5fb;color:#222}
+header{background:linear-gradient(135deg,#064b91,#0878c9);color:white;text-align:center;padding:30px 15px}
+header h1{margin:0;font-size:28px}
+header p{margin:10px 0 0}
+.container{max-width:950px;margin:auto;padding:15px}
+.section{background:white;padding:18px;border-radius:13px;margin:15px 0;box-shadow:0 3px 12px #0001}
+h2{color:#0755a5;text-align:center}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.service{border:1px solid #dce5ef;border-radius:10px;padding:14px;background:#fff}
+.service strong{display:block;font-size:16px}
+.price{color:#087a39;font-weight:bold;font-size:19px;margin-top:8px}
+.delivery{background:#e9f4ff;padding:15px;border-radius:10px;line-height:1.8}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+a.btn{display:block;text-align:center;text-decoration:none;color:white;background:#0872bd;padding:15px;border-radius:9px;font-weight:bold}
+a.admin{background:#333}
+.contact{text-align:center;line-height:1.8}
+footer{text-align:center;background:#073d70;color:white;padding:18px;margin-top:20px}
+@media(max-width:450px){.buttons{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
 
 <header>
- <h2>सेवा कॉम्पुटर नेरड</h2>
- <p>ऑनलाइन सेवा • झेरॉक्स • प्रिंट • लॅमिनेशन</p>
+<h1>सेवा कॉम्प्युटर नेरड</h1>
+<p>सेवा तुमच्या दारी, विश्वास आमचा!</p>
+<p>ऑनलाइन सेवा | कार्ड | पीक विमा | प्रिंट</p>
 </header>
 
 <div class="container">
 
-<div class="card">
- <h3>ग्राहक नोंदणी</h3>
+<div class="section">
+<h2>आमच्या सेवा व दर</h2>
+<div class="services">
 
- <form id="customerForm">
+<div class="service"><strong>आभा कार्ड</strong><div class="price">₹50</div></div>
+<div class="service"><strong>आयुष्मान कार्ड</strong><div class="price">₹50</div></div>
+<div class="service"><strong>आयुष्मान कार्ड दुरुस्ती</strong><div class="price">₹50</div></div>
+<div class="service"><strong>महा ID कार्ड</strong><div class="price">₹70</div></div>
+<div class="service"><strong>वोटिंग कार्ड</strong><div class="price">₹100</div></div>
+<div class="service"><strong>ई-श्रम कार्ड</strong><div class="price">₹100</div></div>
+<div class="service"><strong>पॅन कार्ड</strong><div class="price">₹250</div></div>
+<div class="service"><strong>दुरुस्ती / हरवलेले पॅन कार्ड</strong><div class="price">₹300</div></div>
+<div class="service"><strong>महिला शेतकरी प्रमाणपत्र</strong><div class="price">₹50</div></div>
 
-  <label>ग्राहकाचे पूर्ण नाव</label>
-  <input id="name" type="text" maxlength="100"
-   placeholder="पूर्ण नाव लिहा" required>
+<div class="service"><strong>खरीप पीक विमा</strong><div class="price">₹100</div></div>
+<div class="service"><strong>रब्बी पीक विमा</strong><div class="price">₹100</div></div>
 
-  <label>मोबाईल नंबर</label>
-  <input id="phone" type="tel" inputmode="numeric"
-   maxlength="10" pattern="[0-9]{10}"
-   placeholder="10 अंकी मोबाईल नंबर" required>
+<div class="service"><strong>WhatsApp / Gmail ब्लॅक प्रिंट</strong><div class="price">₹10</div></div>
+<div class="service"><strong>WhatsApp / Gmail रंगीत प्रिंट</strong><div class="price">₹20</div></div>
 
-  <label>सेवा निवडा</label>
-  <select id="service" required>
-   <option value="">-- सेवा निवडा --</option>
-
-   <optgroup label="सामान्य सेवा">
-    <option value="आभा कार्ड|50">आभा कार्ड - ₹50</option>
-    <option value="आयुष्मान कार्ड|50">आयुष्मान कार्ड - ₹50</option>
-    <option value="आयुष्मान कार्ड दुरुस्ती|50">आयुष्मान कार्ड दुरुस्ती - ₹50</option>
-    <option value="महा ID कार्ड|70">महा ID कार्ड - ₹70</option>
-    <option value="वोटिंग कार्ड|100">वोटिंग कार्ड - ₹100</option>
-    <option value="इ श्रम कार्ड|100">इ श्रम कार्ड - ₹100</option>
-    <option value="पॅन कार्ड|250">पॅन कार्ड - ₹250</option>
-    <option value="दुरुस्ती / हरवलेले पॅन कार्ड|300">दुरुस्ती / हरवलेले पॅन कार्ड - ₹300</option>
-   </optgroup>
-
-   <optgroup label="शेतकरी योजना">
-    <option value="महिला शेतकरी प्रमाणपत्र|50">महिला शेतकरी प्रमाणपत्र - ₹50</option>
-    <option value="महिला शेतकरी प्रमाणपत्र लॅमिनेशन सोबत|80">महिला शेतकरी प्रमाणपत्र लॅमिनेशन सोबत - ₹80</option>
-    <option value="फार्मर ID|50">फार्मर ID - ₹50</option>
-    <option value="सात बारा|50">सात बारा - ₹50</option>
-    <option value="आठ अ|50">आठ अ - ₹50</option>
-    <option value="PM किसान रजिस्ट्रेशन|250">PM किसान रजिस्ट्रेशन - ₹250</option>
-    <option value="नमो शेतकरी रजिस्ट्रेशन|250">नमो शेतकरी रजिस्ट्रेशन - ₹250</option>
-    <option value="प्रोत्साहन, अनुदान eKYC|50">प्रोत्साहन, अनुदान eKYC - ₹50</option>
-    <option value="महा DBT फार्मर योजना|70">महा DBT फार्मर योजना - ₹70</option>
-   </optgroup>
-
-   <optgroup label="प्रिंट व इतर सेवा">
-    <option value="झेरॉक्स|5">झेरॉक्स - ₹5</option>
-    <option value="प्रिंट|10">प्रिंट - ₹10</option>
-    <option value="रंगीत प्रिंट|20">रंगीत प्रिंट - ₹20</option>
-    <option value="लॅमिनेशन A4|30">लॅमिनेशन A4 - ₹30</option>
-    <option value="लॅमिनेशन ID कार्ड|10">लॅमिनेशन ID कार्ड - ₹10</option>
-    <option value="पासफोटो अर्जंट फोटो कॉपी वरून 12|70">पासफोटो अर्जंट फोटो कॉपी वरून 12 - ₹70</option>
-    <option value="शासकीय फॉर्म|100">शासकीय फॉर्म - ₹100</option>
-    <option value="शासकीय नोकरी फॉर्म|100">शासकीय नोकरी फॉर्म - ₹100</option>
-   </optgroup>
-  </select>
-
-  <button type="submit" id="saveButton">माहिती सेव्ह करा</button>
-  <div id="message" role="status"></div>
- </form>
+</div>
 </div>
 
-<div class="card qr-box">
- <h3>पेमेंट QR कोड</h3>
- <p>पेमेंट करण्यासाठी QR कोड स्कॅन करा.</p>
-
- <img
-  src="./qr.jpeg"
-  alt="Seva Computer Payment QR Code"
-  class="qr-image"
-  onerror="this.style.display='none';document.getElementById('qrError').style.display='block';">
-
- <p id="qrError" style="display:none;color:#b91c1c">
-  QR फोटो सापडला नाही. GitHub मध्ये qr.jpeg फाइल अपलोड करा.
- </p>
+<div class="section">
+<h2>घरपोच सेवा</h2>
+<div class="delivery">
+<strong>नेरड गावात:</strong> ₹20 अतिरिक्त<br>
+<strong>इतर गावात:</strong> प्रति 1 KM ₹10<br>
+<strong>घरपोच नाही:</strong> ₹0<br>
+<p>इतर गावांसाठी अंतर ग्राहक नोंदणी करताना स्वतः भरावे. Google Maps वापरले जात नाही.</p>
+</div>
 </div>
 
-<div class="card">
- <h3>संपर्क</h3>
- <p>WhatsApp वर संपर्क करून आपले काम पाठवा.</p>
+<div class="section">
+<h2>ग्राहकांसाठी</h2>
+<div class="buttons">
+<a class="btn" href="register.html">ग्राहक नोंदणी करा</a>
+<a class="btn admin" href="admin.html">Admin Login</a>
+</div>
+</div>
 
- <a href="https://wa.me/919623557142" target="_blank">
-  WhatsApp वर मेसेज करा
- </a>
-
- <a href="payment.html">पेमेंट पेज उघडा</a>
- <a href="admin.html">Admin Login</a>
+<div class="section contact">
+<h2>संपर्क</h2>
+<p><strong>सेवा कॉम्प्युटर नेरड</strong></p>
+<p>मोबाईल: 9623557142</p>
+<a class="btn" href="https://wa.me/919623557142">WhatsApp संपर्क करा</a>
 </div>
 
 </div>
 
 <footer>
- Seva Computer Nerad
+सेवा कॉम्प्युटर नेरड<br>
+आपली सेवा, आपला विश्वास!
 </footer>
-
-<script type="module">
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
- getAuth,
- signInAnonymously
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
- getFirestore,
- collection,
- addDoc,
- serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-// तुमचा आधीचा Firebase Config येथे भरा
-const firebaseConfig = {
-  apiKey: "AIzaSyBxmhE4xEyQ5IWtOn2j812eIrIPrHnPIIw",
-  authDomain: "seva-computer-nerad-48174.firebaseapp.com",
-  projectId: "seva-computer-nerad-48174",
-  storageBucket: "seva-computer-nerad-48174.firebasestorage.app",
-  messagingSenderId: "967389505991",
-  appId: "1:967389505991:web:bad6e7f60398867e2b51e2"
-};
-
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const form = document.getElementById("customerForm");
-const button = document.getElementById("saveButton");
-const message = document.getElementById("message");
-
-function showMessage(text,type){
- message.style.display="block";
- message.className=type;
- message.textContent=text;
-}
-
-form.addEventListener("submit",async function(event){
- event.preventDefault();
-
- const name=document.getElementById("name").value.trim();
- const phone=document.getElementById("phone").value.trim();
- const selected=document.getElementById("service").value;
-
- if(!name || !/^[0-9]{10}$/.test(phone) || !selected){
-  showMessage("कृपया नाव, मोबाईल नंबर आणि सेवा योग्य भरा.","error");
-  return;
- }
-
- const parts=selected.split("|");
- const service=parts[0];
- const price=Number(parts[1]);
-
- button.disabled=true;
- button.textContent="सेव्ह होत आहे...";
- message.style.display="none";
-
- try{
-  if(!auth.currentUser){
-   await signInAnonymously(auth);
-  }
-
-  await addDoc(collection(db,"customers"),{
-   name:name,
-   phone:phone,
-   service:service,
-   price:price,
-   createdAt:serverTimestamp()
-  });
-
-  showMessage("ग्राहकाची माहिती यशस्वीरित्या सेव्ह झाली!","success");
-  form.reset();
-
- }catch(error){
-  console.error("Firebase Error:",error);
-  showMessage(
-   "माहिती सेव्ह झाली नाही. Error: "+
-   (error.code || "unknown")+" | "+
-   (error.message || "कृपया सेटिंग तपासा."),
-   "error"
-  );
- }finally{
-  button.disabled=false;
-  button.textContent="माहिती सेव्ह करा";
- }
-});
-</script>
 
 </body>
 </html>
