@@ -3,84 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seva Computer Nerad</title>
+<title>Seva Computer Nerad - Registration</title>
 <style>
 *{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#eef3f9;margin:0;padding:15px}
-.container{max-width:500px;margin:auto;background:white;padding:20px;border-radius:15px;box-shadow:0 3px 15px #0002}
-h2{text-align:center;color:#0755a5}
-label{display:block;margin-top:13px;font-weight:bold}
-input,select{width:100%;padding:12px;margin-top:6px;border:1px solid #bbb;border-radius:8px;font-size:16px}
-button{width:100%;padding:14px;margin-top:18px;background:#0755a5;color:white;border:0;border-radius:8px;font-size:17px}
-.total{background:#e5f4e8;padding:15px;margin-top:15px;border-radius:8px;font-size:20px;font-weight:bold}
-.note{font-size:13px;color:#555}
+body{font-family:Arial,sans-serif;background:#eff6ff;margin:0;padding:15px;color:#172554}
+.container{max-width:550px;margin:15px auto;background:white;padding:20px;border-radius:14px;box-shadow:0 3px 15px #0002}
+h2{text-align:center;color:#075985;margin-top:5px}
+label{display:block;font-weight:bold;margin:14px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px;background:white}
+button{width:100%;padding:14px;margin-top:20px;background:#087e50;color:white;border:0;border-radius:8px;font-size:17px;font-weight:bold}
+button:disabled{background:#94a3b8}
+.amount{background:#e0f2fe;padding:15px;border-radius:9px;margin-top:15px;line-height:1.8}
+.back{text-align:center;margin-top:15px}
+.back a{color:#075985}
+.note{font-size:13px;color:#64748b}
 </style>
 </head>
 <body>
+
 <div class="container">
 <h2>सेवा कॉम्प्युटर नेरड</h2>
 <p style="text-align:center">ग्राहक नोंदणी फॉर्म</p>
 
-<form id="customerForm">
-<label>ग्राहकाचे नाव</label>
-<input id="name" required maxlength="80">
+<form id="regForm">
+
+<label>ग्राहकाचे पूर्ण नाव</label>
+<input id="name" type="text" required placeholder="ग्राहकाचे नाव">
 
 <label>मोबाईल नंबर</label>
-<input id="phone" type="tel" pattern="[0-9]{10}" maxlength="10" required>
+<input id="phone" type="tel" required maxlength="10"
+pattern="[0-9]{10}" placeholder="10 अंकी मोबाईल नंबर">
 
 <label>सेवा निवडा</label>
 <select id="service" required>
-<option value="">सेवा निवडा</option>
-<option value="आभा कार्ड" data-price="50">आभा कार्ड – ₹50</option>
-<option value="आयुष्मान कार्ड" data-price="50">आयुष्मान कार्ड – ₹50</option>
-<option value="आयुष्मान कार्ड दुरुस्ती" data-price="50">आयुष्मान कार्ड दुरुस्ती – ₹50</option>
-<option value="महा ID कार्ड" data-price="70">महा ID कार्ड – ₹70</option>
-<option value="वोटिंग कार्ड" data-price="100">वोटिंग कार्ड – ₹100</option>
-<option value="ई श्रम कार्ड" data-price="100">ई श्रम कार्ड – ₹100</option>
-<option value="पॅन कार्ड" data-price="250">पॅन कार्ड – ₹250</option>
-<option value="दुरुस्ती / हरवलेले पॅन कार्ड" data-price="300">दुरुस्ती / हरवलेले पॅन कार्ड – ₹300</option>
-<option value="महिला शेतकरी प्रमाणपत्र" data-price="50">महिला शेतकरी प्रमाणपत्र – ₹50</option>
-<option value="खरीप पीक विमा" data-price="100">खरीप पीक विमा – ₹100</option>
-<option value="रब्बी पीक विमा" data-price="100">रब्बी पीक विमा – ₹100</option>
-<option value="WhatsApp/Gmail ब्लॅक प्रिंट" data-price="10">WhatsApp/Gmail ब्लॅक प्रिंट – ₹10</option>
-<option value="WhatsApp/Gmail रंगीत प्रिंट" data-price="20">WhatsApp/Gmail रंगीत प्रिंट – ₹20</option>
+<option value="">-- सेवा निवडा --</option>
 </select>
-
-<label>प्रिंट संख्या (प्रिंट सेवेसाठी)</label>
-<input id="quantity" type="number" min="1" value="1">
 
 <label>घरपोच सेवा</label>
 <select id="delivery">
-<option value="no">घरपोच नाही – ₹0</option>
-<option value="nerad">नेरड – ₹20</option>
-<option value="other">इतर गाव – प्रति KM ₹10</option>
+<option value="none">घरपोच नको - ₹0</option>
+<option value="nerad">नेरड गाव - ₹20</option>
+<option value="other">इतर गाव - ₹10 प्रति KM</option>
 </select>
 
 <div id="distanceBox" style="display:none">
-<label>नेरडपासून अंतर (KM स्वतः भरा)</label>
-<input id="distance" type="number" min="1" step="0.1" placeholder="उदा. 5">
-<p class="note">Google Maps वापरले जाणार नाही. अंतर तुम्ही स्वतः टाकायचे आहे.</p>
+<label>अंतर (KM मध्ये)</label>
+<input id="distance" type="number" min="1" step="0.1"
+placeholder="उदा. 5">
+<p class="note">Google Map वापरले जाणार नाही. अंतर तुम्ही स्वतः भरा.</p>
 </div>
 
-<div class="total">
-सेवा रक्कम: ₹<span id="serviceAmount">0</span><br>
-घरपोच फी: ₹<span id="deliveryAmount">0</span><hr>
-एकूण रक्कम: ₹<span id="grandTotal">0</span>
+<div class="amount">
+<div>सेवा रक्कम: ₹<span id="servicePrice">0</span></div>
+<div>घरपोच शुल्क: ₹<span id="deliveryPrice">0</span></div>
+<hr>
+<strong>एकूण रक्कम: ₹<span id="totalPrice">0</span></strong>
 </div>
 
-<button type="submit" id="saveBtn">ग्राहक नोंदणी करा</button>
+<button type="submit" id="submitBtn">नोंदणी करा</button>
 </form>
-<p id="message" style="text-align:center"></p>
+
+<div class="back">
+<a href="index.html">मुख्य पृष्ठावर जा</a>
+</div>
 </div>
 
 <script type="module">
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInAnonymously } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+import { getFirestore, collection, addDoc, serverTimestamp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import { getAuth, signInAnonymously }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/*
+महत्त्वाचे:
+खालील firebaseConfig मध्ये तुमच्या जुन्या register.html
+मधील firebaseConfig जसाच्या तसा कॉपी करा.
+इतर कोणतीही Firebase माहिती बदलू नका.
+*/
 const firebaseConfig = {
   apiKey: "AIzaSyBxmhE4xEyQ5IWtOn2j812eIrIPrHnPIIw",
   authDomain: "seva-computer-nerad-48174.firebaseapp.com",
@@ -92,95 +95,164 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-const service = document.getElementById("service");
-const delivery = document.getElementById("delivery");
+const services = [
+["महा ID कार्ड",70],
+["आभा कार्ड",50],
+["आयुष्मान कार्ड",50],
+["आयुष्मान कार्ड दुरुस्ती",50],
+["वोटिंग कार्ड",100],
+["ई-श्रम कार्ड",100],
+["पॅन कार्ड",250],
+["पॅन दुरुस्ती / हरवलेले पॅन कार्ड",300],
+["पीक पाहणी",100],
+["खरीप पीक विमा",100],
+["रब्बी पीक विमा",100],
+["PM किसान नोंदणी",250],
+["महिला शेतकरी प्रमाणपत्र",50],
+["महिला शेतकरी प्रमाणपत्र व लॅमिनेशन",80],
+["फार्मर ID",50],
+["महा DBT फार्मर योजना",70],
+["लाडकी बहीण योजना फॉर्म",50],
+["शासकीय / निमशासकीय नोकरी फॉर्म",100],
+["शिष्यवृत्ती फॉर्म",100],
+["प्रोत्साहन / अनुदान / कोणतीही eKYC",50],
+["झेरॉक्स ब्लॅक अँड व्हाईट",5],
+["झेरॉक्स रंगीत",10],
+["प्रिंट ब्लॅक",10],
+["रंगीत प्रिंट",20],
+["अर्जंट पासपोर्ट फोटो 12 कॉपी",50],
+["लॅमिनेशन A4 पेज",30],
+["लॅमिनेशन ID कार्ड",10]
+];
+
+const serviceSelect = document.getElementById("service");
+
+services.forEach((item,index)=>{
+  const option = document.createElement("option");
+  option.value = index;
+  option.textContent = item[0] + " - ₹" + item[1];
+  serviceSelect.appendChild(option);
+});
+
+const deliverySelect = document.getElementById("delivery");
 const distanceBox = document.getElementById("distanceBox");
-const distance = document.getElementById("distance");
-const quantity = document.getElementById("quantity");
+const distanceInput = document.getElementById("distance");
+
+let servicePrice = 0;
+let deliveryPrice = 0;
+let totalPrice = 0;
 
 function calculate(){
- const price = Number(service.selectedOptions[0]?.dataset.price || 0);
- const qty = Math.max(1, Number(quantity.value) || 1);
- const serviceTotal = price * qty;
 
- let deliveryFee = 0;
- if(delivery.value === "nerad") deliveryFee = 20;
- if(delivery.value === "other"){
-   deliveryFee = Math.ceil(Math.max(0, Number(distance.value) || 0) * 10);
- }
+  const selected = serviceSelect.value;
 
- distanceBox.style.display = delivery.value === "other" ? "block" : "none";
+  servicePrice = selected === "" ? 0 : services[Number(selected)][1];
 
- document.getElementById("serviceAmount").textContent = serviceTotal;
- document.getElementById("deliveryAmount").textContent = deliveryFee;
- document.getElementById("grandTotal").textContent = serviceTotal + deliveryFee;
+  const delivery = deliverySelect.value;
 
- return {serviceTotal, deliveryFee, total: serviceTotal + deliveryFee};
+  deliveryPrice = 0;
+
+  distanceBox.style.display = "none";
+  distanceInput.required = false;
+
+  if(delivery === "nerad"){
+    deliveryPrice = 20;
+  }
+
+  if(delivery === "other"){
+    distanceBox.style.display = "block";
+    distanceInput.required = true;
+
+    const km = Number(distanceInput.value);
+
+    if(km > 0){
+      deliveryPrice = Math.ceil(km * 10);
+    }
+  }
+
+  totalPrice = servicePrice + deliveryPrice;
+
+  document.getElementById("servicePrice").textContent = servicePrice;
+  document.getElementById("deliveryPrice").textContent = deliveryPrice;
+  document.getElementById("totalPrice").textContent = totalPrice;
 }
 
-service.addEventListener("change", calculate);
-delivery.addEventListener("change", calculate);
-distance.addEventListener("input", calculate);
-quantity.addEventListener("input", calculate);
-calculate();
+serviceSelect.addEventListener("change",calculate);
+deliverySelect.addEventListener("change",calculate);
+distanceInput.addEventListener("input",calculate);
 
-document.getElementById("customerForm").addEventListener("submit", async (e)=>{
- e.preventDefault();
+document.getElementById("regForm").addEventListener("submit",async(e)=>{
 
- const btn = document.getElementById("saveBtn");
- const message = document.getElementById("message");
- const phone = document.getElementById("phone").value.trim();
- const name = document.getElementById("name").value.trim();
- const selectedService = service.value;
+  e.preventDefault();
 
- if(!/^[0-9]{10}$/.test(phone)){
-   message.textContent = "योग्य 10 अंकी मोबाईल नंबर भरा.";
-   return;
- }
- if(!selectedService){
-   message.textContent = "कृपया सेवा निवडा.";
-   return;
- }
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const selected = serviceSelect.value;
+  const delivery = deliverySelect.value;
 
- const amounts = calculate();
- if(delivery.value === "other" && Number(distance.value) <= 0){
-   message.textContent = "घरपोच सेवेसाठी KM भरा.";
-   return;
- }
+  if(!name || !/^[0-9]{10}$/.test(phone) || selected === ""){
+    alert("कृपया सर्व माहिती योग्य भरा.");
+    return;
+  }
 
- const deliveryText =
-   delivery.value === "nerad" ? "नेरड घरपोच ₹20" :
-   delivery.value === "other" ? `${distance.value} KM घरपोच ₹${amounts.deliveryFee}` :
-   "घरपोच नाही";
+  if(delivery === "other" && Number(distanceInput.value) <= 0){
+    alert("कृपया योग्य अंतर भरा.");
+    return;
+  }
 
- btn.disabled = true;
- btn.textContent = "नोंदणी सुरू आहे...";
+  calculate();
 
- try{
-   await signInAnonymously(auth);
+  const serviceName = services[Number(selected)][0];
 
-   await addDoc(collection(db,"customers"),{
-     name,
-     phone,
-     service: `${selectedService} (${quantity.value} नग) | ${deliveryText}`,
-     price: amounts.total,
-     createdAt: serverTimestamp()
-   });
+  let serviceDetails = serviceName;
 
-   message.textContent = "ग्राहकाची नोंदणी यशस्वी झाली!";
-   document.getElementById("customerForm").reset();
-   quantity.value = 1;
-   calculate();
- }catch(error){
-   console.error(error);
-   message.textContent = "नोंदणी झाली नाही. Firebase सेटिंग आणि इंटरनेट तपासा.";
- }finally{
-   btn.disabled = false;
-   btn.textContent = "ग्राहक नोंदणी करा";
- }
+  if(delivery === "nerad"){
+    serviceDetails += " | नेरड घरपोच ₹20";
+  }
+
+  if(delivery === "other"){
+    const km = Number(distanceInput.value);
+    serviceDetails += " | " + km + " KM घरपोच ₹" + deliveryPrice;
+  }
+
+  const button = document.getElementById("submitBtn");
+  button.disabled = true;
+  button.textContent = "नोंदणी होत आहे...";
+
+  try{
+
+    if(!auth.currentUser){
+      await signInAnonymously(auth);
+    }
+
+    await addDoc(collection(db,"customers"),{
+      name:name,
+      phone:phone,
+      service:serviceDetails,
+      price:totalPrice,
+      createdAt:serverTimestamp()
+    });
+
+    alert("नोंदणी यशस्वी झाली!");
+
+    document.getElementById("regForm").reset();
+    calculate();
+
+  }catch(error){
+
+    console.error(error);
+    alert("नोंदणी झाली नाही. इंटरनेट आणि Firebase सेटिंग तपासा.");
+
+  }finally{
+
+    button.disabled = false;
+    button.textContent = "नोंदणी करा";
+
+  }
+
 });
 </script>
 </body>
