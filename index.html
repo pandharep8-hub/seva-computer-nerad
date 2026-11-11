@@ -3,283 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Seva Computer &amp; Xerox, Lamination Services</title>
-<meta name="application-name" content="Seva Computer">
-<meta name="theme-color" content="#123c70">
-<link rel="manifest" href="./manifest.json">
-
+<title>Seva Computer & Xerox, Lamination Services</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:12px;background:#eef2f8;font-family:Arial,sans-serif;color:#222}
-.container{max-width:720px;margin:auto}
-header{background:linear-gradient(135deg,#123c70,#0784bd);color:white;text-align:center;padding:24px 10px;border-radius:14px}
-header h2{margin:0 0 8px;font-size:23px}
-header p{margin:6px}
-.card{background:white;padding:17px;margin-top:14px;border-radius:12px;box-shadow:0 2px 8px #ccd3df}
-h3{color:#123c70;margin-top:0}
-.section-title{background:#e5f1ff;padding:12px;border-radius:8px;color:#123c70;font-weight:bold;margin-top:14px}
-.service{display:flex;align-items:center;gap:9px;padding:12px 3px;border-bottom:1px solid #eee}
-.service input{width:19px;height:19px}
-.service label{flex:1;font-size:14px}
-.price{font-weight:bold;color:#078047;white-space:nowrap}
-input[type=text],input[type=tel]{
-width:100%;padding:13px;margin:7px 0 13px;border:1px solid #bbb;border-radius:8px;font-size:16px
-}
-button{width:100%;padding:13px;border:0;border-radius:8px;background:#1264b0;color:white;font-size:16px;margin-top:9px}
-.green{background:#16834a}
-.orange{background:#e58b18}
-.red{background:#c0392b}
-.total{text-align:center;font-size:24px;font-weight:bold;color:#16834a;padding:15px}
-.record{background:#f1f5fa;padding:13px;margin:10px 0;border-radius:9px;overflow-wrap:anywhere}
-.small{font-size:12px;color:#666}
-.hidden{display:none}
-.footer{text-align:center;padding:20px;color:#123c70}
+body{margin:0;font-family:Arial;background:#eef3f9;color:#17345b}
+header,footer{background:#123c70;color:white;text-align:center;padding:18px}
+main{max-width:850px;margin:auto;padding:12px}
+.card{background:white;padding:16px;margin:14px 0;border-radius:12px}
+.service{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #ddd}
+button{background:#123c70;color:white;border:0;padding:11px;border-radius:7px}
+input{width:100%;padding:12px;margin:7px 0}
+#customerForm{display:none}
 </style>
 </head>
-
 <body>
-<div class="container">
-
 <header>
-<h2>Seva Computer &amp; Xerox</h2>
-<p>Lamination Services</p>
-<p>आपले ऑनलाइन सेवा केंद्र</p>
-<b>मो. 9623557142</b>
+<h2>Seva Computer & Xerox</h2>
+<p>Lamination Services - Nerad</p>
+<p>घरपोच सेवा आणि तुरंत सर्विस</p>
 </header>
+<main>
+<div class="card"><h3>सर्वसाधारण कार्ड सेवा</h3><div id="general"></div></div>
+<div class="card"><h3>शेतकरी योजना</h3><div id="farmer"></div></div>
+<div class="card"><h3>झेरॉक्स, प्रिंट व इतर सेवा</h3><div id="other"></div></div>
 
-<div class="card">
-<h3>📋 सेवा व दरपत्रक</h3>
-<p class="small">आपल्याला आवश्यक असलेल्या सेवा निवडा.</p>
-<div id="serviceList"></div>
-<div class="total">एकूण: ₹<span id="total">0</span></div>
-</div>
-
-<div class="card hidden" id="customerBox">
-<h3>👤 ग्राहकाची माहिती</h3>
-<label>ग्राहकाचे नाव</label>
-<input id="customerName" type="text" placeholder="पूर्ण नाव लिहा">
-
-<label>मोबाईल नंबर</label>
-<input id="mobile" type="tel" maxlength="10" placeholder="10 अंकी नंबर">
-
-<button class="green" onclick="saveCustomer()">ग्राहक नोंद सेव्ह करा</button>
+<div class="card" id="customerForm">
+<h3>ग्राहक नोंदणी</h3>
+<p id="selected"></p>
+<input id="name" placeholder="ग्राहकाचे पूर्ण नाव">
+<input id="phone" placeholder="मोबाईल नंबर" maxlength="10">
+<button id="save">माहिती सेव्ह करा</button>
+<p id="msg"></p>
 </div>
 
 <div class="card">
-<h3>📁 ग्राहक नोंदणी</h3>
-<input type="text" id="search" placeholder="नाव किंवा मोबाईल शोधा" oninput="showRecords()">
-<div id="records"></div>
-<button onclick="downloadData()">ग्राहक यादी डाउनलोड करा</button>
+<h3>संपर्क</h3>
+<p>Seva Computer Nerad</p>
+<p>मोबाईल: 9623557142</p>
+<a href="https://wa.me/919623557142"><button>WhatsApp संपर्क</button></a>
 </div>
-
 <div class="card">
-<h3>💳 Payment आणि Admin</h3>
-<button class="orange" onclick="location.href='payment.html'">Payment QR Code</button>
-<button onclick="location.href='register.html'">ग्राहक नोंदणी पेज</button>
+<button onclick="location.href='payment.html'">Payment QR</button>
+<button onclick="location.href='register.html'">नोंदणी</button>
 <button onclick="location.href='admin.html'">Admin Login</button>
 </div>
+</main>
+<footer>Seva Computer & Xerox, Lamination Services</footer>
 
-<div class="card">
-<h3>🏠 घरपोच सेवा आणि त्वरित सर्विस</h3>
-<p>तुमचा वेळ वाचवा! आमच्या App ला भेट देऊन WhatsApp वर मेसेज करून आपले काम आधीच करून घ्या.</p>
-<button class="green" onclick="contactWhatsApp()">WhatsApp वर संपर्क करा</button>
-</div>
+<script type="module">
+import {initializeApp} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,addDoc,serverTimestamp} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-<div class="footer">
-<b>Seva Computer &amp; Xerox, Lamination Services</b>
-<p>सेवा तुमच्या दारी, विश्वास आमचा!</p>
-</div>
+const firebaseConfig={
+ apiKey:"YOUR_API_KEY",
+ authDomain:"YOUR_AUTH_DOMAIN",
+ projectId:"YOUR_PROJECT_ID",
+ storageBucket:"YOUR_STORAGE_BUCKET",
+ messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+ appId:"YOUR_APP_ID"
+};
 
-</div>
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-<script>
-const sections = [
-{
-title:"सर्वसाधारण कार्ड सेवा",
-items:[
-["आभा कार्ड",50],
-["आयुष्मान कार्ड",50],
-["आयुष्मान कार्ड दुरुस्ती",50],
-["महा ID कार्ड",70],
-["वोटिंग कार्ड",100],
-["ई-श्रम कार्ड",100],
-["पॅन कार्ड",250],
-["दुरुस्ती / हरवलेले पॅन कार्ड",300]
-]
-},
-{
-title:"शेतकरी योजना",
-items:[
+const services={
+general:[
+["आभा कार्ड",50],["आयुष्मान कार्ड",50],
+["आयुष्मान कार्ड दुरुस्ती",50],["महा ID कार्ड",70],
+["वोटिंग कार्ड",100],["इ श्रम कार्ड",100],
+["पॅन कार्ड",250],["दुरुस्ती / हरवलेले पॅन कार्ड",300]
+],
+farmer:[
 ["महिला शेतकरी प्रमाणपत्र",50],
 ["महिला शेतकरी प्रमाणपत्र लॅमिनेशन सोबत",80],
-["फार्मर ID",50],
-["सात बारा",50],
-["आठ अ",50],
-["PM किसान रजिस्ट्रेशन",250],
-["नमो शेतकरी रजिस्ट्रेशन",250],
+["फार्मर ID",50],["सात बारा",50],["आठ अ",50],
+["PM किसान रेजिस्ट्रेशन",250],
+["नमो शेतकरी रेजिस्ट्रेशन",250],
 ["प्रोत्साहन, अनुदान eKYC",50]
-]
-},
-{
-title:"झेरॉक्स, प्रिंट व इतर सेवा",
-items:[
-["झेरॉक्स",5],
-["प्रिंट",10],
-["रंगीत प्रिंट",20],
-["लॅमिनेशन A4",30],
-["लॅमिनेशन ID कार्ड",10],
-["पासपोर्ट फोटो अर्जंट 12 कॉपी",70],
+],
+other:[
+["झेरॉक्स",5],["प्रिंट",10],["रंगीत प्रिंट",20],
+["लॅमिनेशन A4",30],["लॅमिनेशन ID कार्ड",10],
+["पासफोटो अर्जेंट फोटो कॉपी वरून 12",70],
 ["शासकीय फॉर्म (फॉर्म पेमेंट सोडून)",100],
 ["शासकीय नोकरी फॉर्म (पेमेंट सोडून)",100],
 ["महा DBT फार्मर योजना",70]
 ]
-}
-];
-
-let selected=[];
-
-function renderServices(){
-let html="";
-sections.forEach((section,si)=>{
-html+=`<div class="section-title">${section.title}</div>`;
-section.items.forEach((item,ii)=>{
-let id=si+"-"+ii;
-html+=`
-<div class="service">
-<input type="checkbox" id="s${id}" onchange="toggleService('${id}',this.checked)">
-<label for="s${id}">${item[0]}</label>
-<span class="price">₹${item[1]}</span>
-</div>`;
-});
-});
-document.getElementById("serviceList").innerHTML=html;
-}
-
-function getService(id){
-let parts=id.split("-");
-return sections[Number(parts[0])].items[Number(parts[1])];
-}
-
-function toggleService(id,checked){
-if(checked){
-if(!selected.includes(id))selected.push(id);
-}else{
-selected=selected.filter(x=>x!==id);
-}
-updateTotal();
-}
-
-function updateTotal(){
-let total=selected.reduce((sum,id)=>sum+getService(id)[1],0);
-document.getElementById("total").innerText=total;
-document.getElementById("customerBox").classList.toggle("hidden",selected.length===0);
-}
-
-function safe(v){
-return String(v).replace(/[&<>"']/g,c=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
-}
-
-function saveCustomer(){
-let name=document.getElementById("customerName").value.trim();
-let mobile=document.getElementById("mobile").value.trim();
-
-if(!name){alert("ग्राहकाचे नाव भरा");return;}
-if(!/^[0-9]{10}$/.test(mobile)){alert("योग्य 10 अंकी मोबाईल नंबर भरा");return;}
-if(selected.length===0){alert("सेवा निवडा");return;}
-
-let items=selected.map(id=>({
-name:getService(id)[0],
-price:getService(id)[1]
-}));
-let total=items.reduce((s,x)=>s+x.price,0);
-
-let customer={
-id:Date.now(),
-name,
-mobile,
-services:items,
-total,
-date:new Date().toLocaleString("en-IN")
 };
 
-try{
-let records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
-records.unshift(customer);
-localStorage.setItem("sevaCustomers",JSON.stringify(records));
+let selectedService="",selectedPrice=0,loggedIn=false;
 
-alert("ग्राहकाची नोंद सेव्ह झाली!");
+onAuthStateChanged(auth,user=>{loggedIn=!!user});
 
-document.getElementById("customerName").value="";
-document.getElementById("mobile").value="";
-selected=[];
-renderServices();
-updateTotal();
-showRecords();
-}catch(e){
-alert("माहिती सेव्ह झाली नाही. ब्राउझर स्टोरेज तपासा.");
-}
-}
-
-function showRecords(){
-let records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
-let search=document.getElementById("search").value.toLowerCase();
-records=records.filter(c=>c.name.toLowerCase().includes(search)||c.mobile.includes(search));
-
-let box=document.getElementById("records");
-if(!records.length){
-box.innerHTML="<p>ग्राहकांची नोंद उपलब्ध नाही.</p>";
-return;
-}
-box.innerHTML=records.map(c=>`
-<div class="record">
-<b>ग्राहक: ${safe(c.name)}</b><br>
-मोबाईल: ${safe(c.mobile)}<br>
-सेवा: ${c.services.map(s=>safe(s.name)).join(", ")}<br>
-एकूण: <b>₹${Number(c.total)}</b><br>
-<span class="small">${safe(c.date)}</span>
-<button class="red" onclick="deleteCustomer(${Number(c.id)})">नोंद डिलीट करा</button>
-</div>`).join("");
+function render(){
+ Object.entries(services).forEach(([group,items])=>{
+  items.forEach(([name,price])=>{
+   const row=document.createElement("div");
+   row.className="service";
+   const label=document.createElement("span");
+   label.textContent=`${name} = ₹${price}`;
+   const btn=document.createElement("button");
+   btn.textContent="निवडा";
+   btn.onclick=()=>{
+    selectedService=name;selectedPrice=price;
+    document.getElementById("customerForm").style.display="block";
+    document.getElementById("selected").textContent=
+     `${name} - ₹${price}`;
+    document.getElementById("customerForm").scrollIntoView();
+   };
+   row.append(label,btn);
+   document.getElementById(group).appendChild(row);
+  });
+ });
 }
 
-function deleteCustomer(id){
-if(!confirm("ही नोंद डिलीट करायची आहे का?"))return;
-let records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
-records=records.filter(c=>c.id!==id);
-localStorage.setItem("sevaCustomers",JSON.stringify(records));
-showRecords();
-}
-
-function downloadData(){
-let records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
-if(!records.length){alert("नोंदी उपलब्ध नाहीत");return;}
-
-let rows=[
-["नाव","मोबाईल","सेवा","रक्कम","तारीख"],
-...records.map(c=>[
-c.name,c.mobile,
-c.services.map(s=>s.name).join(" / "),
-c.total,c.date
-])
-];
-let csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\r\n");
-let blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
-let url=URL.createObjectURL(blob);
-let a=document.createElement("a");
-a.href=url;
-a.download="Seva-Computer-Customers.csv";
-a.click();
-URL.revokeObjectURL(url);
-}
-
-function contactWhatsApp(){
-let msg=encodeURIComponent("नमस्कार, मला Seva Computer Nerad कडून सेवा हवी आहे.");
-window.open("https://wa.me/919623557142?text="+msg,"_blank");
-}
-
-renderServices();
-showRecords();
+document.getElementById("save").onclick=async()=>{
+ const name=document.getElementById("name").value.trim();
+ const phone=document.getElementById("phone").value.trim();
+ const msg=document.getElementById("msg");
+ if(!name||!/^[0-9]{10}$/.test(phone)||!selectedService){
+  msg.textContent="योग्य नाव, मोबाईल आणि सेवा भरा.";return;
+ }
+ if(!auth.currentUser){
+  msg.textContent="ग्राहक नोंदणीसाठी सुरक्षित सार्वजनिक नोंदणी व्यवस्था अजून जोडलेली नाही.";
+  return;
+ }
+ try{
+  await addDoc(collection(db,"customers"),{
+   name,phone,service:selectedService,price:selectedPrice,
+   createdAt:serverTimestamp()
+  });
+  msg.textContent="माहिती सेव्ह झाली.";
+  document.getElementById("name").value="";
+  document.getElementById("phone").value="";
+ }catch(e){msg.textContent="माहिती सेव्ह झाली नाही."}
+};
+render();
 </script>
 </body>
 </html>
