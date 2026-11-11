@@ -3,186 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seva Computer Admin</title>
+<title>Seva Computer Nerad - Admin</title>
 
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f4f9;
- color:#222;
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f4f9;
+  margin: 0;
+  padding: 15px;
 }
-header{
- background:#172554;
- color:white;
- padding:20px;
- text-align:center;
+.container {
+  max-width: 1100px;
+  margin: auto;
 }
-.container{
- max-width:1000px;
- margin:20px auto;
- padding:12px;
+h2 { text-align: center; color: #123b70; }
+.box {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 12px 0;
+  box-shadow: 0 2px 8px #ddd;
 }
-.card{
- background:white;
- padding:18px;
- border-radius:12px;
- margin-bottom:15px;
- box-shadow:0 3px 12px #00000012;
+input, button {
+  padding: 11px;
+  margin: 5px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
-h3{color:#172554}
-input{
- width:100%;
- padding:13px;
- border:1px solid #bbb;
- border-radius:8px;
- font-size:16px;
- margin:8px 0;
+input { width: 100%; }
+button {
+  background: #0759a5;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
-button{
- padding:12px 18px;
- border:0;
- border-radius:7px;
- background:#172554;
- color:white;
- font-size:15px;
- cursor:pointer;
- margin:5px 3px;
+button:disabled { opacity: .6; }
+.green { background: #16833b; }
+.red { background: #c62828; }
+.whatsapp { background: #128c50; }
+.stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
-.logout{background:#b91c1c}
-.stats{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:12px;
+.stat {
+  flex: 1;
+  min-width: 130px;
+  background: #e4f1ff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
 }
-.stat{
- background:#e8efff;
- padding:18px;
- border-radius:10px;
- text-align:center;
+.stat strong {
+  display: block;
+  font-size: 23px;
+  margin-top: 8px;
 }
-.stat strong{
- display:block;
- font-size:25px;
- color:#172554;
- margin-top:8px;
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  min-width: 850px;
 }
-.table-wrap{overflow-x:auto}
-table{
- width:100%;
- border-collapse:collapse;
- min-width:650px;
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
 }
-th,td{
- padding:11px;
- border-bottom:1px solid #ddd;
- text-align:left;
- font-size:14px;
-}
-th{background:#172554;color:white}
-#dashboard{display:none}
-#message{margin:10px 0;color:#b91c1c}
-.small{color:#666;font-size:13px}
+th { background: #123b70; color: white; }
+.done { color: green; font-weight: bold; }
+.pending { color: #b56b00; font-weight: bold; }
+#dashboard { display: none; }
 </style>
 </head>
 
 <body>
-
-<header>
- <h2>सेवा कॉम्पुटर नेरड</h2>
- <p>Admin Dashboard</p>
-</header>
-
 <div class="container">
 
-<div class="card" id="loginBox">
- <h3>Admin Login</h3>
+<h2>सेवा कॉम्पुटर नेरड</h2>
+<h3 style="text-align:center">Admin Dashboard</h3>
 
- <input type="email" id="email" placeholder="Admin Gmail">
- <input type="password" id="password" placeholder="Password">
-
- <button id="loginBtn">Login करा</button>
- <p id="message"></p>
+<div class="box" id="loginBox">
+  <h3>Admin Login</h3>
+  <input id="email" type="email" placeholder="Admin Gmail">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <p id="loginMessage"></p>
 </div>
 
 <div id="dashboard">
 
- <div class="card">
-  <h3>Admin Dashboard</h3>
-  <p id="welcome"></p>
-  <button class="logout" id="logoutBtn">Logout</button>
- </div>
-
- <div class="stats">
-  <div class="stat">
-   एकूण ग्राहक
-   <strong id="totalCustomers">0</strong>
+  <div class="box">
+    <button class="red" onclick="logout()">Logout</button>
+    <button class="green" onclick="loadCustomers()">Refresh</button>
+    <button onclick="downloadCSV()">Download CSV</button>
   </div>
 
-  <div class="stat">
-   एकूण रक्कम
-   <strong id="totalAmount">₹0</strong>
+  <div class="stats">
+    <div class="stat">
+      एकूण ग्राहक
+      <strong id="totalCustomers">0</strong>
+    </div>
+    <div class="stat">
+      एकूण रक्कम
+      <strong id="totalAmount">₹0</strong>
+    </div>
+    <div class="stat">
+      काम पूर्ण
+      <strong id="completedCount">0</strong>
+    </div>
   </div>
- </div>
 
- <div class="card">
-  <h3>ग्राहक शोधा</h3>
-  <input
-   type="text"
-   id="search"
-   placeholder="नाव किंवा मोबाईल नंबर टाका">
-  <button id="refreshBtn">Refresh करा</button>
-  <p class="small" id="resultCount"></p>
- </div>
-
- <div class="card">
-  <h3>ग्राहकांची यादी</h3>
-  <div class="table-wrap">
-   <table>
-    <thead>
-     <tr>
-      <th>क्र.</th>
-      <th>ग्राहकाचे नाव</th>
-      <th>मोबाईल</th>
-      <th>सेवा</th>
-      <th>रक्कम</th>
-      <th>तारीख</th>
-     </tr>
-    </thead>
-    <tbody id="customerList">
-     <tr><td colspan="6">माहिती लोड होत आहे...</td></tr>
-    </tbody>
-   </table>
+  <div class="box">
+    <input id="search" placeholder="ग्राहक नाव किंवा मोबाईल शोधा"
+      oninput="showCustomers()">
   </div>
- </div>
+
+  <div class="box table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>क्र.</th>
+          <th>ग्राहक नाव</th>
+          <th>मोबाईल</th>
+          <th>सेवा</th>
+          <th>रक्कम</th>
+          <th>दिनांक</th>
+          <th>स्थिती</th>
+          <th>काम पूर्ण</th>
+          <th>WhatsApp</th>
+        </tr>
+      </thead>
+      <tbody id="customerTable"></tbody>
+    </table>
+  </div>
 
 </div>
 </div>
 
-<script type="module">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+<script>
 
-import {
- getAuth,
- signInWithEmailAndPassword,
- onAuthStateChanged,
- signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
- getFirestore,
- collection,
- getDocs,
- query,
- orderBy
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-// index.html मधील तोच Firebase Config वापरा
+// 1. तुमच्या जुन्या index.html मधील Firebase Config इथे टाका
 const firebaseConfig = {
   apiKey: "AIzaSyBxmhE4xEyQ5IWtOn2j812eIrIPrHnPIIw",
   authDomain: "seva-computer-nerad-48174.firebaseapp.com",
@@ -193,171 +161,264 @@ const firebaseConfig = {
 };
 
 
-// तुमचा Admin Login Gmail टाका
+// 2. तुमचा Admin Gmail इथे टाका
 const ADMIN_EMAIL = "pandharep8@gmail.com";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
 
-const loginBox = document.getElementById("loginBox");
-const dashboard = document.getElementById("dashboard");
-const message = document.getElementById("message");
-const list = document.getElementById("customerList");
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 let customers = [];
 
-function showError(error){
- message.textContent =
-  (error.code || "Error") + " : " + error.message;
+// Login
+async function login() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+    document.getElementById("loginMessage").innerText = "";
+  } catch (error) {
+    document.getElementById("loginMessage").innerText =
+      "Login Error: " + error.message;
+  }
 }
 
-document.getElementById("loginBtn").onclick = async () => {
- const email = document.getElementById("email").value.trim();
- const password = document.getElementById("password").value;
+// Login तपासणी
+auth.onAuthStateChanged(async user => {
+  if (user && user.email === ADMIN_EMAIL) {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+    await loadCustomers();
+  } else {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
 
- if(!email || !password){
-  message.textContent = "Gmail आणि Password भरा.";
-  return;
- }
-
- if(email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
-  message.textContent = "हा Admin Email नाही.";
-  return;
- }
-
- try{
-  await signInWithEmailAndPassword(auth,email,password);
- }catch(error){
-  showError(error);
- }
-};
-
-onAuthStateChanged(auth, async (user) => {
-
- if(user && user.email &&
- user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
-
-  loginBox.style.display = "none";
-  dashboard.style.display = "block";
-  document.getElementById("welcome").textContent =
-   "Login: " + user.email;
-
-  await loadCustomers();
-
- }else{
-  dashboard.style.display = "none";
-  loginBox.style.display = "block";
-
-  if(user){
-   await signOut(auth);
-   message.textContent = "Admin परवानगी नाही.";
+    if (user) {
+      await auth.signOut();
+      document.getElementById("loginMessage").innerText =
+        "Admin परवानगी नाही.";
+    }
   }
- }
 });
 
-async function loadCustomers(){
-
- list.innerHTML =
-  "<tr><td colspan='6'>माहिती लोड होत आहे...</td></tr>";
-
- try{
-
-  const q = query(
-   collection(db,"customers"),
-   orderBy("createdAt","desc")
-  );
-
-  const snapshot = await getDocs(q);
-
-  customers = snapshot.docs.map(doc => ({
-   id:doc.id,
-   ...doc.data()
-  }));
-
-  document.getElementById("totalCustomers").textContent =
-   customers.length;
-
-  const total = customers.reduce(
-   (sum,c) => sum + (Number(c.price) || 0),0
-  );
-
-  document.getElementById("totalAmount").textContent =
-   "₹" + total.toLocaleString("en-IN");
-
-  displayCustomers(customers);
-
- }catch(error){
-
-  list.innerHTML =
-   "<tr><td colspan='6'>माहिती मिळाली नाही: "+
-   error.message+"</td></tr>";
-
-  console.error(error);
- }
+// Logout
+async function logout() {
+  await auth.signOut();
 }
 
-function displayCustomers(data){
+// ग्राहक माहिती आणा
+async function loadCustomers() {
+  const table = document.getElementById("customerTable");
+  table.innerHTML = "<tr><td colspan='9'>लोड होत आहे...</td></tr>";
 
- list.innerHTML = "";
+  try {
+    const snapshot = await db.collection("customers").get();
 
- document.getElementById("resultCount").textContent =
-  "दिसणारे ग्राहक: " + data.length;
+    customers = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
 
- if(data.length === 0){
-  list.innerHTML =
-   "<tr><td colspan='6'>ग्राहक सापडला नाही.</td></tr>";
-  return;
- }
+    customers.sort((a, b) => {
+      const ta = a.createdAt?.toMillis
+        ? a.createdAt.toMillis() : 0;
+      const tb = b.createdAt?.toMillis
+        ? b.createdAt.toMillis() : 0;
+      return tb - ta;
+    });
 
- data.forEach((c,index)=>{
+    showCustomers();
 
-  let date = "-";
-
-  if(c.createdAt && c.createdAt.toDate){
-   date = c.createdAt.toDate().toLocaleDateString("en-IN");
+  } catch (error) {
+    table.innerHTML =
+      "<tr><td colspan='9'>Error: " + escapeHTML(error.message) +
+      "</td></tr>";
   }
+}
 
-  const tr = document.createElement("tr");
+// सुरक्षित मजकूर
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
 
-  const values = [
-   index+1,
-   c.name || "-",
-   c.phone || "-",
-   c.service || "-",
-   "₹"+(Number(c.price)||0),
-   date
-  ];
+// ग्राहक दाखवा
+function showCustomers() {
+  const search = document.getElementById("search")
+    .value.toLowerCase().trim();
 
-  values.forEach(value=>{
-   const td = document.createElement("td");
-   td.textContent = value;
-   tr.appendChild(td);
+  const filtered = customers.filter(c =>
+    String(c.name || "").toLowerCase().includes(search) ||
+    String(c.phone || "").includes(search)
+  );
+
+  let total = 0;
+  let completed = 0;
+
+  customers.forEach(c => {
+    total += Number(c.price) || 0;
+    if (c.completed === true) completed++;
   });
 
-  list.appendChild(tr);
- });
+  document.getElementById("totalCustomers").innerText =
+    customers.length;
+
+  document.getElementById("totalAmount").innerText =
+    "₹" + total;
+
+  document.getElementById("completedCount").innerText =
+    completed;
+
+  const tbody = document.getElementById("customerTable");
+  tbody.innerHTML = "";
+
+  if (filtered.length === 0) {
+    tbody.innerHTML =
+      "<tr><td colspan='9'>ग्राहक सापडला नाही.</td></tr>";
+    return;
+  }
+
+  filtered.forEach((c, index) => {
+    const date = c.createdAt?.toDate
+      ? c.createdAt.toDate().toLocaleDateString("en-IN")
+      : "-";
+
+    const isDone = c.completed === true;
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${escapeHTML(c.name)}</td>
+      <td>${escapeHTML(c.phone)}</td>
+      <td>${escapeHTML(c.service)}</td>
+      <td>₹${Number(c.price) || 0}</td>
+      <td>${date}</td>
+      <td class="${isDone ? "done" : "pending"}">
+        ${isDone ? "काम पूर्ण" : "काम बाकी"}
+      </td>
+      <td>
+        <button class="${isDone ? "green" : ""}"
+          ${isDone ? "disabled" : ""}
+          onclick="markComplete('${c.id}')">
+          ${isDone ? "पूर्ण झाले" : "काम पूर्ण झाले"}
+        </button>
+      </td>
+      <td>
+        <button class="whatsapp"
+          onclick="sendWhatsApp('${c.id}')">
+          WhatsApp
+        </button>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
 }
 
-document.getElementById("search").addEventListener("input",function(){
+// काम पूर्ण स्थिती सेव्ह करा
+async function markComplete(id) {
+  const customer = customers.find(c => c.id === id);
+  if (!customer) return;
 
- const term = this.value.trim().toLowerCase();
+  if (!confirm("या ग्राहकाचे काम पूर्ण झाले आहे का?")) return;
 
- const filtered = customers.filter(c =>
-  String(c.name || "").toLowerCase().includes(term) ||
-  String(c.phone || "").includes(term)
- );
+  try {
+    await db.collection("customers").doc(id).update({
+      completed: true,
+      completedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
 
- displayCustomers(filtered);
-});
+    customer.completed = true;
+    showCustomers();
 
-document.getElementById("refreshBtn").onclick = loadCustomers;
+    // काम पूर्ण केल्यानंतर WhatsApp उघडा
+    sendWhatsApp(id);
 
-document.getElementById("logoutBtn").onclick = async ()=>{
- await signOut(auth);
-};
+  } catch (error) {
+    alert("स्थिती सेव्ह झाली नाही: " + error.message);
+  }
+}
+
+// WhatsApp मेसेज
+function sendWhatsApp(id) {
+  const c = customers.find(x => x.id === id);
+  if (!c) return;
+
+  let phone = String(c.phone || "").replace(/\D/g, "");
+
+  if (phone.length === 10) {
+    phone = "91" + phone;
+  }
+
+  if (phone.length !== 12 || !phone.startsWith("91")) {
+    alert("ग्राहकाचा मोबाईल नंबर योग्य नाही.");
+    return;
+  }
+
+  const message =
+    "नमस्कार " + (c.name || "") + "!\n\n" +
+    "आपले " + (c.service || "सेवेचे") +
+    " हे काम यशस्वीरित्या पूर्ण झाले आहे.\n\n" +
+    "सेवा कॉम्पुटर नेरड\nधन्यवाद!";
+
+  const url =
+    "https://wa.me/" + phone + "?text=" +
+    encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+// CSV Download
+function downloadCSV() {
+  if (!customers.length) {
+    alert("ग्राहकांची माहिती उपलब्ध नाही.");
+    return;
+  }
+
+  const rows = [
+    ["ग्राहक नाव", "मोबाईल", "सेवा", "रक्कम", "दिनांक", "स्थिती"]
+  ];
+
+  customers.forEach(c => {
+    const date = c.createdAt?.toDate
+      ? c.createdAt.toDate().toLocaleDateString("en-IN")
+      : "";
+
+    rows.push([
+      c.name || "",
+      c.phone || "",
+      c.service || "",
+      c.price || 0,
+      date,
+      c.completed ? "काम पूर्ण" : "काम बाकी"
+    ]);
+  });
+
+  const csv = "\uFEFF" + rows.map(row =>
+    row.map(value =>
+      '"' + String(value).replace(/"/g, '""') + '"'
+    ).join(",")
+  ).join("\n");
+
+  const blob = new Blob([csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Seva-Computer-Customers.csv";
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
 
 </script>
-
 </body>
 </html>
