@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
+  <link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#075985">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Seva Computer">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seva Computer Nerad</title>
@@ -25,6 +30,15 @@ h2{color:#075985;border-bottom:2px solid #bae6fd;padding-bottom:8px}
 footer{text-align:center;padding:18px;color:#64748b}
 </style>
 </head>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Seva Computer App Ready"))
+      .catch(error => console.log("Service Worker Error:", error));
+  });
+}
+</script>
 <body>
 
 <header>
