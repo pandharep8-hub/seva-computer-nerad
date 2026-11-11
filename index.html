@@ -1,227 +1,370 @@
 <!DOCTYPE html>
 <html lang="mr">
-<link rel="manifest" href="manifest.json">
- <title>Seva Computer &amp; Xerox, Lamination Services</title>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Seva Computer & Xerox,print, Lamination Services</title>
+
+<title>Seva Computer &amp; Xerox, Lamination Services</title>
+
+<meta name="application-name" content="Seva Computer">
+<meta name="theme-color" content="#123c70">
+<link rel="manifest" href="./manifest.json">
+
 <style>
 *{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f1f4f9;margin:0;padding:15px;color:#222}
-.container{max-width:650px;margin:auto}
-.header{background:#123c70;color:white;text-align:center;padding:22px;border-radius:12px}
-.header h2{margin:0 0 8px}
-.card{background:white;padding:18px;margin-top:15px;border-radius:12px;box-shadow:0 2px 9px #ddd}
-h3{color:#123c70;margin-top:0}
-.service{display:flex;justify-content:space-between;align-items:center;padding:11px 5px;border-bottom:1px solid #eee;gap:8px}
-.service label{flex:1}
-input[type=checkbox]{width:19px;height:19px}
-input[type=text],input[type=tel]{
-width:100%;padding:13px;margin:7px 0 13px;
-border:1px solid #bbb;border-radius:7px;font-size:16px
+body{
+ margin:0;padding:15px;
+ font-family:Arial,sans-serif;
+ background:#eef2f8;color:#222
 }
-button{background:#1264b0;color:white;border:0;padding:13px;
-border-radius:7px;width:100%;font-size:16px;margin-top:8px}
-button:active{opacity:.8}
-.total{font-size:21px;font-weight:bold;color:green;text-align:center;padding:15px}
-.hidden{display:none}
-.record{background:#f4f7fb;padding:12px;border-radius:8px;margin:8px 0}
+.container{max-width:700px;margin:auto}
+header{
+ background:linear-gradient(135deg,#123c70,#087cc0);
+ color:white;text-align:center;
+ padding:25px 12px;border-radius:14px
+}
+header h2{margin:0 0 10px;font-size:23px}
+header p{margin:5px}
+.card{
+ background:white;padding:18px;
+ margin-top:15px;border-radius:12px;
+ box-shadow:0 2px 8px #ccd3df
+}
+h3{color:#123c70;margin-top:0}
+input[type=text],input[type=tel],input[type=number]{
+ width:100%;padding:13px;
+ border:1px solid #bbb;border-radius:8px;
+ font-size:16px;margin:8px 0 14px
+}
+.service{
+ display:flex;align-items:center;
+ gap:10px;padding:12px 3px;
+ border-bottom:1px solid #eee
+}
+.service label{flex:1}
+.service input{width:19px;height:19px}
+.price{font-weight:bold;color:#087c43}
+button{
+ width:100%;padding:13px;
+ border:0;border-radius:8px;
+ background:#1264b0;color:white;
+ font-size:16px;margin-top:9px;
+ cursor:pointer
+}
+button.danger{background:#c0392b}
+button.green{background:#16834a}
+.total{
+ text-align:center;font-size:23px;
+ font-weight:bold;color:#16834a;
+ padding:15px
+}
+.record{
+ background:#f2f6fb;padding:13px;
+ margin:10px 0;border-radius:9px;
+ overflow-wrap:anywhere
+}
 .small{font-size:13px;color:#666}
+.hidden{display:none}
 </style>
 </head>
+
 <body>
 <div class="container">
 
-<div class="header">
-<h2>सेवा कॉम्पुटर नेरड</h2>
+<header>
+<h2>Seva Computer &amp; Xerox</h2>
+<p>Lamination Services</p>
 <p>आपले ऑनलाइन सेवा केंद्र</p>
 <b>मो. 9623557142</b>
-</div>
+</header>
 
 <div class="card">
 <h3>1. सेवा निवडा</h3>
-<div id="services"></div>
-<div class="total">एकूण बिल: ₹<span id="total">0</span></div>
+<div id="serviceList"></div>
+<div class="total">
+एकूण बिल: ₹<span id="total">0</span>
+</div>
 </div>
 
 <div class="card hidden" id="customerBox">
-<h3>2. ग्राहकाची माहिती</h3>
+<h3>2. ग्राहकाची माहिती भरा</h3>
 
 <label>ग्राहकाचे नाव</label>
-<input type="text" id="customerName" placeholder="ग्राहकाचे पूर्ण नाव">
+<input type="text" id="customerName"
+placeholder="ग्राहकाचे पूर्ण नाव">
 
 <label>मोबाईल नंबर</label>
-<input type="tel" id="mobile" maxlength="10" placeholder="10 अंकी मोबाईल नंबर">
+<input type="tel" id="mobile"
+maxlength="10" placeholder="10 अंकी मोबाईल नंबर">
 
-<button onclick="saveCustomer()">ग्राहक माहिती सेव्ह करा</button>
-<p class="small">माहिती या डिव्हाइसच्या ब्राउझरमध्ये सेव्ह होईल.</p>
+<button class="green" onclick="saveCustomer()">
+ग्राहक माहिती सेव्ह करा
+</button>
 </div>
 
 <div class="card">
 <h3>3. ग्राहकांची नोंद</h3>
+
+<input type="text" id="search"
+placeholder="ग्राहकाचे नाव शोधा..."
+oninput="showRecords()">
+
 <div id="records"></div>
-<button onclick="downloadData()">ग्राहक यादी डाउनलोड करा</button>
+
+<button onclick="downloadData()">
+ग्राहक यादी डाउनलोड करा
+</button>
 </div>
 
 <div class="card">
-<h3>इतर पर्याय</h3>
-<button onclick="location.href='register.html'">ग्राहक नोंदणी</button>
-<button onclick="location.href='payment.html'">Payment QR Code</button>
-<button onclick="location.href='admin.html'">Admin Page</button>
+<h3>4. इतर माहिती</h3>
+<p><b>Seva Computer &amp; Xerox</b></p>
+<p>मोबाईल: 9623557142</p>
+<p class="small">
+आपल्या ग्राहकांची माहिती याच ब्राउझरमध्ये सेव्ह राहील.
+</p>
 </div>
 
 </div>
 
 <script>
-const serviceList = [
-["सर्वसाधारण ID कार्ड",70],
-["पीक पाहणी",100],
-["Voting Card",100],
-["PM Kisan Registration",250],
-["Xerox Black & White",5],
-["Xerox Colour",10],
-["Print",10],
-["अर्जंट फोटो 12 कॉपी",50],
-["Maha DBT फॉर्म",70],
-["लाडकी बहीण Registration",70],
-["पीक विमा",100],
-["eKYC",50],
-["ई-श्रम कार्ड",100],
-["महिला शेतकरी प्रमाणपत्र",50],
-["नवीन PAN कार्ड",250],
-["PAN दुरुस्ती / हरवलेले",350]
+
+// सेवांची नावे आणि दर
+const services = [
+ {name:"आधार कार्ड प्रिंट + लॅमिनेशन",price:70},
+ {name:"आभा कार्ड",price:70},
+ {name:"आयुष्मान कार्ड",price:50},
+ {name:"नवीन वोटर कार्ड / दुरुस्ती",price:150},
+ {name:"PAN कार्ड / दुरुस्ती",price:250},
+ {name:"महा ID कार्ड",price:100},
+ {name:"महिला शेतकरी प्रमाणपत्र प्रिंट",price:20},
+ {name:"महिला शेतकरी प्रिंट + लॅमिनेशन",price:50},
+ {name:"ई-श्रम कार्ड",price:100},
+ {name:"WhatsApp प्रिंट Black",price:10},
+ {name:"WhatsApp प्रिंट Colour",price:20},
+ {name:"लॅमिनेशन ID",price:10},
+ {name:"लॅमिनेशन 4 पेज",price:30},
+ {name:"Xerox",price:5}
 ];
 
 let selected = [];
 
+// सेवा दाखवणे
 function showServices(){
- const box=document.getElementById("services");
+ const box=document.getElementById("serviceList");
  box.innerHTML="";
- serviceList.forEach((s,i)=>{
+
+ services.forEach((s,i)=>{
  box.innerHTML+=`
  <div class="service">
- <input type="checkbox" onchange="toggleService(${i},this.checked)">
- <label>${s[0]}</label>
- <b>₹${s[1]}</b>
+ <input type="checkbox"
+ id="service${i}"
+ onchange="selectService(${i},this.checked)">
+ <label for="service${i}">${s.name}</label>
+ <span class="price">₹${s.price}</span>
  </div>`;
  });
 }
 
-function toggleService(i,checked){
+// सेवा निवडणे
+function selectService(index,checked){
  if(checked){
- selected.push(i);
+  selected.push(index);
  }else{
- selected=selected.filter(x=>x!==i);
+  selected=selected.filter(i=>i!==index);
  }
- document.getElementById("total").innerText=
- selected.reduce((sum,x)=>sum+serviceList[x][1],0);
 
- document.getElementById("customerBox").classList.toggle(
- "hidden",selected.length===0
- );
+ updateTotal();
 }
 
+// एकूण रक्कम
+function updateTotal(){
+ let total=selected.reduce(
+ (sum,i)=>sum+services[i].price,0
+ );
+
+ document.getElementById("total").innerText=total;
+
+ document.getElementById("customerBox")
+ .classList.toggle("hidden",selected.length===0);
+}
+
+// सुरक्षित मजकूर
+function safe(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+ "&":"&amp;",
+ "<":"&lt;",
+ ">":"&gt;",
+ '"':"&quot;",
+ "'":"&#39;"
+ }[c]));
+}
+
+// ग्राहक माहिती सेव्ह
 function saveCustomer(){
- const name=document.getElementById("customerName").value.trim();
- const mobile=document.getElementById("mobile").value.trim();
+
+ const name=document.getElementById("customerName")
+ .value.trim();
+
+ const mobile=document.getElementById("mobile")
+ .value.trim();
 
  if(!name){
- alert("ग्राहकाचे नाव भरा");
- return;
- }
- if(!/^[0-9]{10}$/.test(mobile)){
- alert("योग्य 10 अंकी मोबाईल नंबर भरा");
- return;
- }
- if(selected.length===0){
- alert("सेवा निवडा");
- return;
+  alert("ग्राहकाचे नाव भरा");
+  return;
  }
 
- const services=selected.map(i=>({
- name:serviceList[i][0],
- price:serviceList[i][1]
+ if(!/^[0-9]{10}$/.test(mobile)){
+  alert("योग्य 10 अंकी मोबाईल नंबर भरा");
+  return;
+ }
+
+ if(selected.length===0){
+  alert("सेवा निवडा");
+  return;
+ }
+
+ const selectedServices=selected.map(i=>({
+  name:services[i].name,
+  price:services[i].price
  }));
 
- const total=services.reduce((s,x)=>s+x.price,0);
+ const total=selectedServices.reduce(
+  (sum,s)=>sum+s.price,0
+ );
 
  const customer={
- id:Date.now(),
- name:name,
- mobile:mobile,
- services:services,
- total:total,
- date:new Date().toLocaleString("mr-IN")
+  id:Date.now(),
+  name:name,
+  mobile:mobile,
+  services:selectedServices,
+  total:total,
+  date:new Date().toLocaleString("en-IN")
  };
 
- let records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
- records.unshift(customer);
- localStorage.setItem("sevaCustomers",JSON.stringify(records));
+ try{
+  let records=JSON.parse(
+   localStorage.getItem("sevaCustomers")||"[]"
+  );
 
- alert("ग्राहकाची माहिती सेव्ह झाली!");
+  records.unshift(customer);
 
- document.getElementById("customerName").value="";
- document.getElementById("mobile").value="";
- selected=[];
- document.getElementById("total").innerText="0";
- document.getElementById("customerBox").classList.add("hidden");
- showServices();
- showRecords();
+  localStorage.setItem(
+   "sevaCustomers",JSON.stringify(records)
+  );
+
+  alert("ग्राहकाची माहिती सेव्ह झाली!");
+
+  document.getElementById("customerName").value="";
+  document.getElementById("mobile").value="";
+
+  selected=[];
+  showServices();
+  updateTotal();
+  showRecords();
+
+ }catch(error){
+  alert("माहिती सेव्ह झाली नाही. ब्राउझर स्टोरेज तपासा.");
+ }
 }
 
+// ग्राहक यादी
 function showRecords(){
- const records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
+
+ let records=JSON.parse(
+  localStorage.getItem("sevaCustomers")||"[]"
+ );
+
+ const search=document.getElementById("search")
+ .value.toLowerCase();
+
+ records=records.filter(c=>
+  c.name.toLowerCase().includes(search) ||
+  c.mobile.includes(search)
+ );
+
  const box=document.getElementById("records");
 
  if(records.length===0){
- box.innerHTML="<p>अजून ग्राहकांची नोंद नाही.</p>";
- return;
+  box.innerHTML="<p>ग्राहकांची नोंद उपलब्ध नाही.</p>";
+  return;
  }
 
  box.innerHTML=records.map(c=>`
  <div class="record">
- <b>${escapeHTML(c.name)}</b><br>
- मोबाईल: ${escapeHTML(c.mobile)}<br>
- सेवा: ${c.services.map(s=>escapeHTML(s.name)).join(", ")}<br>
- एकूण: ₹${c.total}<br>
- <span class="small">${escapeHTML(c.date)}</span>
+ <b>नाव: ${safe(c.name)}</b><br>
+ मोबाईल: ${safe(c.mobile)}<br>
+ सेवा: ${c.services.map(s=>safe(s.name)).join(", ")}<br>
+ रक्कम: <b>₹${Number(c.total)}</b><br>
+ <span class="small">${safe(c.date)}</span>
+ <button class="danger" onclick="deleteCustomer(${Number(c.id)})">
+ ही नोंद डिलीट करा
+ </button>
  </div>
  `).join("");
 }
 
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+// ग्राहक नोंद डिलीट
+function deleteCustomer(id){
+ if(!confirm("ही ग्राहक नोंद डिलीट करायची आहे का?"))return;
+
+ let records=JSON.parse(
+  localStorage.getItem("sevaCustomers")||"[]"
+ );
+
+ records=records.filter(c=>c.id!==id);
+
+ localStorage.setItem(
+  "sevaCustomers",JSON.stringify(records)
+ );
+
+ showRecords();
 }
 
+// ग्राहक यादी डाउनलोड
 function downloadData(){
- const records=JSON.parse(localStorage.getItem("sevaCustomers")||"[]");
- if(!records.length){
- alert("ग्राहकांची नोंद उपलब्ध नाही");
- return;
- }
- const data=records.map(c=>({
- नाव:c.name,
- मोबाईल:c.mobile,
- सेवा:c.services.map(s=>s.name).join(", "),
- रक्कम:c.total,
- तारीख:c.date
- }));
- const blob=new Blob(
- ["\uFEFF"+JSON.stringify(data,null,2)],
- {type:"application/json;charset=utf-8"}
+
+ const records=JSON.parse(
+  localStorage.getItem("sevaCustomers")||"[]"
  );
+
+ if(records.length===0){
+  alert("ग्राहकांची नोंद उपलब्ध नाही");
+  return;
+ }
+
+ const rows=[
+  ["नाव","मोबाईल","सेवा","रक्कम","तारीख"],
+  ...records.map(c=>[
+   c.name,c.mobile,
+   c.services.map(s=>s.name).join(" / "),
+   c.total,c.date
+  ])
+ ];
+
+ const csv=rows.map(row=>
+  row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")
+ ).join("\r\n");
+
+ const blob=new Blob(
+  ["\uFEFF"+csv],
+  {type:"text/csv;charset=utf-8"}
+ );
+
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
+
  a.href=url;
- a.download="Seva-Computer-Customers.json";
+ a.download="Seva-Computer-Customers.csv";
  a.click();
+
  URL.revokeObjectURL(url);
 }
 
+// सुरुवात
 showServices();
 showRecords();
+
 </script>
 </body>
 </html>
