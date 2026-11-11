@@ -33,6 +33,15 @@ th{background:#e8f1ff}
 }
 </style>
 </head>
+ <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Seva Computer App Ready"))
+      .catch(error => console.log("Service Worker Error:", error));
+  });
+}
+</script>
 <body>
 <div class="container">
 <header>
