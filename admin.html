@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seva Computer Admin</title>
+<style>
+body{font-family:Arial;background:#eef3f9;color:#17345b;margin:0}
+header{background:#123c70;color:white;text-align:center;padding:18px}
+main{max-width:750px;margin:auto;padding:15px}
+.card{background:white;padding:18px;margin:15px 0;border-radius:12px}
+input{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
+button{background:#123c70;color:white;border:0;padding:11px 16px;border-radius:7px;margin:5px}
+.customer{padding:12px 0;border-bottom:1px solid #ddd}
+#adminArea{display:none}
+</style>
+</head>
+<body>
+<header><h2>Seva Computer Nerad</h2><p>Admin Login</p></header>
+<main>
+<div class="card" id="loginArea">
+<h3>Admin Login</h3>
+<input id="email" type="email" placeholder="Admin Email">
+<input id="password" type="password" placeholder="Password">
+<button id="login">Login</button>
+<p id="msg"></p>
+</div>
+
+<div class="card" id="adminArea">
+<h3>ग्राहक यादी</h3>
+<input id="search" placeholder="नाव किंवा मोबाईल शोधा">
+<p id="count"></p>
+<div id="list"></div>
+<button id="download">CSV Download</button>
+<button id="logout">Logout</button>
+</div>
+</main>
+
+<script type="module">
+import {initializeApp} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,getDocs,query,orderBy} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig={
+ apiKey:"YOUR_API_KEY",
+ authDomain:"YOUR_AUTH_DOMAIN",
+ projectId:"YOUR_PROJECT_ID",
+ storageBucket:"YOUR_STORAGE_BUCKET",
+ messagingSenderId:"YOUR_MESSAGING_SENDER_ID",
+ appId:"YOUR_APP_ID"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+let customers=[];
+
+document.getElementById("login").onclick=async()=>{
+ try{
+  await signInWithEmailAndPassword(
+   auth,
+   document.getElementById("email").value.trim(),
+   document.getElementById("password").value
+  );
+  document.getElementById("msg").textContent="";
+ }catch(e){
+  document.getElementById("msg").textContent="Email किंवा Password चुकीचा आहे.";
+ }
+};
+
+onAuthStateChanged(auth,async user=>{
+ const loginArea=document.getElementById("loginArea");
+ const adminArea=document.getElementById("adminArea");
+ if(!user){
+  loginArea.style.display="block";
+  adminArea.style.display="none";
+  return;
+ }
+ try{
+  const snap=await getDocs(query(
+   collection(db,"customers"),orderBy("createdAt","desc")
+  ));
+  customers=snap.docs.map(d=>d.data());
+  loginArea.style.display="none";
+  adminArea.style.display="block";
+  showCustomers();
+ }catch(e){
+  await signOut(auth);
+  document.getElementById("msg").textContent=
+   "Admin परवानगी नाही किंवा डेटा उपलब्ध नाही.";
+ }
+});
+
+function showCustomers(){
+ const term=document.getElementById("search").value.toLowerCase();
+ const list=document.getElementById("list");
+ list.innerHTML="";
+ const filtered=customers.filter(c=>
+  (c.name||"").toLowerCase().includes(term)||
+  (c.phone||"").includes(term)
+ );
+ document.getElementById("count").textContent=
+  "एकूण ग्राहक: "+filtered.length;
+ filtered.forEach(c=>{
+  const div=document.createElement("div");
+  div.className="customer";
+  const title=document.createElement("b");
+  title.textContent=c.name||"";
+  const detail=document.createElement("p");
+  detail.textContent=`मोबाईल: ${c.phone||""} | सेवा: ${c.service||""} | दर: ₹${c.price??""}`;
+  div.append(title,detail);
+  list.appendChild(div);
+ });
+}
+
+document.getElementById("search").oninput=showCustomers;
+
+document.getElementById("download").onclick=()=>{
+ const rows=[["नाव","मोबाईल","सेवा","दर"],
+ ...customers.map(c=>[c.name,c.phone,c.service,c.price])];
+ const csv=rows.map(r=>r.map(v=>
+  '"'+String(v??"").replace(/"/g,'""')+'"'
+ ).join(",")).join("\n");
+ const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="Seva_Customers.csv";a.click();
+ URL.revokeObjectURL(url);
+};
+
+document.getElementById("logout").onclick=()=>signOut(auth);
+</script>
+</body>
+</html>
