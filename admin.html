@@ -75,6 +75,32 @@ if ("serviceWorker" in navigator) {
 <div class="stat">बाकी रक्कम<b id="totalDue">₹0</b></div>
 <div class="stat">काम बाकी<b id="pendingCount">0</b></div>
 <div class="stat">काम पूर्ण<b id="completedCount">0</b></div>
+ <button onclick="sendWhatsApp(customer)">
+  📱 WhatsApp मेसेज
+</button>
+
+<script>
+function sendWhatsApp(customer) {
+  const name = customer.name || "";
+  const mobile = (customer.mobile || "").replace(/\D/g, "");
+  const service = customer.service || "";
+
+  if (!mobile) {
+    alert("ग्राहकाचा मोबाईल नंबर उपलब्ध नाही!");
+    return;
+  }
+
+  const number = mobile.length === 10 ? "91" + mobile : mobile;
+
+  const message =
+    `नमस्कार ${name},\n\nआपले ${service} चे काम पूर्ण झाले आहे.\n\nधन्यवाद!\nSeva Computer & Xerox, Nerad`;
+
+  const url =
+    "https://wa.me/" + number + "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+</script>
 </div>
 </div>
 
