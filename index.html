@@ -39,6 +39,100 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+  <div style="
+  margin-top:15px;
+  padding:12px;
+  background:#fff3cd;
+  border:1px solid #e0a800;
+  border-radius:10px;
+  color:#8a3d00;
+  font-weight:bold;
+  text-align:center;
+  line-height:1.7;
+">
+  ⚠️ ग्राहकांसाठी महत्त्वाची सूचना
+
+  <br>
+  📌 रिचार्ज व बिल पेमेंटसाठी ग्राहकाने
+  दुकानात प्रत्यक्ष हजर राहावे.
+
+  <br>
+  📌 उधार सुविधा उपलब्ध नाही.
+
+  <br>
+  📌 पैसे भरल्यानंतरच रिचार्ज व बिल पेमेंट केले जाईल.
+</div>
+  <!-- SEVA RECHARGE SECTION -->
+<section id="rechargeSection" style="padding:15px;margin:15px 0;background:#eaf6ff;border-radius:15px;">
+  <h2 style="color:#075985;">📱 Seva Recharge & Bill Payment</h2>
+  <p>मोबाईल रिचार्ज आणि बिल पेमेंटसाठी विनंती करा.</p>
+
+  <label>सेवा निवडा</label>
+  <select id="rechargeType" style="width:100%;padding:12px;margin:8px 0;">
+    <option value="Mobile Recharge">Mobile Recharge</option>
+    <option value="DTH Recharge">DTH Recharge</option>
+    <option value="Electricity Bill">Electricity Bill</option>
+  </select>
+
+  <label>कंपनी निवडा</label>
+  <select id="rechargeCompany" style="width:100%;padding:12px;margin:8px 0;">
+    <option>Jio</option>
+    <option>Airtel</option>
+    <option>Vi</option>
+    <option>BSNL</option>
+    <option>Tata Play</option>
+    <option>Dish TV</option>
+    <option>Electricity Provider</option>
+  </select>
+
+  <label>मोबाईल / ग्राहक क्रमांक</label>
+  <input id="rechargeNumber" type="tel" maxlength="15"
+    placeholder="क्रमांक टाका"
+    style="width:100%;padding:12px;margin:8px 0;">
+
+  <label>रक्कम ₹</label>
+  <input id="rechargeAmount" type="number" min="1"
+    placeholder="रक्कम टाका"
+    style="width:100%;padding:12px;margin:8px 0;">
+
+  <label>ग्राहकाचे नाव</label>
+  <input id="rechargeName" type="text"
+    placeholder="नाव टाका"
+    style="width:100%;padding:12px;margin:8px 0;">
+
+  <button onclick="sendRechargeRequest()"
+    style="width:100%;padding:14px;background:#075985;color:white;border:0;border-radius:10px;font-size:16px;">
+    WhatsApp वर विनंती पाठवा
+  </button>
+</section>
+
+<script>
+function sendRechargeRequest() {
+  const type = document.getElementById("rechargeType").value;
+  const company = document.getElementById("rechargeCompany").value;
+  const number = document.getElementById("rechargeNumber").value.trim();
+  const amount = document.getElementById("rechargeAmount").value;
+  const name = document.getElementById("rechargeName").value.trim();
+
+  if (!number || !amount || !name || Number(amount) <= 0) {
+    alert("कृपया सर्व माहिती योग्य भरा.");
+    return;
+  }
+
+  const message =
+    "नमस्कार Seva Computer,%0A" +
+    "नाव: " + encodeURIComponent(name) + "%0A" +
+    "सेवा: " + encodeURIComponent(type) + "%0A" +
+    "कंपनी: " + encodeURIComponent(company) + "%0A" +
+    "क्रमांक: " + encodeURIComponent(number) + "%0A" +
+    "रक्कम: ₹" + encodeURIComponent(amount);
+
+  window.open(
+    "https://wa.me/919623557142?text=" + message,
+    "_blank"
+  );
+}
+</script>
 <body>
 
 <header>
