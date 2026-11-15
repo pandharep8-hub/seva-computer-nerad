@@ -3,324 +3,453 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seva Computer Nerad</title>
+
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#075985">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Seva Computer">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Seva Computer Nerad | Digital Services</title>
+<link rel="icon" href="./icon.svg">
 
 <style>
-*{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172554}
-header{background:linear-gradient(135deg,#042f4a,#075985,#2563eb);color:white;text-align:center;padding:32px 15px;position:relative;overflow:hidden}
-header h1{margin:0;font-size:clamp(28px,5vw,43px);font-weight:900;text-shadow:2px 3px 7px #0006}
-header p{margin:10px 0}
-.tagline{display:inline-block;margin-top:10px;padding:9px 17px;border:1px solid #ffffff70;border-radius:30px;background:#ffffff18;font-weight:bold}
-
-nav{position:sticky;top:0;z-index:100;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:12px;background:#ffffffed;backdrop-filter:blur(12px);box-shadow:0 3px 15px #0002}
-.nav-card{width:155px;min-height:130px;text-align:center;text-decoration:none;color:#10245b;background:linear-gradient(145deg,#fff,#dbeafe);border:1px solid #bfdbfe;border-radius:17px;padding:9px;box-shadow:0 5px 0 #9dbce2,0 9px 15px #0002;transition:.2s;font-weight:900}
-.nav-card:hover{transform:translateY(-4px)}
-.nav-card svg{width:100%;height:82px;display:block;margin:auto;filter:drop-shadow(0 5px 3px #0003)}
-.nav-card span{display:block;font-size:14px;margin-top:5px}
-.nav-card.recharge-card{background:linear-gradient(145deg,#f0fdf4,#bbf7d0);box-shadow:0 5px 0 #86c99a,0 9px 15px #0002}
-.nav-card.service-card{background:linear-gradient(145deg,#faf5ff,#e9d5ff);box-shadow:0 5px 0 #c4a2e9,0 9px 15px #0002}
-.nav-card.admin-card{background:linear-gradient(145deg,#fff7ed,#fed7aa);box-shadow:0 5px 0 #e8ad75,0 9px 15px #0002}
-
-.container{max-width:1150px;margin:auto;padding:18px}
-.hero{margin:10px 0 25px;padding:28px 20px;border-radius:20px;background:linear-gradient(135deg,#dbeafe,#e0f2fe,#f0fdfa);border:1px solid #bfdbfe;box-shadow:0 8px 25px #07598512;text-align:center}
-.hero h2{margin:0 0 12px;color:#075985;font-size:25px}
-.hero p{line-height:1.7;margin:8px 0}
-.hero-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:18px}
-.btn{display:inline-block;padding:12px 19px;border-radius:11px;text-decoration:none;font-weight:bold;color:white;background:#075985;border:0;cursor:pointer}
-.btn-green{background:#15803d}
-
-.section{margin:25px 0}
-.section-title{color:#075985;font-size:22px;font-weight:900;padding-bottom:10px;border-bottom:3px solid #bae6fd;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:15px}
-.card{background:white;padding:19px 13px;border-radius:16px;text-align:center;border:1px solid #e2e8f0;box-shadow:0 5px 16px #0f172a0b;transition:.2s}
-.card:hover{transform:translateY(-4px);box-shadow:0 10px 25px #07598520}
-.card h3{font-size:15px;line-height:1.5;margin:0 0 12px;color:#1e293b}
-.price{display:inline-block;background:#dcfce7;color:#047857;padding:7px 14px;border-radius:25px;font-weight:900;font-size:17px}
-.small{font-size:13px;color:#64748b}
-
-.notice{margin:22px 0;padding:18px;background:#fff7df;border:1px solid #f5d78e;border-radius:15px;color:#854d0e;line-height:1.9}
-.notice h3{margin:0 0 8px}
-
-.recharge{padding:22px;margin:25px 0;border-radius:20px;background:linear-gradient(135deg,#e0f2fe,#f0fdfa);border:1px solid #bae6fd;box-shadow:0 6px 20px #07598512}
-.recharge h2{color:#075985;margin-top:0}
-.recharge-art{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:15px auto}
-.recharge-art div{width:85px;height:75px;border-radius:15px;background:white;box-shadow:0 5px 12px #0002;display:grid;place-items:center;font-weight:bold;color:#075985}
-.recharge-art svg{width:65px;height:55px}
-label{display:block;font-weight:bold;margin-top:12px;color:#334155}
-input,select{width:100%;padding:13px;margin-top:7px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;background:white;outline:none}
-input:focus,select:focus{border-color:#0284c7;box-shadow:0 0 0 3px #0ea5e920}
-.submit-btn{width:100%;padding:14px;margin-top:18px;border:0;border-radius:11px;background:#15803d;color:white;font-size:16px;font-weight:bold;cursor:pointer}
-
-.delivery{padding:22px;margin:22px 0;border-radius:17px;background:linear-gradient(135deg,#dbeafe,#eff6ff);border:1px solid #bfdbfe;line-height:1.8}
-.contact{margin-top:25px;padding:28px 15px;border-radius:20px;background:linear-gradient(135deg,#075985,#1d4ed8);color:white;text-align:center}
-.contact h2{color:white}
-.contact a{color:white;font-weight:bold}
-.whatsapp-btn{display:inline-block;margin-top:12px;padding:13px 22px;background:#16a34a;color:white;border-radius:30px;text-decoration:none;font-weight:bold}
-footer{text-align:center;padding:20px 10px;color:#64748b;font-size:13px}
-
-/* QR PAYMENT POPUP */
-.modal{display:none;position:fixed;inset:0;background:#0009;z-index:500;align-items:center;justify-content:center;padding:15px}
-.modal-box{background:white;border-radius:20px;padding:22px;width:min(350px,100%);text-align:center;box-shadow:0 15px 40px #0005}
-.modal-box img{width:230px;height:230px;max-width:100%;object-fit:contain;border:1px solid #ddd;border-radius:12px}
-.close-btn{border:0;background:#dc2626;color:white;padding:10px 22px;border-radius:9px;font-weight:bold;margin-top:12px;cursor:pointer}
-
-@media(max-width:600px){
- header{padding:27px 12px}
- nav{gap:9px;padding:10px 5px}
- .nav-card{width:calc(50% - 10px);min-height:120px}
- .nav-card svg{height:75px}
- .container{padding:12px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- .card{padding:15px 8px}
- .card h3{font-size:14px}
- .section-title{font-size:19px}
- .hero h2{font-size:21px}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f1f6ff;
+ color:#17233e;
+}
+header{
+ background:linear-gradient(120deg,#075985,#1769ff,#743bff);
+ color:white;
+ padding:25px 15px;
+ text-align:center;
+}
+header h1{
+ margin:0;
+ font-size:29px;
+ font-weight:900;
+}
+header p{margin:8px 0 0;font-size:15px}
+.phone{font-weight:bold;margin-top:10px}
+nav{
+ background:white;
+ padding:12px;
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:10px;
+ box-shadow:0 3px 12px #0001;
+ position:sticky;
+ top:0;
+ z-index:10;
+}
+nav a{
+ text-decoration:none;
+ color:#075985;
+ font-weight:bold;
+ font-size:13px;
+ padding:9px 13px;
+ border-radius:20px;
+ background:#eaf3ff;
+}
+.container{max-width:1100px;margin:auto;padding:16px}
+.welcome{
+ background:linear-gradient(120deg,#dceeff,#f0eaff);
+ border-radius:18px;
+ padding:24px 15px;
+ text-align:center;
+ margin-bottom:20px;
+}
+.welcome h2{color:#075985;margin:0 0 10px}
+.welcome p{margin:0;line-height:1.6}
+.quick-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+ margin:18px 0 25px;
+}
+.quick-card{
+ min-height:175px;
+ border-radius:20px;
+ padding:16px 10px;
+ text-align:center;
+ text-decoration:none;
+ color:#17233e;
+ box-shadow:0 5px 16px #0002;
+ border:1px solid #ffffff;
+ transition:.2s;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+}
+.quick-card:active{transform:scale(.97)}
+.quick-card h3{margin:8px 0 4px;font-size:17px}
+.quick-card p{font-size:12px;margin:0}
+.customer{background:linear-gradient(140deg,#d9efff,#ffffff)}
+.recharge{background:linear-gradient(140deg,#fff0d8,#ffffff)}
+.services{background:linear-gradient(140deg,#e4e0ff,#ffffff)}
+.admin{background:linear-gradient(140deg,#d8f8e9,#ffffff)}
+.art{
+ width:100px;
+ height:90px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+.art svg{width:100%;height:100%}
+.qr-card{
+ background:linear-gradient(120deg,#075985,#1769ff);
+ color:white;
+ border-radius:16px;
+ padding:15px;
+ text-align:center;
+ margin:20px 0;
+}
+.qr-card button{
+ background:white;
+ color:#075985;
+ border:0;
+ padding:11px 22px;
+ border-radius:25px;
+ font-weight:bold;
+ margin-top:8px;
+}
+.section-title{
+ color:#075985;
+ text-align:center;
+ font-size:23px;
+ margin:28px 0 16px;
+}
+.service-box{
+ background:white;
+ padding:16px;
+ border-radius:15px;
+ margin-bottom:14px;
+ box-shadow:0 3px 12px #0001;
+}
+.service-box h3{
+ color:#075985;
+ margin:0 0 12px;
+ border-bottom:1px solid #e6edf7;
+ padding-bottom:9px;
+}
+.service-row{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ padding:9px 2px;
+ border-bottom:1px dashed #e2e8f0;
+ font-size:14px;
+}
+.service-row:last-child{border:0}
+.price{font-weight:bold;color:#07834e;white-space:nowrap}
+.notice{
+ background:#fff7df;
+ border-left:5px solid #f3a712;
+ border-radius:10px;
+ padding:14px;
+ line-height:1.6;
+ margin:20px 0;
+}
+.form-box{
+ background:white;
+ padding:18px;
+ border-radius:16px;
+ box-shadow:0 3px 12px #0001;
+}
+input,select{
+ width:100%;
+ padding:12px;
+ margin:7px 0 12px;
+ border:1px solid #cbd5e1;
+ border-radius:9px;
+ font-size:15px;
+}
+.submit{
+ width:100%;
+ border:0;
+ background:#07834e;
+ color:white;
+ padding:13px;
+ border-radius:10px;
+ font-weight:bold;
+ font-size:16px;
+}
+.delivery{
+ background:#e6f4ff;
+ border-radius:15px;
+ padding:16px;
+ line-height:1.7;
+ margin-top:20px;
+}
+.contact{
+ background:#075985;
+ color:white;
+ text-align:center;
+ padding:23px 12px;
+ border-radius:16px;
+ margin:22px 0;
+}
+.contact a{
+ display:inline-block;
+ background:#16a34a;
+ color:white;
+ text-decoration:none;
+ padding:12px 20px;
+ border-radius:25px;
+ font-weight:bold;
+ margin-top:8px;
+}
+footer{
+ background:#102a43;
+ color:white;
+ text-align:center;
+ padding:17px;
+ font-size:13px;
+}
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:#000b;
+ z-index:100;
+ align-items:center;
+ justify-content:center;
+ padding:15px;
+}
+.modal-content{
+ background:white;
+ padding:20px;
+ border-radius:18px;
+ max-width:350px;
+ width:100%;
+ text-align:center;
+}
+.modal-content img{width:100%;max-width:250px;object-fit:contain}
+.close{
+ background:#dc2626;
+ color:white;
+ border:0;
+ padding:10px 22px;
+ border-radius:20px;
+ margin-top:12px;
+}
+@media(max-width:500px){
+ header h1{font-size:24px}
+ .quick-card{min-height:155px}
+ .art{height:80px;width:90px}
+ .service-row{font-size:13px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- 3D STYLE VECTOR STICKERS -->
-<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
-<defs>
-<linearGradient id="blue" x2="1" y2="1"><stop stop-color="#60a5fa"/><stop offset="1" stop-color="#075985"/></linearGradient>
-<linearGradient id="skin" x2="0" y2="1"><stop stop-color="#ffd7a8"/><stop offset="1" stop-color="#d99058"/></linearGradient>
-<linearGradient id="silver" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#94a3b8"/></linearGradient>
-</defs>
-
-<symbol id="customer-art" viewBox="0 0 180 110">
-<ellipse cx="85" cy="101" rx="70" ry="7" fill="#64748b" opacity=".25"/>
-<path d="M43 105V78Q45 58 78 58Q110 58 113 78V105" fill="url(#blue)" stroke="#075985" stroke-width="3"/>
-<circle cx="79" cy="36" r="27" fill="url(#skin)" stroke="#a45c36" stroke-width="2"/>
-<path d="M53 31Q55 2 82 8Q105 10 106 34L98 26Q83 17 62 30Z" fill="#422b23"/>
-<circle cx="70" cy="37" r="3" fill="#172554"/><circle cx="89" cy="37" r="3" fill="#172554"/>
-<path d="M72 49Q81 57 91 48" fill="none" stroke="#9a4e37" stroke-width="3" stroke-linecap="round"/>
-<rect x="5" y="62" width="57" height="34" rx="5" fill="url(#silver)" stroke="#075985" stroke-width="2"/>
-<circle cx="20" cy="76" r="6" fill="#2563eb"/><path d="M12 89Q20 77 28 89" fill="#2563eb"/>
-<path d="M32 74H53M32 82H50" stroke="#64748b" stroke-width="3"/>
-<path d="M120 72Q135 50 143 68L149 83Q153 96 140 96Q129 96 120 72" fill="url(#skin)"/>
-</symbol>
-
-<symbol id="recharge-art" viewBox="0 0 180 110">
-<ellipse cx="90" cy="102" rx="78" ry="6" fill="#64748b" opacity=".2"/>
-<rect x="7" y="12" width="47" height="83" rx="9" fill="#172554" stroke="#60a5fa" stroke-width="3"/>
-<rect x="12" y="20" width="37" height="65" rx="4" fill="#38bdf8"/>
-<circle cx="30" cy="52" r="12" fill="#fff"/><path d="M26 44L35 52L26 60" fill="none" stroke="#2563eb" stroke-width="3"/>
-<path d="M65 32L104 16L130 56L91 74Z" fill="#cbd5e1" stroke="#64748b" stroke-width="3"/>
-<path d="M104 16L119 8L145 49L130 56Z" fill="#94a3b8"/>
-<text x="93" y="47" font-size="13" font-weight="bold" fill="#172554">DTH</text>
-<path d="M151 30Q128 58 150 80Q173 58 151 30Z" fill="#facc15" stroke="#eab308" stroke-width="2"/>
-<path d="M153 43L145 59H153L149 70L161 54H153Z" fill="white"/>
-</symbol>
-
-<symbol id="service-art" viewBox="0 0 180 110">
-<ellipse cx="90" cy="103" rx="78" ry="6" fill="#64748b" opacity=".2"/>
-<path d="M28 44L90 9L152 44Z" fill="#2563eb" stroke="#1e40af" stroke-width="3"/>
-<rect x="37" y="44" width="106" height="54" rx="3" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
-<path d="M49 44V98M69 44V98M90 44V98M111 44V98M131 44V98" stroke="#2563eb" stroke-width="5"/>
-<path d="M22 99H158" stroke="#1e40af" stroke-width="6" stroke-linecap="round"/>
-<rect x="61" y="62" width="58" height="34" rx="4" fill="#fff" stroke="#0f766e" stroke-width="2"/>
-<circle cx="76" cy="74" r="5" fill="#16a34a"/><path d="M70 85Q76 77 82 85" fill="#16a34a"/>
-<path d="M88 72H110M88 80H108" stroke="#64748b" stroke-width="3"/>
-</symbol>
-
-<symbol id="admin-art" viewBox="0 0 180 110">
-<ellipse cx="92" cy="103" rx="78" ry="6" fill="#64748b" opacity=".2"/>
-<rect x="76" y="48" width="91" height="54" rx="6" fill="#334155" stroke="#0f172a" stroke-width="3"/>
-<rect x="82" y="54" width="79" height="42" rx="3" fill="#60a5fa"/>
-<path d="M69 103H174L165 108H77Z" fill="#64748b"/>
-<path d="M17 105V80Q19 57 49 57Q75 57 78 80V105" fill="#1e40af"/>
-<circle cx="48" cy="35" r="24" fill="url(#skin)" stroke="#a45c36" stroke-width="2"/>
-<path d="M25 31Q26 5 51 10Q69 12 72 31L63 25Q46 18 29 31Z" fill="#422b23"/>
-<circle cx="39" cy="36" r="3" fill="#172554"/><circle cx="56" cy="36" r="3" fill="#172554"/>
-<path d="M39 48Q48 54 57 47" fill="none" stroke="#9a4e37" stroke-width="2"/>
-<circle cx="39" cy="36" r="8" fill="none" stroke="#172554" stroke-width="2"/>
-<circle cx="56" cy="36" r="8" fill="none" stroke="#172554" stroke-width="2"/>
-<path d="M47 36H48" stroke="#172554" stroke-width="2"/>
-</symbol>
-</svg>
-
 <header>
-<h1>सेवा कॉम्प्युटर नेरड</h1>
-<p>ऑनलाइन सेवा • प्रिंट • झेरॉक्स • लॅमिनेशन</p>
-<div class="tagline">सेवा तुमच्या दारी, विश्वास आमचा!</div>
+ <h1>सेवा कॉम्प्युटर नेरड</h1>
+ <p>आपली डिजिटल सेवा, आपल्या गावात!</p>
+ <div class="phone">📞 9623557142</div>
 </header>
 
 <nav>
-<a class="nav-card" href="register.html">
-<svg viewBox="0 0 180 110"><use href="#customer-art"/></svg>
-<span>ग्राहक Registration</span>
-</a>
-
-<a class="nav-card recharge-card" href="#rechargeSection">
-<svg viewBox="0 0 180 110"><use href="#recharge-art"/></svg>
-<span>Recharge</span>
-</a>
-
-<a class="nav-card service-card" href="#services">
-<svg viewBox="0 0 180 110"><use href="#service-art"/></svg>
-<span>सर्व सेवा</span>
-</a>
-
-<a class="nav-card admin-card" href="admin.html">
-<svg viewBox="0 0 180 110"><use href="#admin-art"/></svg>
-<span>Admin Login</span>
-</a>
-
-<button class="nav-card" onclick="openQR()" type="button">
-<svg viewBox="0 0 180 110">
-<rect x="35" y="8" width="110" height="94" rx="10" fill="#fff" stroke="#075985" stroke-width="5"/>
-<path d="M48 22H72V46H48ZM108 22H132V46H108ZM48 64H72V88H48Z" fill="#075985"/>
-<path d="M82 22H94V34H82ZM82 46H94V58H82ZM108 64H120V76H108ZM132 82H143V94H132Z" fill="#075985"/>
-</svg>
-<span>QR Payment</span>
-</button>
+ <a href="#home">Home</a>
+ <a href="#services">सर्व सेवा</a>
+ <a href="./register.html">ग्राहक नोंदणी</a>
+ <a href="#recharge">Recharge</a>
+ <a href="./admin.html">Admin Login</a>
 </nav>
 
-<div class="container">
+<div class="container" id="home">
 
-<section class="hero">
-<h2>आपले स्वागत आहे!</h2>
-<p><b>Seva Computer Nerad</b></p>
-<p>शासकीय योजना, ऑनलाइन अर्ज, ओळखपत्र, प्रिंट आणि झेरॉक्स सेवा आता एकाच ठिकाणी.</p>
-<div class="hero-buttons">
-<a class="btn" href="register.html">अर्ज नोंदणी करा</a>
-<a class="btn btn-green" href="https://wa.me/919623557142">WhatsApp संपर्क</a>
+ <div class="welcome">
+  <h2>आपले स्वागत आहे!</h2>
+  <p>सर्व सरकारी योजना, ऑनलाइन फॉर्म, झेरॉक्स, प्रिंटिंग व डिजिटल सेवा आता एकाच ठिकाणी.</p>
+ </div>
+
+ <!-- मुख्य 4 पर्याय -->
+ <div class="quick-grid">
+
+  <a class="quick-card customer" href="./register.html">
+   <div class="art">
+    <svg viewBox="0 0 120 100">
+     <circle cx="60" cy="28" r="19" fill="#f2bd91"/>
+     <path d="M41 25 Q43 3 63 9 Q80 11 80 29 L72 22 Q59 15 43 26" fill="#293b58"/>
+     <path d="M29 91 Q30 52 60 51 Q90 52 91 91" fill="#1769ff"/>
+     <rect x="66" y="57" width="42" height="28" rx="5" fill="#fff" stroke="#075985" stroke-width="2"/>
+     <circle cx="77" cy="68" r="5" fill="#f2bd91"/>
+     <path d="M73 78 Q77 71 82 78" fill="#1769ff"/>
+     <path d="M87 66h15 M87 72h12 M87 78h9" stroke="#075985" stroke-width="2"/>
+    </svg>
+   </div>
+   <h3>ग्राहक नोंदणी</h3>
+   <p>ऑनलाइन अर्ज करा</p>
+  </a>
+
+  <a class="quick-card recharge" href="#recharge">
+   <div class="art">
+    <svg viewBox="0 0 120 100">
+     <rect x="6" y="18" width="38" height="65" rx="8" fill="#263d66"/>
+     <rect x="10" y="24" width="30" height="48" rx="3" fill="#a9e4ff"/>
+     <circle cx="25" cy="77" r="2.5" fill="white"/>
+     <path d="M58 40 Q82 4 108 40" fill="none" stroke="#1769ff" stroke-width="5"/>
+     <path d="M63 40h40l-7 23H70z" fill="#f59e0b"/>
+     <path d="M83 57l-8 15h10l-4 15 16-21H86l5-9" fill="#fbbf24"/>
+     <path d="M67 25h29" stroke="#075985" stroke-width="3"/>
+    </svg>
+   </div>
+   <h3>Recharge & Bills</h3>
+   <p>Mobile • DTH • Electricity</p>
+  </a>
+
+  <a class="quick-card services" href="#services">
+   <div class="art">
+    <svg viewBox="0 0 120 100">
+     <path d="M19 15h52l12 12v60H19z" fill="#fff" stroke="#1769ff" stroke-width="3"/>
+     <path d="M71 15v14h12" fill="#b9d9ff" stroke="#1769ff" stroke-width="2"/>
+     <path d="M31 43h40 M31 53h40 M31 63h30" stroke="#1769ff" stroke-width="4" stroke-linecap="round"/>
+     <rect x="65" y="57" width="43" height="29" rx="5" fill="#fbbf24" stroke="#b77908" stroke-width="2"/>
+     <path d="M76 70h22 M87 63v14" stroke="#fff" stroke-width="3"/>
+    </svg>
+   </div>
+   <h3>सर्व सेवा</h3>
+   <p>सर्व सेवा व दर पाहा</p>
+  </a>
+
+  <a class="quick-card admin" href="./admin.html">
+   <div class="art">
+    <svg viewBox="0 0 120 100">
+     <rect x="10" y="54" width="100" height="35" rx="5" fill="#334155"/>
+     <rect x="17" y="58" width="86" height="24" rx="2" fill="#a5e8ff"/>
+     <path d="M47 90h26l5 6H42z" fill="#64748b"/>
+     <circle cx="61" cy="28" r="18" fill="#f2bd91"/>
+     <path d="M43 26 Q43 6 64 9 Q79 11 80 27 Q70 17 58 19 Q49 18 43 26" fill="#26364f"/>
+     <rect x="44" y="24" width="14" height="9" rx="4" fill="none" stroke="#26364f" stroke-width="2"/>
+     <rect x="63" y="24" width="14" height="9" rx="4" fill="none" stroke="#26364f" stroke-width="2"/>
+     <path d="M58 28h5" stroke="#26364f" stroke-width="2"/>
+    </svg>
+   </div>
+   <h3>Admin Login</h3>
+   <p>व्यवस्थापन पॅनल</p>
+  </a>
+
+ </div>
+
+ <div class="qr-card">
+  <h3>QR Code द्वारे पेमेंट करा</h3>
+  <p>स्कॅन करा आणि पेमेंट करा</p>
+  <button onclick="openQR()">QR Code पाहा</button>
+ </div>
+
+ <h2 class="section-title" id="services">आमच्या सर्व सेवा व दर</h2>
+
+ <div class="service-box">
+  <h3>🪪 ID कार्ड व प्रमाणपत्र सेवा</h3>
+  <div class="service-row"><span>महा ID कार्ड</span><span class="price">₹70</span></div>
+  <div class="service-row"><span>आधार प्रिंट / लॅमिनेशन</span><span class="price">₹70</span></div>
+  <div class="service-row"><span>ABHA कार्ड</span><span class="price">₹50</span></div>
+  <div class="service-row"><span>आयुष्मान कार्ड</span><span class="price">₹50</span></div>
+  <div class="service-row"><span>आयुष्मान कार्ड दुरुस्ती</span><span class="price">₹50</span></div>
+  <div class="service-row"><span>मतदान कार्ड</span><span class="price">₹100</span></div>
+  <div class="service-row"><span>ई-श्रम कार्ड</span><span class="price">₹100</span></div>
+  <div class="service-row"><span>PAN कार्ड</span><span class="price">₹250</span></div>
+  <div class="service-row"><span>PAN दुरुस्ती / हरवलेले कार्ड</span><span class="price">₹300</span></div>
+ </div>
+
+ <div class="service-box">
+  <h3>🌾 शेतकरी सेवा</h3>
+  <div class="service-row"><span>पीक पाहणी</span><span class="price">₹100</span></div>
+  <div class="service-row"><span>खरीप पीक विमा</span><span class="price">₹100</span></div>
+  <div class="service-row"><span>रब्बी पीक विमा</span><span class="price">₹100</span></div>
+  <div class="service-row"><span>PM किसान नोंदणी</span><span class="price">₹250</span></div>
+  <div class="service-row"><span>महिला शेतकरी प्रमाणपत्र</span><span class="price">₹50</span></div>
+  <div class="service-row"><span>महिला शेतकरी + लॅमिनेशन</span><span class="price">₹80</span></div>
+  <div class="service-row"><span>Farmer ID</span><span class="price">₹50</span></div>
+ </div>
+
+ <div class="service-box">
+  <h3>📄 योजना, फॉर्म व eKYC</h3>
+  <div class="service-row"><span>महा DBT शेतकरी योजना</span><span class="price">₹70</span></div>
+  <div class="service-row"><span>लाडकी बहीण योजना फॉर्म</span><span class="price">₹70</span></div>
+  <div class="service-row"><span>सर्व प्रकारची eKYC</span><span class="price">₹50</span></div>
+  <div class="service-row"><span>सरकारी / निमसरकारी नोकरी फॉर्म</span><span class="price">₹100</span></div>
+  <div class="service-row"><span>शिष्यवृत्ती फॉर्म</span><span class="price">₹100</span></div>
+ </div>
+
+ <div class="service-box">
+  <h3>🖨️ झेरॉक्स, प्रिंटिंग व लॅमिनेशन</h3>
+  <div class="service-row"><span>ब्लॅक अँड व्हाईट झेरॉक्स</span><span class="price">₹5</span></div>
+  <div class="service-row"><span>कलर झेरॉक्स</span><span class="price">₹10</span></div>
+  <div class="service-row"><span>ब्लॅक अँड व्हाईट प्रिंट</span><span class="price">₹10</span></div>
+  <div class="service-row"><span>WhatsApp / Gmail प्रिंट</span><span class="price">₹10</span></div>
+  <div class="service-row"><span>कलर प्रिंट</span><span class="price">₹20</span></div>
+  <div class="service-row"><span>पासपोर्ट फोटो 12 कॉपी</span><span class="price">₹50</span></div>
+  <div class="service-row"><span>A4 लॅमिनेशन</span><span class="price">₹30</span></div>
+  <div class="service-row"><span>ID कार्ड लॅमिनेशन</span><span class="price">₹10</span></div>
+ </div>
+
+ <div class="notice">
+  <b>📢 ग्राहकांसाठी सूचना</b><br>
+  अर्ज करताना आधार कार्ड व आवश्यक कागदपत्रे सोबत ठेवा.
+  शासकीय शुल्क किंवा पोर्टल शुल्क वेगळे असल्यास ते अतिरिक्त लागू होऊ शकते.
+ </div>
+
+ <h2 class="section-title" id="recharge">Recharge व Bill Payment</h2>
+ <div class="form-box">
+  <form onsubmit="sendRecharge(event)">
+   <label>सेवा निवडा</label>
+   <select id="rservice" required>
+    <option value="">निवडा</option>
+    <option>Mobile Recharge</option>
+    <option>DTH Recharge</option>
+    <option>Electricity Bill</option>
+   </select>
+
+   <label>कंपनीचे नाव</label>
+   <input id="company" placeholder="उदा. Jio / Airtel / Tata Play" required>
+
+   <label>मोबाईल / ग्राहक क्रमांक</label>
+   <input id="number" type="text" placeholder="क्रमांक टाका" required>
+
+   <label>रक्कम</label>
+   <input id="amount" type="number" placeholder="रक्कम टाका" required>
+
+   <label>ग्राहकाचे नाव</label>
+   <input id="customer" placeholder="नाव टाका" required>
+
+   <button class="submit" type="submit">WhatsApp वर पाठवा</button>
+  </form>
+ </div>
+
+ <div class="delivery">
+  <h3>🏠 घरपोच सेवा</h3>
+  नेरड गावात घरपोच सेवा उपलब्ध.<br>
+  इतर गावांसाठी अंतरानुसार डिलिव्हरी शुल्क लागू.
+ </div>
+
+ <div class="contact">
+  <h2>सेवा कॉम्प्युटर नेरड</h2>
+  <p>अधिक माहितीसाठी WhatsApp करा</p>
+  <p>📞 9623557142</p>
+  <a href="https://wa.me/919623557142" target="_blank">WhatsApp संपर्क</a>
+ </div>
+
 </div>
-</section>
 
-<div id="services">
+<footer>
+ © 2026 Seva Computer Nerad<br>
+ सेवा तुमच्या दारी, विश्वास आमचा!
+</footer>
 
-<section class="section">
-<h2 class="section-title">आधार व ओळखपत्र सेवा</h2>
-<div class="grid">
-<div class="card"><h3>सर्वसाधारण ID कार्ड</h3><div class="price">₹70</div></div>
-<div class="card"><h3>आधार प्रिंट व लॅमिनेशन</h3><div class="price">₹70</div></div>
-<div class="card"><h3>आभा कार्ड</h3><div class="price">₹50</div></div>
-<div class="card"><h3>आयुष्मान कार्ड</h3><div class="price">₹50</div></div>
-<div class="card"><h3>आयुष्मान कार्ड दुरुस्ती</h3><div class="price">₹50</div></div>
-<div class="card"><h3>महा ID कार्ड</h3><div class="price">₹70</div></div>
-<div class="card"><h3>वोटिंग कार्ड</h3><div class="price">₹100</div></div>
-<div class="card"><h3>ई-श्रम कार्ड</h3><div class="price">₹100</div></div>
-<div class="card"><h3>पॅन कार्ड</h3><div class="price">₹250</div></div>
-<div class="card"><h3>पॅन दुरुस्ती / हरवलेले</h3><div class="price">₹300</div></div>
-</div>
-</section>
-
-<section class="section">
-<h2 class="section-title">शेतकरी योजना</h2>
-<div class="grid">
-<div class="card"><h3>पीक पाहणी</h3><div class="price">₹100</div></div>
-<div class="card"><h3>खरीप पीक विमा</h3><div class="price">₹100</div></div>
-<div class="card"><h3>रब्बी पीक विमा</h3><div class="price">₹100</div></div>
-<div class="card"><h3>PM किसान नोंदणी</h3><div class="price">₹250</div></div>
-<div class="card"><h3>महिला शेतकरी प्रमाणपत्र</h3><div class="price">₹50</div></div>
-<div class="card"><h3>Farmer ID</h3><div class="price">₹50</div></div>
-</div>
-</section>
-
-<section class="section">
-<h2 class="section-title">सरकारी फॉर्म व eKYC</h2>
-<div class="grid">
-<div class="card"><h3>Maha DBT फॉर्म</h3><div class="price">₹70</div></div>
-<div class="card"><h3>लाडकी बहीण</h3><div class="price">₹70</div></div>
-<div class="card"><h3>eKYC सेवा</h3><div class="price">₹50</div></div>
-<div class="card"><h3>नोकरीचे फॉर्म</h3><div class="price">₹100</div></div>
-<div class="card"><h3>शिष्यवृत्ती फॉर्म</h3><div class="price">₹100</div></div>
-<div class="card"><h3>शाळेचे प्रोजेक्ट प्रिंट</h3><div class="price">दर संपर्क करा</div></div>
-</div>
-</section>
-
-<section class="section">
-<h2 class="section-title">प्रिंट, झेरॉक्स व लॅमिनेशन</h2>
-<div class="grid">
-<div class="card"><h3>Xerox ब्लॅक अँड व्हाईट</h3><div class="price">₹5</div></div>
-<div class="card"><h3>Xerox रंगीत</h3><div class="price">₹10</div></div>
-<div class="card"><h3>प्रिंट</h3><div class="price">₹10</div></div>
-<div class="card"><h3>WhatsApp / Gmail ब्लॅक प्रिंट</h3><div class="price">₹10</div></div>
-<div class="card"><h3>WhatsApp / Gmail रंगीत प्रिंट</h3><div class="price">₹20</div></div>
-<div class="card"><h3>अर्जंट फोटो 12 कॉपी</h3><div class="price">₹50</div></div>
-<div class="card"><h3>लॅमिनेशन</h3><div class="price">₹30</div></div>
-</div>
-</section>
-</div>
-
-<div class="notice">
-<h3>ग्राहकांसाठी महत्त्वाची सूचना</h3>
-रिचार्ज व बिल पेमेंटसाठी ग्राहकाने दुकानात प्रत्यक्ष हजर राहावे.<br>
-उधार सुविधा उपलब्ध नाही.<br>
-पैसे भरल्यानंतरच रिचार्ज व बिल पेमेंट केले जाईल.
-</div>
-
-<section class="recharge" id="rechargeSection">
-<h2>Seva Recharge & Bill Payment</h2>
-<p>मोबाईल रिचार्ज आणि बिल पेमेंटसाठी विनंती करा.</p>
-
-<div class="recharge-art">
-<div><svg viewBox="0 0 180 110"><use href="#recharge-art"/></svg>Mobile</div>
-<div><svg viewBox="0 0 180 110"><use href="#recharge-art"/></svg>DTH</div>
-<div><svg viewBox="0 0 180 110"><use href="#recharge-art"/></svg>Electricity</div>
-</div>
-
-<label>सेवा निवडा</label>
-<select id="rechargeType">
-<option value="Mobile Recharge">Mobile Recharge</option>
-<option value="DTH Recharge">DTH Recharge</option>
-<option value="Electricity Bill">Electricity Bill</option>
-</select>
-
-<label>कंपनी निवडा</label>
-<select id="rechargeCompany">
-<option>Jio</option><option>Airtel</option><option>Vi</option><option>BSNL</option>
-<option>Sun TV</option><option>Tata Play</option><option>Dish TV</option>
-<option>Electricity Provider</option>
-</select>
-
-<label>मोबाईल / ग्राहक क्रमांक</label>
-<input id="rechargeNumber" type="tel" maxlength="15" placeholder="क्रमांक टाका">
-
-<label>रक्कम ₹</label>
-<input id="rechargeAmount" type="number" min="1" placeholder="रक्कम टाका">
-
-<label>ग्राहकाचे नाव</label>
-<input id="rechargeName" type="text" placeholder="नाव टाका">
-
-<button class="submit-btn" onclick="sendRechargeRequest()">WhatsApp वर विनंती पाठवा</button>
-</section>
-
-<section class="delivery">
-<h2>घरपोच सेवा</h2>
-<p><b>नेरड गावात:</b> ₹20</p>
-<p><b>इतर गावांसाठी:</b> ₹10 प्रति KM</p>
-<p class="small">अंतर ग्राहकाने दिलेल्या KM नुसार मोजले जाईल.</p>
-</section>
-
-<section class="contact">
-<h2>सेवा कॉम्प्युटर नेरड</h2>
-<p>आपले काम करून घेण्यासाठी संपर्क करा.</p>
-<p>मोबाईल: <a href="tel:9623557142">9623557142</a></p>
-<a class="whatsapp-btn" href="https://wa.me/919623557142">WhatsApp वर संपर्क करा</a>
-</section>
-</div>
-
-<footer>© Seva Computer Nerad | All Rights Reserved</footer>
-
-<!-- QR POPUP -->
-<div class="modal" id="qrModal" onclick="if(event.target===this)closeQR()">
-<div class="modal-box">
-<h2>QR Payment</h2>
-<p>पेमेंट करण्यासाठी QR Code Scan करा.</p>
-<img src="./qr.jpeg" alt="Seva Computer Payment QR">
-<br>
-<button class="close-btn" onclick="closeQR()">बंद करा</button>
-</div>
+<!-- QR Modal -->
+<div class="modal" id="qrModal">
+ <div class="modal-content">
+  <h3>QR Code Payment</h3>
+  <img src="./qr.jpeg" alt="Payment QR Code">
+  <p>पेमेंट करण्यासाठी QR Code स्कॅन करा.</p>
+  <button class="close" onclick="closeQR()">बंद करा</button>
+ </div>
 </div>
 
 <script>
@@ -330,28 +459,24 @@ function openQR(){
 function closeQR(){
  document.getElementById("qrModal").style.display="none";
 }
+function sendRecharge(e){
+ e.preventDefault();
 
-function sendRechargeRequest(){
- const type=document.getElementById("rechargeType").value;
- const company=document.getElementById("rechargeCompany").value;
- const number=document.getElementById("rechargeNumber").value.trim();
- const amount=document.getElementById("rechargeAmount").value;
- const name=document.getElementById("rechargeName").value.trim();
+ const service=document.getElementById("rservice").value;
+ const company=document.getElementById("company").value;
+ const number=document.getElementById("number").value;
+ const amount=document.getElementById("amount").value;
+ const customer=document.getElementById("customer").value;
 
- if(!number||!amount||!name||Number(amount)<=0){
-  alert("कृपया सर्व माहिती योग्य भरा.");
-  return;
- }
+ const msg=
+ "नमस्कार, मला Recharge / Bill Payment करायचे आहे.%0A"+
+ "सेवा: "+encodeURIComponent(service)+"%0A"+
+ "कंपनी: "+encodeURIComponent(company)+"%0A"+
+ "क्रमांक: "+encodeURIComponent(number)+"%0A"+
+ "रक्कम: ₹"+encodeURIComponent(amount)+"%0A"+
+ "ग्राहक नाव: "+encodeURIComponent(customer);
 
- const message=
- "नमस्कार Seva Computer,\n"+
- "नाव: "+name+"\n"+
- "सेवा: "+type+"\n"+
- "कंपनी: "+company+"\n"+
- "क्रमांक: "+number+"\n"+
- "रक्कम: ₹"+amount;
-
- window.open("https://wa.me/919623557142?text="+encodeURIComponent(message),"_blank");
+ window.open("https://wa.me/919623557142?text="+msg,"_blank");
 }
 
 if("serviceWorker" in navigator){
@@ -362,5 +487,6 @@ if("serviceWorker" in navigator){
  });
 }
 </script>
+
 </body>
 </html>
