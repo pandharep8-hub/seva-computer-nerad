@@ -1,207 +1,622 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#075985">
+<title>Seva Computer Admin</title>
+
+<style>
 *{box-sizing:border-box}
-
 :root{
- --primary:#1769ff;
- --secondary:#743bff;
- --dark:#101a35;
- --light:#f2f5ff;
- --green:#08a878;
- --red:#ed4560;
+ --primary:#1769ff;--secondary:#743bff;
+ --green:#08a878;--red:#ed4560;
 }
-
 body{
- margin:0;
- font-family:Arial,sans-serif;
+ margin:0;font-family:Arial,sans-serif;
  background:linear-gradient(135deg,#eaf1ff,#f6f0ff);
- color:#17233e;
- min-height:100vh;
+ color:#17233e;min-height:100vh;
 }
-
 header{
  background:linear-gradient(120deg,#101d45,#1769ff,#743bff);
- color:white;
- padding:27px 15px;
- text-align:center;
- font-size:26px;
- font-weight:900;
- letter-spacing:1px;
- box-shadow:0 8px 25px #3155aa40;
- border-radius:0 0 25px 25px;
+ color:white;padding:25px 15px;text-align:center;
+ font-size:25px;font-weight:900;
+ border-radius:0 0 23px 23px;
 }
-
-header small{
- display:block;
- margin-top:8px;
- font-size:13px;
- letter-spacing:2px;
- opacity:.85;
-}
-
-.container{
- max-width:1250px;
- margin:auto;
- padding:16px;
-}
-
+header small{display:block;font-size:13px;margin-top:8px}
+.container{max-width:1250px;margin:auto;padding:15px}
 .card{
- background:rgba(255,255,255,.88);
- backdrop-filter:blur(15px);
- padding:20px;
- margin:15px 0;
- border:1px solid #ffffff;
- border-radius:20px;
- box-shadow:0 8px 28px #263c7512;
+ background:white;padding:19px;margin:15px 0;
+ border-radius:18px;box-shadow:0 8px 28px #263c7512;
 }
-
-h2,h3{
- color:#1748a5;
- font-weight:800;
-}
-
+h2,h3{color:#1748a5}
 input,select{
- width:100%;
- padding:14px;
- margin:8px 0;
- border:1px solid #dce4f5;
- border-radius:12px;
- background:#f8faff;
- font-size:15px;
- outline:none;
+ width:100%;padding:13px;margin:7px 0;
+ border:1px solid #dce4f5;border-radius:11px;
+ background:#f8faff;font-size:15px;
 }
-
-input:focus,select:focus{
- border-color:#1769ff;
- box-shadow:0 0 0 3px #1769ff20;
-}
-
 button{
- padding:12px 17px;
- margin:5px 2px;
- border:0;
- border-radius:11px;
+ padding:11px 15px;margin:4px 2px;border:0;
+ border-radius:10px;color:white;font-weight:bold;
  background:linear-gradient(120deg,#1769ff,#743bff);
- color:white;
- font-size:14px;
- font-weight:bold;
  cursor:pointer;
- box-shadow:0 4px 12px #1769ff25;
- transition:.2s;
 }
-
-button:active{
- transform:scale(.96);
-}
-
-button.red{
- background:linear-gradient(120deg,#ef4444,#be123c);
-}
-
-button.green{
- background:linear-gradient(120deg,#059669,#10b981);
-}
-
-button.orange{
- background:linear-gradient(120deg,#f59e0b,#ea580c);
-}
-
-button.gray{
- background:#475569;
-}
-
-button:disabled{
- opacity:.5;
-}
-
+.green{background:#059669}
+.red{background:#dc3545}
+.orange{background:#ea8500}
+.gray{background:#475569}
+.hidden{display:none!important}
 .nav{
- display:grid;
- grid-template-columns:repeat(5,1fr);
- gap:10px;
- margin:18px 0;
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:8px;margin:15px 0;
 }
-
-.nav button{
- min-height:55px;
- border-radius:14px;
+.nav button{min-height:48px}
+.stats{
+ display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
 }
-
-.hidden{
- display:none!important;
-}
-
 .stat{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:13px;
-}
-
-.stat div{
  background:linear-gradient(135deg,#edf4ff,#f2edff);
- padding:18px;
- border-radius:16px;
- border:1px solid #e2e9ff;
- font-size:14px;
- color:#425274;
+ padding:16px;border-radius:14px;font-size:13px;
 }
-
-.stat b{
- display:block;
- font-size:23px;
- margin-top:10px;
- color:#1769ff;
-}
-
-table{
- width:100%;
- border-collapse:collapse;
- min-width:750px;
-}
-
-th{
- background:#eaf0ff;
- color:#1748a5;
- padding:14px;
- text-align:left;
-}
-
-td{
- padding:12px;
- border-bottom:1px solid #e9edf5;
-}
-
-tr:hover{
- background:#f5f8ff;
-}
-
-.table-wrap{
- overflow-x:auto;
- border-radius:12px;
-}
-
-.status{
- color:#059669;
- font-weight:bold;
-}
-
-.pending{
- color:#e58b00;
- font-weight:bold;
-}
-
-.small{
- font-size:12px;
- color:#64748b;
-}
-
-@media(max-width:650px){
- header{font-size:22px}
- .container{padding:10px}
- .card{padding:14px}
+.stat b{display:block;font-size:22px;color:#1769ff;margin-top:8px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:750px}
+th,td{padding:12px;border-bottom:1px solid #e9edf5;text-align:left;font-size:13px}
+th{background:#eaf0ff;color:#1748a5}
+.small{font-size:12px;color:#64748b}
+.status{color:#059669;font-weight:bold}
+.pending{color:#d97706;font-weight:bold}
+#message{padding:12px;border-radius:10px;margin:10px 0}
+@media(max-width:750px){
+ .stats{grid-template-columns:repeat(2,1fr)}
  .nav{grid-template-columns:repeat(2,1fr)}
- .nav button:last-child{
-  grid-column:span 2;
- }
- .stat{grid-template-columns:repeat(2,1fr)}
- .stat div{padding:13px;font-size:12px}
- .stat b{font-size:18px}
+ header{font-size:21px}
+ .container{padding:9px}
+ .card{padding:14px}
  button{font-size:12px;padding:10px}
 }
+@media print{
+ header,.nav,button,#loginBox{display:none!important}
+ body{background:white}
+ .card{box-shadow:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ SEVA COMPUTER
+ <small>NERAD • ADMIN DASHBOARD</small>
+</header>
+
+<div class="container">
+
+<div id="message" class="hidden"></div>
+
+<!-- LOGIN -->
+<div class="card" id="loginBox">
+ <h2>🔐 Admin Login</h2>
+ <input type="email" id="email" placeholder="pandharep8@gmail.com">
+ <input type="password" id="password" placeholder="Password">
+ <button onclick="login()">Login करा</button>
+ <p class="small">Firebase Authentication मधील Admin Email आणि Password वापरा.</p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+
+<div class="card">
+ <h2>📊 Dashboard</h2>
+ <div class="stats">
+  <div class="stat">एकूण अर्ज<b id="totalCustomers">0</b></div>
+  <div class="stat">काम बाकी<b id="pendingCount">0</b></div>
+  <div class="stat">काम पूर्ण<b id="doneCount">0</b></div>
+  <div class="stat">एकूण पेमेंट<b id="totalIncome">₹0</b></div>
+  <div class="stat">आजचे उत्पन्न<b id="todayIncome">₹0</b></div>
+  <div class="stat">या महिन्याचे उत्पन्न<b id="monthIncome">₹0</b></div>
+  <div class="stat">एकूण खर्च<b id="totalExpense">₹0</b></div>
+  <div class="stat">शिल्लक<b id="balance">₹0</b></div>
+ </div>
+</div>
+
+<div class="nav">
+ <button onclick="showSection('customers')">👥 ग्राहक यादी</button>
+ <button onclick="showSection('addCustomer')">➕ ग्राहक जोडा</button>
+ <button onclick="showSection('payments')">💳 पेमेंट</button>
+ <button onclick="showSection('expenses')">💰 खर्च</button>
+ <button onclick="showSection('reports')">📄 रिपोर्ट</button>
+ <button class="gray" onclick="loadAll()">🔄 Refresh</button>
+ <button class="red" onclick="logout()">Logout</button>
+</div>
+
+<!-- CUSTOMERS -->
+<div class="card" id="customers">
+ <h2>👥 ग्राहक / अर्ज यादी</h2>
+ <input id="search" placeholder="नाव, मोबाईल किंवा सेवा शोधा..." oninput="renderCustomers()">
+ <div class="table-wrap">
+ <table>
+ <thead>
+ <tr>
+ <th>नाव</th><th>मोबाईल</th><th>सेवा</th>
+ <th>रक्कम</th><th>स्टेटस</th><th>कृती</th>
+ </tr>
+ </thead>
+ <tbody id="customerRows"></tbody>
+ </table>
+ </div>
+ <p class="small">applications आणि registrations मधील नोंदी येथे दिसतील.</p>
+</div>
+
+<!-- ADD CUSTOMER -->
+<div class="card hidden" id="addCustomer">
+ <h2>➕ नवीन ग्राहक</h2>
+ <input id="newName" placeholder="ग्राहकाचे पूर्ण नाव">
+ <input id="newMobile" placeholder="मोबाईल नंबर" maxlength="10">
+ <input id="newService" placeholder="सेवेचे नाव">
+ <input id="newAmount" type="number" min="0" placeholder="रक्कम ₹">
+ <button class="green" onclick="addCustomer()">ग्राहक सेव्ह करा</button>
+</div>
+
+<!-- PAYMENTS -->
+<div class="card hidden" id="payments">
+ <h2>💳 Payment History</h2>
+ <button onclick="addPayment()">+ पेमेंट नोंदवा</button>
+ <div class="table-wrap">
+ <table>
+ <thead><tr><th>नाव</th><th>रक्कम</th><th>दिनांक</th><th>कृती</th></tr></thead>
+ <tbody id="paymentRows"></tbody>
+ </table>
+ </div>
+</div>
+
+<!-- EXPENSES -->
+<div class="card hidden" id="expenses">
+ <h2>💰 खर्च नोंदणी</h2>
+ <input id="expenseTitle" placeholder="खर्चाचे कारण">
+ <input id="expenseAmount" type="number" min="1" placeholder="रक्कम ₹">
+ <button class="orange" onclick="addExpense()">खर्च सेव्ह करा</button>
+ <div class="table-wrap">
+ <table>
+ <thead><tr><th>खर्च</th><th>रक्कम</th><th>दिनांक</th><th>कृती</th></tr></thead>
+ <tbody id="expenseRows"></tbody>
+ </table>
+ </div>
+</div>
+
+<!-- REPORTS -->
+<div class="card hidden" id="reports">
+ <h2>📄 रिपोर्ट</h2>
+ <button onclick="downloadCSV()">CSV डाउनलोड</button>
+ <button class="gray" onclick="window.print()">PDF / Print</button>
+ <h3>एकूण पेमेंट: ₹<span id="reportIncome">0</span></h3>
+ <h3>एकूण खर्च: ₹<span id="reportExpense">0</span></h3>
+ <h3>शिल्लक: ₹<span id="reportBalance">0</span></h3>
+</div>
+
+</div>
+</div>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+// =================================
+// FIREBASE CONFIG येथे टाका
+// =================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBxmhE4xEyQ5IWtOn2j812eIrIPrHnPIIw",
+  authDomain: "seva-computer-nerad-48174.firebaseapp.com",
+  projectId: "seva-computer-nerad-48174",
+  storageBucket: "seva-computer-nerad-48174.firebasestorage.app",
+  messagingSenderId: "967389505991",
+  appId: "1:967389505991:web:bad6e7f60398867e2b51e2"
+};
+
+
+// =================================
+// FIREBASE START
+// =================================
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+let customers = [];
+let payments = [];
+let expenses = [];
+
+function msg(text,error=false){
+ const box=document.getElementById("message");
+ box.textContent=text;
+ box.style.background=error?"#fee2e2":"#dcfce7";
+ box.style.color=error?"#991b1b":"#166534";
+ box.classList.remove("hidden");
+}
+
+function val(o,keys){
+ for(const k of keys){
+  if(o[k]!==undefined && o[k]!==null && o[k]!=="") return o[k];
+ }
+ return "";
+}
+
+function amountOf(o){
+ return Number(val(o,["amount","price","fee","total","paidAmount","paymentAmount"]))||0;
+}
+
+function nameOf(o){
+ return String(val(o,["name","customerName","fullName","applicantName","customer","नाम"]));
+}
+
+function mobileOf(o){
+ return String(val(o,["mobile","phone","mobileNumber","phoneNumber","contact","मोबाईल"]));
+}
+
+function serviceOf(o){
+ return String(val(o,["service","serviceName","scheme","work","योजना"]));
+}
+
+function statusOf(o){
+ return String(val(o,["status","workStatus","कामाचीस्थिती"])||"बाकी");
+}
+
+function safe(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function dateOf(o){
+ const v=val(o,["createdAt","date","timestamp","paymentDate"]);
+ if(v && typeof v.toDate==="function") return v.toDate();
+ if(v && typeof v==="object" && v.seconds) return new Date(v.seconds*1000);
+ if(v){
+  const d=new Date(v);
+  if(!isNaN(d)) return d;
+ }
+ return null;
+}
+
+function dateText(o){
+ const d=dateOf(o);
+ return d?d.toLocaleDateString("en-IN"):"—";
+}
+
+// =================================
+// LOGIN
+// =================================
+function login(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(!email||!password){
+  msg("Email आणि Password भरा.",true);return;
+ }
+
+ auth.signInWithEmailAndPassword(email,password)
+ .then(()=>msg("Login यशस्वी"))
+ .catch(e=>msg("Login Error: "+e.message,true));
+}
+
+function logout(){
+ auth.signOut();
+}
+
+auth.onAuthStateChanged(user=>{
+ if(user){
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
+  loadAll();
+ }else{
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
+ }
+});
+
+// =================================
+// LOAD FIRESTORE DATA
+// =================================
+async function loadAll(){
+ try{
+  const [a,r,p,e]=await Promise.all([
+   db.collection("applications").get(),
+   db.collection("registrations").get(),
+   db.collection("payments").get(),
+   db.collection("expenses").get()
+  ]);
+
+  customers=[
+   ...a.docs.map(d=>({id:d.id,collection:"applications",data:d.data()})),
+   ...r.docs.map(d=>({id:d.id,collection:"registrations",data:d.data()}))
+  ];
+
+  payments=p.docs.map(d=>({id:d.id,data:d.data()}));
+  expenses=e.docs.map(d=>({id:d.id,data:d.data()}));
+
+  renderCustomers();
+  renderPayments();
+  renderExpenses();
+  updateStats();
+
+  msg("डेटा लोड झाला.");
+ }catch(err){
+  msg("डेटा लोड होत नाही: "+err.message,true);
+ }
+}
+
+// =================================
+// NAVIGATION
+// =================================
+function showSection(id){
+ ["customers","addCustomer","payments","expenses","reports"].forEach(x=>{
+  document.getElementById(x).classList.add("hidden");
+ });
+ document.getElementById(id).classList.remove("hidden");
+}
+
+// =================================
+// CUSTOMER LIST
+// =================================
+function renderCustomers(){
+ const q=document.getElementById("search").value.toLowerCase();
+ let html="";
+
+ customers.forEach((c,i)=>{
+  const d=c.data;
+  const n=nameOf(d),m=mobileOf(d),s=serviceOf(d);
+  if(!(n+" "+m+" "+s).toLowerCase().includes(q)) return;
+
+  html+=`<tr>
+   <td>${safe(n||"नाव उपलब्ध नाही")}</td>
+   <td>${safe(m)}</td>
+   <td>${safe(s)}</td>
+   <td>₹${amountOf(d)}</td>
+   <td>${safe(statusOf(d))}</td>
+   <td>
+    <button class="green" data-action="done" data-index="${i}">पूर्ण</button>
+    <button data-action="edit" data-index="${i}">Edit</button>
+    <button data-action="wa" data-index="${i}">WhatsApp</button>
+    <button class="red" data-action="deleteCustomer" data-index="${i}">Delete</button>
+   </td>
+  </tr>`;
+ });
+
+ document.getElementById("customerRows").innerHTML=
+ html||'<tr><td colspan="6">ग्राहक उपलब्ध नाहीत.</td></tr>';
+}
+
+document.getElementById("customerRows").addEventListener("click",async ev=>{
+ const b=ev.target.closest("button[data-action]");
+ if(!b)return;
+ const i=Number(b.dataset.index);
+ const c=customers[i];
+ if(!c)return;
+
+ if(b.dataset.action==="done"){
+  try{
+   await db.collection(c.collection).doc(c.id).update({status:"पूर्ण"});
+   await loadAll();
+  }catch(e){msg(e.message,true)}
+ }
+
+ if(b.dataset.action==="edit"){
+  const d=c.data;
+  const name=prompt("ग्राहकाचे नाव",nameOf(d));
+  if(name===null)return;
+  const mobile=prompt("मोबाईल नंबर",mobileOf(d));
+  if(mobile===null)return;
+  const service=prompt("सेवेचे नाव",serviceOf(d));
+  if(service===null)return;
+  const amount=prompt("रक्कम",amountOf(d));
+  if(amount===null||!Number.isFinite(Number(amount)))return;
+
+  try{
+   await db.collection(c.collection).doc(c.id).update({
+    name,mobile,service,amount:Number(amount)
+   });
+   await loadAll();
+  }catch(e){msg(e.message,true)}
+ }
+
+ if(b.dataset.action==="wa"){
+  const mobile=mobileOf(c.data).replace(/\D/g,"");
+  if(mobile.length!==10){msg("योग्य मोबाईल नंबर उपलब्ध नाही.",true);return}
+  const text=encodeURIComponent("नमस्कार "+nameOf(c.data)+", सेवा कॉम्प्युटर नेरड येथे आपले काम पूर्ण झाले आहे.");
+  window.open("https://wa.me/91"+mobile+"?text="+text,"_blank");
+ }
+
+ if(b.dataset.action==="deleteCustomer"){
+  if(!confirm("हा ग्राहक अर्ज Delete करायचा आहे का?"))return;
+  try{
+   await db.collection(c.collection).doc(c.id).delete();
+   await loadAll();
+  }catch(e){msg(e.message,true)}
+ }
+});
+
+// =================================
+// ADD CUSTOMER
+// =================================
+async function addCustomer(){
+ const name=document.getElementById("newName").value.trim();
+ const mobile=document.getElementById("newMobile").value.trim();
+ const service=document.getElementById("newService").value.trim();
+ const amount=Number(document.getElementById("newAmount").value);
+
+ if(!name||!/^[0-9]{10}$/.test(mobile)||!service||amount<0||!Number.isFinite(amount)){
+  msg("सर्व माहिती योग्य भरा.",true);return;
+ }
+
+ try{
+  await db.collection("applications").add({
+   name,mobile,service,amount,
+   status:"बाकी",
+   createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  ["newName","newMobile","newService","newAmount"].forEach(id=>{
+   document.getElementById(id).value="";
+  });
+
+  await loadAll();
+  showSection("customers");
+  msg("ग्राहक सेव्ह झाला.");
+ }catch(e){msg(e.message,true)}
+}
+
+// =================================
+// PAYMENTS
+// =================================
+function renderPayments(){
+ let html="";
+ payments.forEach((p,i)=>{
+  const d=p.data;
+  html+=`<tr>
+   <td>${safe(nameOf(d)||val(d,["customer"])||"—")}</td>
+   <td>₹${amountOf(d)}</td>
+   <td>${dateText(d)}</td>
+   <td><button class="red" data-payment-delete="${i}">Delete</button></td>
+  </tr>`;
+ });
+ document.getElementById("paymentRows").innerHTML=
+ html||'<tr><td colspan="4">पेमेंट नोंद उपलब्ध नाही.</td></tr>';
+}
+
+document.getElementById("paymentRows").addEventListener("click",async ev=>{
+ const b=ev.target.closest("[data-payment-delete]");
+ if(!b)return;
+ const p=payments[Number(b.dataset.paymentDelete)];
+ if(!p||!confirm("पेमेंट नोंद Delete करायची?"))return;
+ try{
+  await db.collection("payments").doc(p.id).delete();
+  await loadAll();
+ }catch(e){msg(e.message,true)}
+});
+
+async function addPayment(){
+ const customerName=prompt("ग्राहकाचे नाव");
+ if(!customerName)return;
+ const amount=Number(prompt("जमा रक्कम ₹"));
+ if(!Number.isFinite(amount)||amount<=0){
+  msg("योग्य रक्कम भरा.",true);return;
+ }
+ try{
+  await db.collection("payments").add({
+   name:customerName,
+   amount,
+   createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+  await loadAll();
+  msg("पेमेंट नोंदवले.");
+ }catch(e){msg(e.message,true)}
+}
+
+// =================================
+// EXPENSES
+// =================================
+function renderExpenses(){
+ let html="";
+ expenses.forEach((e,i)=>{
+  const d=e.data;
+  html+=`<tr>
+   <td>${safe(val(d,["title","name","reason"])||"खर्च")}</td>
+   <td>₹${amountOf(d)}</td>
+   <td>${dateText(d)}</td>
+   <td><button class="red" data-expense-delete="${i}">Delete</button></td>
+  </tr>`;
+ });
+ document.getElementById("expenseRows").innerHTML=
+ html||'<tr><td colspan="4">खर्च नोंद उपलब्ध नाही.</td></tr>';
+}
+
+document.getElementById("expenseRows").addEventListener("click",async ev=>{
+ const b=ev.target.closest("[data-expense-delete]");
+ if(!b)return;
+ const e=expenses[Number(b.dataset.expenseDelete)];
+ if(!e||!confirm("खर्च नोंद Delete करायची?"))return;
+ try{
+  await db.collection("expenses").doc(e.id).delete();
+  await loadAll();
+ }catch(err){msg(err.message,true)}
+});
+
+async function addExpense(){
+ const title=document.getElementById("expenseTitle").value.trim();
+ const amount=Number(document.getElementById("expenseAmount").value);
+ if(!title||!Number.isFinite(amount)||amount<=0){
+  msg("खर्चाचे कारण आणि योग्य रक्कम भरा.",true);return;
+ }
+ try{
+  await db.collection("expenses").add({
+   title,amount,
+   createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+  document.getElementById("expenseTitle").value="";
+  document.getElementById("expenseAmount").value="";
+  await loadAll();
+  msg("खर्च सेव्ह झाला.");
+ }catch(e){msg(e.message,true)}
+}
+
+// =================================
+// DASHBOARD CALCULATIONS
+// =================================
+function updateStats(){
+ const income=payments.reduce((s,p)=>s+amountOf(p.data),0);
+ const expense=expenses.reduce((s,e)=>s+amountOf(e.data),0);
+ const now=new Date();
+
+ const sameDay=d=>{
+  const x=dateOf(d);
+  return x&&x.toDateString()===now.toDateString();
+ };
+
+ const sameMonth=d=>{
+  const x=dateOf(d);
+  return x&&x.getMonth()===now.getMonth()&&x.getFullYear()===now.getFullYear();
+ };
+
+ const today=payments.filter(p=>sameDay(p.data)).reduce((s,p)=>s+amountOf(p.data),0);
+ const month=payments.filter(p=>sameMonth(p.data)).reduce((s,p)=>s+amountOf(p.data),0);
+
+ const pending=customers.filter(c=>!["पूर्ण","completed","done"].includes(statusOf(c.data).toLowerCase())).length;
+ const done=customers.length-pending;
+
+ document.getElementById("totalCustomers").textContent=customers.length;
+ document.getElementById("pendingCount").textContent=pending;
+ document.getElementById("doneCount").textContent=done;
+ document.getElementById("totalIncome").textContent="₹"+income;
+ document.getElementById("todayIncome").textContent="₹"+today;
+ document.getElementById("monthIncome").textContent="₹"+month;
+ document.getElementById("totalExpense").textContent="₹"+expense;
+ document.getElementById("balance").textContent="₹"+(income-expense);
+
+ document.getElementById("reportIncome").textContent=income;
+ document.getElementById("reportExpense").textContent=expense;
+ document.getElementById("reportBalance").textContent=income-expense;
+}
+
+// =================================
+// CSV REPORT
+// =================================
+function downloadCSV(){
+ let csv="नाव,मोबाईल,सेवा,रक्कम,स्टेटस\n";
+ customers.forEach(c=>{
+  const d=c.data;
+  const row=[nameOf(d),mobileOf(d),serviceOf(d),amountOf(d),statusOf(d)];
+  csv+=row.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(",")+"\n";
+ });
+
+ const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="Seva-Computer-Customers.csv";
+ a.click();
+ URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
