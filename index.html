@@ -3,201 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Seva Computer Nerad</title>
-
-<link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#075985">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Seva Computer">
-<link rel="icon" href="./icon.svg">
+<link rel="manifest" href="./manifest.json">
+
+<title>Seva Computer Nerad</title>
 
 <style>
-*{box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f6ff;
- color:#17233e;
+  font-family:Arial,"Noto Sans Devanagari",sans-serif;
+  background:linear-gradient(135deg,#06152e,#075985,#0e7490);
+  color:white;min-height:100vh;
 }
 header{
- background:linear-gradient(120deg,#075985,#1769ff,#743bff);
- color:white;
- padding:25px 15px;
- text-align:center;
+  text-align:center;padding:25px 12px;
+  background:linear-gradient(145deg,#082f49,#0284c7);
+  box-shadow:0 8px 25px #0008;
+  border-bottom:2px solid #38bdf8;
 }
-header h1{margin:0;font-size:29px;font-weight:900}
-header p{margin:8px 0 0;font-size:15px}
-.phone{font-weight:bold;margin-top:10px}
-
+.logo{font-size:29px;font-weight:900;text-shadow:3px 4px 5px #0009}
+header p{margin-top:8px;color:#e0f2fe}
 nav{
- background:white;
- padding:12px;
- display:flex;
- justify-content:center;
- flex-wrap:wrap;
- gap:10px;
- box-shadow:0 3px 12px #0001;
- position:sticky;
- top:0;
- z-index:10;
+  display:flex;justify-content:center;flex-wrap:wrap;gap:9px;
+  padding:13px 8px;background:#06152eee;
+  position:sticky;top:0;z-index:10;
 }
 nav a{
- text-decoration:none;
- color:#075985;
- font-weight:bold;
- font-size:13px;
- padding:9px 13px;
- border-radius:20px;
- background:#eaf3ff;
+  color:white;text-decoration:none;padding:10px 13px;
+  border-radius:12px;
+  background:linear-gradient(145deg,#0ea5e9,#075985);
+  box-shadow:3px 4px 7px #0008;font-size:13px;font-weight:bold;
 }
-.container{max-width:1100px;margin:auto;padding:16px}
-
-.welcome{
- background:linear-gradient(120deg,#dceeff,#f0eaff);
- border-radius:18px;
- padding:24px 15px;
- text-align:center;
- margin-bottom:20px;
+.container{max-width:1150px;margin:auto;padding:18px 13px}
+.hero{
+  text-align:center;padding:32px 15px;
+  background:linear-gradient(145deg,#ffffff28,#ffffff08);
+  border:1px solid #ffffff45;border-radius:25px;
+  box-shadow:0 15px 35px #0007;
 }
-.welcome h2{color:#075985;margin:0 0 10px}
-.welcome p{margin:0;line-height:1.6}
-
-.quick-grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:14px;
- margin:18px 0 25px;
+.hero h1{font-size:29px;color:#fef08a;text-shadow:2px 3px 5px #000}
+.hero p{margin:12px 0;line-height:1.7}
+.btn{
+  display:inline-block;margin:8px 4px;padding:12px 18px;
+  border-radius:13px;border:0;cursor:pointer;
+  background:linear-gradient(145deg,#facc15,#f97316);
+  color:#172554;text-decoration:none;font-weight:900;
+  box-shadow:4px 5px 8px #0008;
 }
-.quick-card{
- min-height:175px;
- border-radius:20px;
- padding:16px 10px;
- text-align:center;
- text-decoration:none;
- color:#17233e;
- box-shadow:0 5px 16px #0002;
- border:1px solid white;
- transition:.2s;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
-}
-.quick-card:active{transform:scale(.97)}
-.quick-card h3{margin:8px 0 4px;font-size:17px}
-.quick-card p{font-size:12px;margin:0}
-.customer{background:linear-gradient(140deg,#d9efff,#fff)}
-.recharge{background:linear-gradient(140deg,#fff0d8,#fff)}
-.services{background:linear-gradient(140deg,#e4e0ff,#fff)}
-.admin{background:linear-gradient(140deg,#d8f8e9,#fff)}
-.art{
- width:100px;height:90px;
- display:flex;align-items:center;justify-content:center;
-}
-.art svg{width:100%;height:100%}
-
-.qr-card{
- background:linear-gradient(120deg,#075985,#1769ff);
- color:white;border-radius:16px;padding:15px;
- text-align:center;margin:20px 0;
-}
-.qr-card button{
- background:white;color:#075985;border:0;
- padding:11px 22px;border-radius:25px;
- font-weight:bold;margin-top:8px;
-}
-
+.btn-blue{background:linear-gradient(145deg,#38bdf8,#0369a1);color:white}
+.btn-green{background:linear-gradient(145deg,#4ade80,#15803d);color:white}
 .section-title{
- color:#075985;text-align:center;
- font-size:23px;margin:28px 0 16px;
+  text-align:center;margin:30px 0 18px;
+  font-size:23px;color:#fef08a;text-shadow:2px 3px 5px #000;
 }
-.service-box{
- background:white;padding:16px;
- border-radius:15px;margin-bottom:14px;
- box-shadow:0 3px 12px #0001;
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:17px;
 }
-.service-box h3{
- color:#075985;margin:0 0 12px;
- border-bottom:1px solid #e6edf7;
- padding-bottom:9px;
+.card{
+  background:linear-gradient(145deg,#ffffff28,#ffffff0b);
+  border:1px solid #ffffff45;border-radius:22px;
+  padding:20px 14px;text-align:center;
+  box-shadow:7px 9px 18px #0007;transition:.25s;
 }
-.service-row{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- padding:10px 2px;
- border-bottom:1px dashed #e2e8f0;
- font-size:14px;
+.card:hover{transform:translateY(-5px)}
+.emoji{font-size:42px;margin-bottom:10px}
+.card h3{font-size:18px;margin-bottom:9px;color:#fef08a}
+.card p{font-size:14px;line-height:1.6;color:#e0f2fe}
+.search{
+  width:100%;padding:13px;border-radius:12px;
+  border:1px solid #bae6fd;font-size:16px;margin-bottom:15px;
+  outline:none;
 }
-.service-row:last-child{border:0}
-.service-name{line-height:1.5}
+.services{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+.service{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;padding:14px 12px;border-radius:14px;
+  background:linear-gradient(145deg,#ffffff25,#ffffff0c);
+  border:1px solid #ffffff40;box-shadow:3px 5px 10px #0005;
+}
+.service-name{font-size:14px;line-height:1.5}
 .price{
- font-weight:bold;color:#07834e;
- white-space:nowrap;
+  white-space:nowrap;color:#fef08a;font-weight:900;
+  background:#082f49;padding:7px 10px;border-radius:9px;
 }
 .notice{
- background:#fff7df;
- border-left:5px solid #f3a712;
- border-radius:10px;padding:14px;
- line-height:1.6;margin:20px 0;
-}
-.form-box{
- background:white;padding:18px;
- border-radius:16px;
- box-shadow:0 3px 12px #0001;
-}
-input,select{
- width:100%;padding:12px;margin:7px 0 12px;
- border:1px solid #cbd5e1;border-radius:9px;
- font-size:15px;
-}
-.submit{
- width:100%;border:0;background:#07834e;
- color:white;padding:13px;border-radius:10px;
- font-weight:bold;font-size:16px;
-}
-.delivery{
- background:#e6f4ff;border-radius:15px;
- padding:16px;line-height:1.7;margin-top:20px;
-}
-.contact{
- background:#075985;color:white;
- text-align:center;padding:23px 12px;
- border-radius:16px;margin:22px 0;
-}
-.contact a{
- display:inline-block;background:#16a34a;
- color:white;text-decoration:none;
- padding:12px 20px;border-radius:25px;
- font-weight:bold;margin-top:8px;
+  text-align:center;padding:22px;margin-top:28px;
+  background:linear-gradient(145deg,#164e63,#0c4a6e);
+  border-radius:20px;box-shadow:5px 7px 15px #0007;
 }
 footer{
- background:#102a43;color:white;
- text-align:center;padding:17px;font-size:13px;
+  text-align:center;padding:25px 12px;
+  background:#06152e;margin-top:30px;
+  line-height:1.8;color:#bae6fd;
 }
 .modal{
- display:none;position:fixed;inset:0;
- background:#000b;z-index:100;
- align-items:center;justify-content:center;padding:15px;
+  display:none;position:fixed;inset:0;background:#000c;
+  z-index:99;justify-content:center;align-items:center;padding:15px;
 }
-.modal-content{
- background:white;padding:20px;border-radius:18px;
- max-width:350px;width:100%;text-align:center;
+.modal-box{
+  background:white;color:#123;padding:22px;border-radius:20px;
+  width:100%;max-width:350px;text-align:center;
 }
-.modal-content img{
- width:100%;max-width:250px;object-fit:contain;
-}
+.modal-box img{width:220px;max-width:100%;margin:15px auto}
 .close{
- background:#dc2626;color:white;border:0;
- padding:10px 22px;border-radius:20px;margin-top:12px;
+  float:right;border:0;background:#dc2626;color:white;
+  padding:7px 12px;border-radius:8px;cursor:pointer;
 }
-
-@media(max-width:500px){
- header h1{font-size:24px}
- .quick-card{min-height:155px}
- .art{height:80px;width:90px}
- .service-row{font-size:13px}
+@media(max-width:480px){
+  .logo{font-size:23px}
+  .hero h1{font-size:24px}
+  nav a{font-size:12px;padding:9px 10px}
 }
 </style>
 </head>
@@ -205,244 +126,212 @@ footer{
 <body>
 
 <header>
- <h1>सेवा कॉम्प्युटर नेरड</h1>
- <p>आपली डिजिटल सेवा, आपल्या गावात!</p>
- <div class="phone">📞 9623557142</div>
+  <div class="logo">🌐 सेवा कॉम्प्युटर नेरड</div>
+  <p>आपली डिजिटल सेवा केंद्र</p>
+  <p>📞 संपर्क: 9623557142</p>
 </header>
 
 <nav>
- <a href="#home">Home</a>
- <a href="#services">सर्व सेवा</a>
- <a href="./register.html">ग्राहक नोंदणी</a>
- <a href="#recharge">Recharge</a>
- <a href="./admin.html">Admin Login</a>
+  <a href="#home">🏠 Home</a>
+  <a href="#services">📋 योजना व दर</a>
+  <a href="register.html">📝 ग्राहक नोंदणी</a>
+  <a href="recharge.html">📱 Recharge</a>
+  <a href="admin.html">🔐 Admin Login</a>
 </nav>
 
-<div class="container" id="home">
+<main class="container">
 
-<div class="welcome">
- <h2>आपले स्वागत आहे!</h2>
- <p>सर्व सरकारी योजना, ऑनलाइन फॉर्म, झेरॉक्स, प्रिंटिंग व डिजिटल सेवा आता एकाच ठिकाणी.</p>
-</div>
+<section class="hero" id="home">
+  <h1>सेवा तुमच्या दारी!</h1>
+  <p style="color:#fef08a;font-weight:bold">विश्वास आमचा • सेवा तुमची</p>
+  <p>
+    सरकारी योजना, डिजिटल सेवा, कार्ड, eKYC आणि
+    विविध शासकीय फॉर्मसाठी संपर्क करा.
+  </p>
+  <a class="btn" href="register.html">📝 ग्राहक नोंदणी करा</a>
+  <a class="btn btn-blue" href="#services">सर्व योजना व दर पहा</a>
+</section>
 
-<div class="quick-grid">
+<h2 class="section-title">⭐ आमच्या सुविधा</h2>
 
-<a class="quick-card customer" href="./register.html">
- <div class="art">
- <svg viewBox="0 0 120 100">
- <circle cx="60" cy="28" r="19" fill="#f2bd91"/>
- <path d="M41 25 Q43 3 63 9 Q80 11 80 29 L72 22 Q59 15 43 26" fill="#293b58"/>
- <path d="M29 91 Q30 52 60 51 Q90 52 91 91" fill="#1769ff"/>
- <rect x="66" y="57" width="42" height="28" rx="5" fill="#fff" stroke="#075985" stroke-width="2"/>
- <circle cx="77" cy="68" r="5" fill="#f2bd91"/>
- <path d="M73 78 Q77 71 82 78" fill="#1769ff"/>
- <path d="M87 66h15 M87 72h12 M87 78h9" stroke="#075985" stroke-width="2"/>
- </svg>
- </div>
- <h3>ग्राहक नोंदणी</h3>
- <p>ऑनलाइन अर्ज करा</p>
-</a>
+<section class="grid">
 
-<a class="quick-card recharge" href="#recharge">
- <div class="art">
- <svg viewBox="0 0 120 100">
- <rect x="6" y="18" width="38" height="65" rx="8" fill="#263d66"/>
- <rect x="10" y="24" width="30" height="48" rx="3" fill="#a9e4ff"/>
- <circle cx="25" cy="77" r="2.5" fill="white"/>
- <path d="M58 40 Q82 4 108 40" fill="none" stroke="#1769ff" stroke-width="5"/>
- <path d="M63 40h40l-7 23H70z" fill="#f59e0b"/>
- <path d="M83 57l-8 15h10l-4 15 16-21H86l5-9" fill="#fbbf24"/>
- </svg>
- </div>
- <h3>Recharge & Bills</h3>
- <p>Mobile • DTH • Electricity</p>
-</a>
+  <div class="card">
+    <div class="emoji">📝</div>
+    <h3>ग्राहक नोंदणी</h3>
+    <p>आपली माहिती भरून आवश्यक सेवेची नोंदणी करा.</p>
+    <a class="btn" href="register.html">नोंदणी करा</a>
+  </div>
 
-<a class="quick-card services" href="#services">
- <div class="art">
- <svg viewBox="0 0 120 100">
- <path d="M19 15h52l12 12v60H19z" fill="#fff" stroke="#1769ff" stroke-width="3"/>
- <path d="M71 15v14h12" fill="#b9d9ff" stroke="#1769ff" stroke-width="2"/>
- <path d="M31 43h40 M31 53h40 M31 63h30" stroke="#1769ff" stroke-width="4" stroke-linecap="round"/>
- <rect x="65" y="57" width="43" height="29" rx="5" fill="#fbbf24" stroke="#b77908" stroke-width="2"/>
- <path d="M76 70h22 M87 63v14" stroke="#fff" stroke-width="3"/>
- </svg>
- </div>
- <h3>सर्व सेवा</h3>
- <p>सर्व सेवा व दर पाहा</p>
-</a>
+  <div class="card">
+    <div class="emoji">🔐</div>
+    <h3>Admin Login</h3>
+    <p>Admin साठी स्वतंत्र लॉगिन आणि व्यवस्थापन.</p>
+    <a class="btn btn-blue" href="admin.html">Admin Login</a>
+  </div>
 
-<a class="quick-card admin" href="./admin.html">
- <div class="art">
- <svg viewBox="0 0 120 100">
- <rect x="10" y="54" width="100" height="35" rx="5" fill="#334155"/>
- <rect x="17" y="58" width="86" height="24" rx="2" fill="#a5e8ff"/>
- <path d="M47 90h26l5 6H42z" fill="#64748b"/>
- <circle cx="61" cy="28" r="18" fill="#f2bd91"/>
- <path d="M43 26 Q43 6 64 9 Q79 11 80 27 Q70 17 58 19 Q49 18 43 26" fill="#26364f"/>
- <rect x="44" y="24" width="14" height="9" rx="4" fill="none" stroke="#26364f" stroke-width="2"/>
- <rect x="63" y="24" width="14" height="9" rx="4" fill="none" stroke="#26364f" stroke-width="2"/>
- </svg>
- </div>
- <h3>Admin Login</h3>
- <p>व्यवस्थापन पॅनल</p>
-</a>
+  <div class="card">
+    <div class="emoji">🏡</div>
+    <h3>घरपोच सेवा</h3>
+    <p>नेरड व परिसरातील नागरिकांसाठी घरपोच डिजिटल सेवा.</p>
+    <a class="btn btn-green"
+       href="https://wa.me/919623557142?text=मला%20घरपोच%20सेवा%20हवी%20आहे">
+       घरपोच सेवा मागवा
+    </a>
+  </div>
 
-</div>
+  <div class="card">
+    <div class="emoji">📱</div>
+    <h3>Recharge & Bills</h3>
+    <p>Recharge आणि इतर बिल सेवांसाठी संपर्क करा.</p>
+    <a class="btn btn-blue" href="recharge.html">Recharge</a>
+  </div>
 
-<div class="qr-card">
- <h3>💳 QR Code द्वारे पेमेंट करा</h3>
- <p>स्कॅन करा आणि पेमेंट करा</p>
- <button onclick="openQR()">QR Code पाहा</button>
-</div>
+  <div class="card">
+    <div class="emoji">💳</div>
+    <h3>QR Code Payment</h3>
+    <p>QR Code द्वारे पेमेंट करण्याची सुविधा.</p>
+    <button class="btn" onclick="openQR()">QR Code पहा</button>
+  </div>
 
-<h2 class="section-title" id="services">📋 आमच्या सर्व 29 सेवा व दर</h2>
+  <div class="card">
+    <div class="emoji">💬</div>
+    <h3>WhatsApp संपर्क</h3>
+    <p>सेवेची माहिती आणि चौकशीसाठी संपर्क करा.</p>
+    <a class="btn btn-green" href="https://wa.me/919623557142">
+      WhatsApp करा
+    </a>
+  </div>
 
-<div class="service-box">
-<h3>🪪 ID कार्ड व प्रमाणपत्र सेवा</h3>
-<div class="service-row"><span class="service-name">🪪 महा ID कार्ड</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">❤️ ABHA कार्ड</span><span class="price">₹50</span></div>
-<div class="service-row"><span class="service-name">🏥 आयुष्मान कार्ड</span><span class="price">₹50</span></div>
-<div class="service-row"><span class="service-name">🩺 आयुष्मान कार्ड दुरुस्ती</span><span class="price">₹50</span></div>
-<div class="service-row"><span class="service-name">🗳️ मतदान कार्ड</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">👷 ई-श्रम कार्ड</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">💳 PAN कार्ड</span><span class="price">₹250</span></div>
-<div class="service-row"><span class="service-name">📝 PAN दुरुस्ती / हरवलेले कार्ड</span><span class="price">₹300</span></div>
-</div>
+</section>
 
-<div class="service-box">
-<h3>🌾 शेतकरी सेवा</h3>
-<div class="service-row"><span class="service-name">🌱 पीक पाहणी</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">🌾 खरीप पीक विमा</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">🌿 रब्बी पीक विमा</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">👨‍🌾 PM किसान नोंदणी</span><span class="price">₹250</span></div>
-<div class="service-row"><span class="service-name">👩‍🌾 महिला शेतकरी प्रमाणपत्र</span><span class="price">₹50</span></div>
-<div class="service-row"><span class="service-name">📜 महिला शेतकरी + लॅमिनेशन</span><span class="price">₹80</span></div>
-<div class="service-row"><span class="service-name">🚜 Farmer ID</span><span class="price">₹50</span></div>
-</div>
+<h2 class="section-title" id="services">📋 सर्व 29 योजना, सेवा व दर</h2>
 
-<div class="service-box">
-<h3>📄 सरकारी योजना, फॉर्म व eKYC</h3>
-<div class="service-row"><span class="service-name">💰 महा DBT शेतकरी योजना</span><span class="price">₹70</span></div>
-<div class="service-row"><span class="service-name">👩 लाडकी बहीण योजना फॉर्म</span><span class="price">₹50</span></div>
- <div class="service-row"><span class="service-name">👩 लाडकी बहीण योजना ekyc</span><span class="price">₹50</span></div>
-<div class="service-row"><span class="service-name">🔐 प्रोत्साहन / अनुदान / इतर eKYC</span><span class="price">₹50</span></div>
-<div class="service-row"><span class="service-name">💼 सरकारी / निमसरकारी नोकरी फॉर्म</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">🎓 शिष्यवृत्ती फॉर्म</span><span class="price">₹100</span></div>
-<div class="service-row"><span class="service-name">📑 7/12 उतारा</span><span class="price">₹50</span></div>
-<div class="service-row"><span class="service-name">📃 8A उतारा</span><span class="price">₹50</span></div>
-</div>
+<input class="search" id="serviceSearch"
+       type="search" placeholder="🔍 योजना किंवा सेवा शोधा..."
+       oninput="showServices()">
 
-<div class="service-box">
-<h3>🖨️ झेरॉक्स, प्रिंटिंग व लॅमिनेशन</h3>
-<div class="service-row"><span class="service-name">📄 ब्लॅक अँड व्हाईट झेरॉक्स</span><span class="price">₹5</span></div>
-<div class="service-row"><span class="service-name">🌈 कलर झेरॉक्स</span><span class="price">₹10</span></div>
-<div class="service-row"><span class="service-name">🖨️ ब्लॅक अँड व्हाईट प्रिंट</span><span class="price">₹10</span></div>
-<div class="service-row"><span class="service-name">🎨 कलर प्रिंट</span><span class="price">₹20</span></div>
-<div class="service-row"><span class="service-name">📸 पासपोर्ट फोटो 12 कॉपी</span><span class="price">₹70</span></div>
-<div class="service-row"><span class="service-name">📑 A4 लॅमिनेशन</span><span class="price">₹30</span></div>
-<div class="service-row"><span class="service-name">🪪 ID कार्ड लॅमिनेशन</span><span class="price">₹10</span></div>
-</div>
+<div class="services" id="serviceList"></div>
 
 <div class="notice">
-<b>📢 ग्राहकांसाठी सूचना</b><br>
-अर्ज करताना आधार कार्ड व आवश्यक कागदपत्रे सोबत ठेवा.
-शासकीय शुल्क किंवा पोर्टल शुल्क वेगळे असल्यास ते अतिरिक्त लागू होऊ शकते.
+  <h2>🏡 सेवा तुमच्या दारी, विश्वास आमचा!</h2>
+  <p style="margin-top:10px">नेरड व परिसरातील नागरिकांसाठी डिजिटल सेवा.</p>
+  <a class="btn btn-green" href="https://wa.me/919623557142">
+    आत्ताच संपर्क करा
+  </a>
 </div>
 
-<h2 class="section-title" id="recharge">📱 Recharge व Bill Payment</h2>
-
-<div class="form-box">
-<form onsubmit="sendRecharge(event)">
-<label>सेवा निवडा</label>
-<select id="rservice" required>
-<option value="">निवडा</option>
-<option>Mobile Recharge</option>
-<option>DTH Recharge</option>
-<option>Electricity Bill</option>
-</select>
-
-<label>कंपनीचे नाव</label>
-<input id="company" placeholder="उदा. Jio / Airtel / Tata Play" required>
-
-<label>मोबाईल / ग्राहक क्रमांक</label>
-<input id="number" type="text" placeholder="क्रमांक टाका" required>
-
-<label>रक्कम</label>
-<input id="amount" type="number" placeholder="रक्कम टाका" required>
-
-<label>ग्राहकाचे नाव</label>
-<input id="customer" placeholder="नाव टाका" required>
-
-<button class="submit" type="submit">WhatsApp वर पाठवा</button>
-</form>
-</div>
-
-<div class="delivery">
-<h3>🏠 घरपोच सेवा</h3>
-नेरड गावात घरपोच सेवा उपलब्ध.<br>
-इतर गावांसाठी अंतरानुसार डिलिव्हरी शुल्क लागू.
-</div>
-
-<div class="contact">
-<h2>सेवा कॉम्प्युटर नेरड</h2>
-<p>अधिक माहितीसाठी WhatsApp करा</p>
-<p>📞 9623557142</p>
-<a href="https://wa.me/919623557142" target="_blank">WhatsApp संपर्क</a>
-</div>
-
-</div>
+</main>
 
 <footer>
-© 2026 Seva Computer Nerad<br>
-सेवा तुमच्या दारी, विश्वास आमचा!
+  <h3>🌐 Seva Computer Nerad</h3>
+  <p>📞 9623557142</p>
+  <p>नेरड | ता. वणी | जि. यवतमाळ</p>
+  <p>© 2026 Seva Computer Nerad</p>
 </footer>
 
+<!-- QR PAYMENT POPUP -->
 <div class="modal" id="qrModal">
-<div class="modal-content">
-<h3>💳 QR Code Payment</h3>
-<img src="./qr.jpeg" alt="Payment QR Code">
-<p>पेमेंट करण्यासाठी QR Code स्कॅन करा.</p>
-<button class="close" onclick="closeQR()">बंद करा</button>
-</div>
+  <div class="modal-box">
+    <button class="close" onclick="closeQR()">✖ बंद</button>
+    <h2>QR Code Payment</h2>
+    <p>पेमेंट करण्यासाठी QR Code Scan करा.</p>
+    <img src="qr.jpeg" alt="Payment QR Code"
+      onerror="this.style.display='none';document.getElementById('qrError').style.display='block'">
+    <p id="qrError" style="display:none;color:red">
+      qr.jpeg फाईल सापडली नाही. ती index.html सोबत ठेवा.
+    </p>
+    <p>पेमेंट केल्यानंतर WhatsApp वर कळवा.</p>
+    <a class="btn btn-green"
+       href="https://wa.me/919623557142?text=मी%20QR%20द्वारे%20पेमेंट%20केले%20आहे">
+       WhatsApp वर कळवा
+    </a>
+  </div>
 </div>
 
 <script>
+const services = [
+  ["महा ID कार्ड",70],
+  ["ABHA कार्ड",50],
+  ["आयुष्मान कार्ड",50],
+  ["आयुष्मान कार्ड दुरुस्ती",50],
+  ["मतदान कार्ड",100],
+  ["ई-श्रम कार्ड",100],
+  ["PAN कार्ड",250],
+  ["PAN कार्ड दुरुस्ती / हरवलेले",300],
+  ["पीक पाहणी",100],
+  ["खरीप पीक विमा",100],
+  ["रब्बी पीक विमा",100],
+  ["PM किसान नोंदणी",250],
+  ["महिला शेतकरी प्रमाणपत्र",50],
+  ["महिला शेतकरी प्रमाणपत्र + लॅमिनेशन",80],
+  ["Farmer ID",50],
+  ["MahaDBT Farmer योजना",70],
+  ["लाडकी बहीण योजना फॉर्म",50],
+  ["सरकारी / निमसरकारी नोकरी फॉर्म",100],
+  ["शिष्यवृत्ती फॉर्म",100],
+  ["प्रोत्साहन / अनुदान / कोणतीही eKYC",50],
+  ["झेरॉक्स B&W",5],
+  ["झेरॉक्स Colour",10],
+  ["प्रिंट B&W",10],
+  ["Colour Print",20],
+  ["A4 लॅमिनेशन",30],
+  ["ID कार्ड लॅमिनेशन",10],
+  ["बांधकाम कामगार योजना",100],
+  ["लाडकी बहीण eKYC",50],
+  ["MPSC / रेल्वे / पोलीस / तलाठी / आरोग्य व सर्व शासकीय फॉर्म",100]
+];
+
+function showServices(){
+  const search = document.getElementById("serviceSearch").value.toLowerCase();
+  const list = document.getElementById("serviceList");
+  const filtered = services.filter(item =>
+    item[0].toLowerCase().includes(search)
+  );
+
+  list.innerHTML = "";
+
+  if(filtered.length === 0){
+    list.innerHTML = "<p>सेवा सापडली नाही.</p>";
+    return;
+  }
+
+  filtered.forEach((item,index)=>{
+    const div = document.createElement("div");
+    div.className = "service";
+
+    const name = document.createElement("span");
+    name.className = "service-name";
+    name.textContent = (index+1) + ". " + item[0];
+
+    const price = document.createElement("span");
+    price.className = "price";
+    price.textContent = "₹" + item[1];
+
+    div.appendChild(name);
+    div.appendChild(price);
+    list.appendChild(div);
+  });
+}
+
 function openQR(){
- document.getElementById("qrModal").style.display="flex";
+  document.getElementById("qrModal").style.display="flex";
 }
 function closeQR(){
- document.getElementById("qrModal").style.display="none";
+  document.getElementById("qrModal").style.display="none";
 }
-function sendRecharge(e){
- e.preventDefault();
+document.getElementById("qrModal").addEventListener("click",function(e){
+  if(e.target===this) closeQR();
+});
 
- const service=document.getElementById("rservice").value;
- const company=document.getElementById("company").value;
- const number=document.getElementById("number").value;
- const amount=document.getElementById("amount").value;
- const customer=document.getElementById("customer").value;
-
- const msg=
- "नमस्कार, मला Recharge / Bill Payment करायचे आहे.\n"+
- "सेवा: "+service+"\n"+
- "कंपनी: "+company+"\n"+
- "क्रमांक: "+number+"\n"+
- "रक्कम: ₹"+amount+"\n"+
- "ग्राहक नाव: "+customer;
-
- window.open(
- "https://wa.me/919623557142?text="+encodeURIComponent(msg),
- "_blank"
- );
-}
+showServices();
 
 if("serviceWorker" in navigator){
- window.addEventListener("load",()=>{
-  navigator.serviceWorker.register("./sw.js")
-   .then(()=>console.log("Seva Computer App Ready"))
-   .catch(error=>console.log("Service Worker Error:",error));
- });
+  window.addEventListener("load",function(){
+    navigator.serviceWorker.register("./sw.js").catch(function(error){
+      console.log("Service Worker:",error);
+    });
+  });
 }
 </script>
 
