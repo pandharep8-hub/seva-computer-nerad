@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#075985">
+<title>Recharge - Seva Computer Nerad</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#06152e,#075985,#0e7490);
+color:white;min-height:100vh;
+}
+header{
+text-align:center;padding:24px 10px;
+background:linear-gradient(145deg,#082f49,#0284c7);
+box-shadow:0 7px 20px #0008;
+}
+header h1{font-size:25px}
+header p{margin-top:8px}
+.container{max-width:650px;margin:auto;padding:18px 13px}
+.card{
+background:linear-gradient(145deg,#ffffff28,#ffffff0b);
+border:1px solid #ffffff45;
+border-radius:20px;padding:20px;margin-bottom:18px;
+box-shadow:5px 7px 18px #0007;
+}
+h2{text-align:center;color:#fef08a;margin-bottom:18px}
+label{display:block;margin:13px 0 6px;font-weight:bold}
+input,select{
+width:100%;padding:13px;border-radius:10px;
+border:1px solid #bae6fd;background:white;
+color:#123;font-size:15px;
+}
+button,.btn{
+display:block;width:100%;padding:14px;margin-top:17px;
+border:0;border-radius:12px;
+background:linear-gradient(145deg,#4ade80,#15803d);
+color:white;font-weight:bold;font-size:16px;
+cursor:pointer;text-decoration:none;text-align:center;
+}
+.home{background:linear-gradient(145deg,#38bdf8,#0369a1)}
+.note{font-size:13px;line-height:1.7;color:#dbeafe;margin-top:15px}
+footer{text-align:center;padding:22px;background:#06152e;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+<h1>📱 Recharge & Bill Payment</h1>
+<p>🌐 Seva Computer Nerad</p>
+<p>📞 9623557142</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>📱 Mobile Recharge</h2>
+<form id="mobileForm">
+<label>ग्राहकाचे नाव</label>
+<input id="mobileName" required placeholder="ग्राहकाचे नाव">
+
+<label>मोबाईल नंबर</label>
+<input id="mobileNumber" type="tel" maxlength="10"
+pattern="[6-9][0-9]{9}" required placeholder="10 अंकी नंबर">
+
+<label>मोबाईल कंपनी</label>
+<select id="mobileCompany" required>
+<option value="">कंपनी निवडा</option>
+<option>Jio</option>
+<option>Vi</option>
+<option>Airtel</option>
+<option>BSNL</option>
+</select>
+
+<label>Recharge रक्कम ₹</label>
+<input id="mobileAmount" type="number" min="1" required placeholder="रक्कम">
+
+<button type="submit">WhatsApp वर पाठवा</button>
+</form>
+</div>
+
+<div class="card">
+<h2>📺 DTH Recharge</h2>
+<form id="dthForm">
+<label>ग्राहकाचे नाव</label>
+<input id="dthName" required placeholder="ग्राहकाचे नाव">
+
+<label>मोबाईल नंबर</label>
+<input id="dthMobile" type="tel" maxlength="10"
+pattern="[6-9][0-9]{9}" required placeholder="10 अंकी नंबर">
+
+<label>DTH कंपनी</label>
+<select id="dthCompany" required>
+<option value="">कंपनी निवडा</option>
+<option>Tata Play</option>
+<option>Airtel Digital TV</option>
+<option>Dish TV</option>
+<option>d2h</option>
+<option>Sun Direct</option>
+</select>
+
+<label>Subscriber ID / VC Number</label>
+<input id="dthId" required placeholder="ग्राहक क्रमांक">
+
+<label>Recharge रक्कम ₹</label>
+<input id="dthAmount" type="number" min="1" required placeholder="रक्कम">
+
+<button type="submit">WhatsApp वर पाठवा</button>
+</form>
+</div>
+
+<div class="card">
+<h2>💡 Electricity Bill</h2>
+<form id="electricForm">
+<label>ग्राहकाचे नाव</label>
+<input id="electricName" required placeholder="ग्राहकाचे नाव">
+
+<label>मोबाईल नंबर</label>
+<input id="electricMobile" type="tel" maxlength="10"
+pattern="[6-9][0-9]{9}" required placeholder="10 अंकी नंबर">
+
+<label>वीज वितरण कंपनी</label>
+<select id="electricCompany" required>
+<option value="">कंपनी निवडा</option>
+<option>महावितरण (MSEDCL)</option>
+<option>इतर वीज वितरण कंपनी</option>
+</select>
+
+<label>Consumer Number</label>
+<input id="consumerNumber" required placeholder="ग्राहक क्रमांक">
+
+<label>बिलाची रक्कम ₹</label>
+<input id="electricAmount" type="number" min="1" required placeholder="रक्कम">
+
+<button type="submit">WhatsApp वर पाठवा</button>
+</form>
+</div>
+
+<a href="index.html" class="btn home">🏠 Home Page वर जा</a>
+
+<p class="note">
+टीप: या पेजवरून Recharge किंवा Bill Payment ची विनंती WhatsApp वर येईल.
+प्रत्यक्ष पेमेंट व Recharge करण्यासाठी अधिकृत सेवा आवश्यक आहे.
+OTP किंवा UPI PIN कोणालाही देऊ नका.
+</p>
+</div>
+
+<footer>
+<h3>Seva Computer Nerad</h3>
+<p>📞 9623557142</p>
+<p>नेरड | ता. वणी | जि. यवतमाळ</p>
+</footer>
+
+<script>
+const whatsapp="919623557142";
+
+function send(data){
+const message=data.join("\n");
+window.open("https://wa.me/"+whatsapp+"?text="+encodeURIComponent(message),"_blank");
+}
+
+document.getElementById("mobileForm").addEventListener("submit",function(e){
+e.preventDefault();
+send([
+"📱 MOBILE RECHARGE REQUEST",
+"नाव: "+mobileName.value,
+"मोबाईल: "+mobileNumber.value,
+"कंपनी: "+mobileCompany.value,
+"रक्कम: ₹"+mobileAmount.value
+]);
+});
+
+document.getElementById("dthForm").addEventListener("submit",function(e){
+e.preventDefault();
+send([
+"📺 DTH RECHARGE REQUEST",
+"नाव: "+dthName.value,
+"मोबाईल: "+dthMobile.value,
+"कंपनी: "+dthCompany.value,
+"Subscriber ID: "+dthId.value,
+"रक्कम: ₹"+dthAmount.value
+]);
+});
+
+document.getElementById("electricForm").addEventListener("submit",function(e){
+e.preventDefault();
+send([
+"💡 ELECTRICITY BILL REQUEST",
+"नाव: "+electricName.value,
+"मोबाईल: "+electricMobile.value,
+"कंपनी: "+electricCompany.value,
+"Consumer Number: "+consumerNumber.value,
+"बिल रक्कम: ₹"+electricAmount.value
+]);
+});
+</script>
+
+</body>
+</html>
