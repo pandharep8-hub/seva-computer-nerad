@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0755c9">
+<title>ग्राहक नोंदणी - Seva Computer</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;padding:18px;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(140deg,#e8f4ff,#fff,#e9edff);
+ color:#12336c;
+}
+.container{
+ max-width:520px;margin:20px auto;
+ background:white;padding:22px;
+ border-radius:22px;
+ box-shadow:0 8px 25px #153d7530;
+}
+h2{text-align:center;color:#0755c9}
+input,select{
+ width:100%;padding:14px;
+ margin:8px 0 15px;
+ border:1px solid #b9cce8;
+ border-radius:12px;
+ font-size:16px;
+ background:#f8fbff;
+}
+label{font-weight:bold}
+button{
+ width:100%;padding:15px;
+ border:0;border-radius:13px;
+ color:white;font-size:17px;
+ font-weight:bold;
+ background:linear-gradient(120deg,#087bdf,#0645bd);
+}
+.back{
+ display:block;text-align:center;
+ margin-top:18px;color:#0755c9;
+ text-decoration:none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>📝 ग्राहक रजिस्ट्रेशन</h2>
+
+<form id="customerForm">
+
+<label>ग्राहकाचे पूर्ण नाव</label>
+<input id="name" required placeholder="पूर्ण नाव">
+
+<label>मोबाईल नंबर</label>
+<input id="mobile" type="tel"
+ pattern="[6-9][0-9]{9}" maxlength="10"
+ required placeholder="10 अंकी नंबर">
+
+<label>जिल्हा</label>
+<select id="district" required>
+<option value="">जिल्हा निवडा</option>
+<option>यवतमाळ</option>
+</select>
+
+<label>तालुका</label>
+<select id="taluka" required>
+<option value="">तालुका निवडा</option>
+<option>वणी</option>
+<option>मारेगाव</option>
+<option>झरी जामणी</option>
+</select>
+
+<label>गाव</label>
+<input id="village" required placeholder="गावाचे नाव">
+
+<label>योजना / सेवा निवडा</label>
+<select id="service" required>
+<option value="">सेवा निवडा</option>
+<option value="Maha ID|70">महा ID – ₹70</option>
+<option value="ABHA|50">ABHA – ₹50</option>
+<option value="Ayushman|50">आयुष्मान कार्ड – ₹50</option>
+<option value="Ayushman Correction|50">आयुष्मान दुरुस्ती – ₹50</option>
+<option value="Voting Card|100">मतदान कार्ड – ₹100</option>
+<option value="e-Shram|100">ई-श्रम – ₹100</option>
+<option value="PAN Card|250">PAN कार्ड – ₹250</option>
+<option value="PAN Correction|300">PAN दुरुस्ती / हरवलेले – ₹300</option>
+<option value="Pik Pahani|100">पीक पाहणी – ₹100</option>
+<option value="Kharip Insurance|100">खरीप विमा – ₹100</option>
+<option value="Rabi Insurance|100">रब्बी विमा – ₹100</option>
+<option value="PM Kisan|250">PM किसान नोंदणी – ₹250</option>
+<option value="Mahila Shetkari|50">महिला शेतकरी प्रमाणपत्र – ₹50</option>
+<option value="Mahila Shetkari Lamination|80">महिला शेतकरी + लॅमिनेशन – ₹80</option>
+<option value="Farmer ID|50">Farmer ID – ₹50</option>
+<option value="Maha DBT|70">महा DBT – ₹70</option>
+<option value="Ladki Bahin|50">लाडकी बहीण फॉर्म – ₹50</option>
+<option value="Job Form|100">नोकरी अर्ज – ₹100</option>
+<option value="Scholarship|100">शिष्यवृत्ती अर्ज – ₹100</option>
+<option value="eKYC|50">eKYC – ₹50</option>
+<option value="Xerox B&W|5">झेरॉक्स B&W – ₹5</option>
+<option value="Xerox Colour|10">कलर झेरॉक्स – ₹10</option>
+<option value="Print|10">प्रिंट – ₹10</option>
+<option value="Colour Print|20">कलर प्रिंट – ₹20</option>
+<option value="A4 Lamination|30">A4 लॅमिनेशन – ₹30</option>
+<option value="ID Lamination|10">ID कार्ड लॅमिनेशन – ₹10</option>
+</select>
+
+<label>सेवा शुल्क</label>
+<input id="amount" readonly placeholder="सेवा निवडल्यानंतर रक्कम">
+
+<button type="submit">नोंदणी करा</button>
+</form>
+
+<a class="back" href="index.html">← Home Page वर जा</a>
+</div>
+
+<script type="module">
+import { db } from "./firebase-config.js";
+import {
+ collection, addDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const service = document.getElementById("service");
+const amount = document.getElementById("amount");
+
+service.addEventListener("change",()=>{
+ const selected = service.value;
+ amount.value = selected ? "₹"+selected.split("|")[1] : "";
+});
+
+document.getElementById("customerForm").addEventListener("submit",async(e)=>{
+ e.preventDefault();
+ const selected = service.value.split("|");
+
+ const record = {
+  name:document.getElementById("name").value.trim(),
+  mobile:document.getElementById("mobile").value.trim(),
+  district:document.getElementById("district").value,
+  taluka:document.getElementById("taluka").value,
+  village:document.getElementById("village").value.trim(),
+  service:selected[0],
+  amount:Number(selected[1]),
+  status:"काम बाकी",
+  createdAt:serverTimestamp()
+ };
+
+ try{
+  await addDoc(collection(db,"applications"),record);
+  alert("ग्राहक नोंदणी यशस्वी झाली!");
+  e.target.reset();
+  amount.value="";
+ }catch(error){
+  console.error(error);
+  alert("नोंदणी झाली नाही. Firebase सेटिंग तपासा.");
+ }
+});
+</script>
+</body>
+</html>
