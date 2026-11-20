@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#075985">
+<title>रिचार्ज आणि बिल सेवा - Seva Computer</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#e0f2fe,#eff6ff);
+ color:#123;
+ padding:15px;
+}
+.container{
+ max-width:520px;
+ margin:20px auto;
+ background:white;
+ padding:22px;
+ border-radius:20px;
+ box-shadow:0 8px 30px #0002;
+}
+h2{text-align:center;color:#075985}
+input,select{
+ width:100%;
+ padding:13px;
+ margin:7px 0 14px;
+ border:1px solid #cbd5e1;
+ border-radius:10px;
+ font-size:16px;
+}
+label{font-weight:bold}
+button{
+ width:100%;
+ padding:14px;
+ border:0;
+ border-radius:12px;
+ background:#075985;
+ color:white;
+ font-size:17px;
+ font-weight:bold;
+}
+.note{
+ background:#fef3c7;
+ padding:12px;
+ border-radius:10px;
+ font-size:13px;
+ margin:12px 0;
+}
+.check{
+ display:flex;
+ gap:10px;
+ align-items:center;
+ margin:15px 0;
+}
+.check input{width:20px;margin:0}
+#msg{text-align:center;font-weight:bold;margin-top:15px}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h2>सेवा कॉम्पुटर नेरड</h2>
+<h3 style="text-align:center">मोबाईल रिचार्ज / DTH / वीज बिल</h3>
+
+<form id="serviceForm">
+
+<label>सेवेचा प्रकार निवडा</label>
+<select id="type" required>
+<option value="">निवडा</option>
+<option value="mobile">मोबाईल रिचार्ज</option>
+<option value="dth">DTH रिचार्ज</option>
+<option value="light">वीज बिल</option>
+</select>
+
+<div id="providerBox" style="display:none">
+<label id="providerLabel">कंपनी निवडा</label>
+<select id="provider">
+<option value="">निवडा</option>
+</select>
+</div>
+
+<label>ग्राहकाचे नाव</label>
+<input id="name" required placeholder="पूर्ण नाव">
+
+<label>ग्राहकाचा मोबाईल नंबर</label>
+<input id="mobile" required maxlength="10"
+inputmode="numeric" placeholder="10 अंकी मोबाईल नंबर">
+
+<div id="numberBox">
+<label id="numberLabel">रिचार्ज नंबर</label>
+<input id="consumerNumber" required
+inputmode="numeric" placeholder="नंबर / ग्राहक क्रमांक">
+</div>
+
+<label>जिल्हा</label>
+<input id="district" value="यवतमाळ" required>
+
+<label>तालुका</label>
+<input id="taluka" value="वणी" required>
+
+<label>गाव</label>
+<input id="village" value="नेरड" required>
+
+<label>रिचार्ज / बिल रक्कम (₹)</label>
+<input id="amount" type="number" min="1" step="0.01"
+required placeholder="उदा. 199">
+
+<div class="check">
+<input type="checkbox" id="present" required>
+<label for="present">ग्राहक दुकानात प्रत्यक्ष उपस्थित आहे</label>
+</div>
+
+<div class="note">
+ही फॉर्म फक्त ग्राहकाच्या कामाची नोंद करतो. प्रत्यक्ष रिचार्ज किंवा बिल पेमेंट अधिकृत पोर्टलवरून स्वतंत्रपणे करावे.
+</div>
+
+<button type="submit" id="submitBtn">नोंदणी करा</button>
+</form>
+
+<p id="msg"></p>
+</div>
+
+<script type="module">
+import { db } from "./firebase-config.js";
+import {
+ collection, addDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const type = document.getElementById("type");
+const provider = document.getElementById("provider");
+const providerBox = document.getElementById("providerBox");
+const providerLabel = document.getElementById("providerLabel");
+const numberLabel = document.getElementById("numberLabel");
+const consumerNumber = document.getElementById("consumerNumber");
+const numberBox = document.getElementById("numberBox");
+const msg = document.getElementById("msg");
+
+const params = new URLSearchParams(location.search);
+const preset = params.get("type");
+if(["mobile","dth","light"].includes(preset)) type.value = preset;
+
+function updateForm(){
+ const t=type.value;
+ provider.innerHTML='<option value="">निवडा</option>';
+ providerBox.style.display="none";
+ numberBox.style.display="block";
+ consumerNumber.required=true;
+
+ if(t==="mobile"){
+  providerBox.style.display="block";
+  providerLabel.textContent="मोबाईल कंपनी निवडा";
+  ["Jio","Airtel","Vi","BSNL"].forEach(x=>{
+   provider.add(new Option(x,x));
+  });
+  numberLabel.textContent="रिचार्ज करायचा मोबाईल नंबर";
+  consumerNumber.placeholder="10 अंकी रिचार्ज नंबर";
+  consumerNumber.maxLength=10;
+  consumerNumber.inputMode="numeric";
+ }
+ else if(t==="dth"){
+  providerBox.style.display="block";
+  providerLabel.textContent="DTH कंपनी निवडा";
+  ["Tata Play","Airtel Digital TV","Dish TV","d2h","Sun Direct","इतर"].forEach(x=>{
+   provider.add(new Option(x,x));
+  });
+  numberLabel.textContent="DTH ग्राहक / सबस्क्रायबर नंबर";
+  consumerNumber.placeholder="ग्राहक क्रमांक";
+  consumerNumber.removeAttribute("maxlength");
+  consumerNumber.inputMode="text";
+ }
+ else if(t==="light"){
+  providerBox.style.display="block";
+  providerLabel.textContent="वीज वितरण कंपनी";
+  ["MSEDCL / महावितरण","इतर"].forEach(x=>{
+   provider.add(new Option(x,x));
+  });
+  numberLabel.textContent="वीज ग्राहक क्रमांक";
+  consumerNumber.placeholder="ग्राहक क्रमांक टाका";
+  consumerNumber.removeAttribute("maxlength");
+  consumerNumber.inputMode="text";
+ }
+}
+type.addEventListener("change",updateForm);
+updateForm();
+
+document.getElementById("serviceForm").addEventListener("submit",async(e)=>{
+ e.preventDefault();
+
+ const t=type.value;
+ const n=document.getElementById("name").value.trim();
+ const m=document.getElementById("mobile").value.trim();
+ const num=consumerNumber.value.trim();
+ const amt=Number(document.getElementById("amount").value);
+ const p=provider.value;
+
+ if(!t || !p){
+  msg.textContent="कृपया सेवेचा प्रकार आणि कंपनी निवडा.";
+  return;
+ }
+ if(!/^[0-9]{10}$/.test(m)){
+  msg.textContent="ग्राहकाचा 10 अंकी मोबाईल नंबर टाका.";
+  return;
+ }
+ if(t==="mobile" && !/^[0-9]{10}$/.test(num)){
+  msg.textContent="रिचार्जचा 10 अंकी नंबर टाका.";
+  return;
+ }
+ if(!num || !Number.isFinite(amt) || amt<=0){
+  msg.textContent="योग्य क्रमांक आणि रक्कम भरा.";
+  return;
+ }
+
+ const serviceName =
+  t==="mobile" ? "Mobile Recharge - "+p :
+  t==="dth" ? "DTH Recharge - "+p :
+  "वीज बिल - "+p;
+
+ const btn=document.getElementById("submitBtn");
+ btn.disabled=true;
+ btn.textContent="नोंदणी होत आहे...";
+ msg.textContent="";
+
+ try{
+  await addDoc(collection(db,"applications"),{
+   name:n,
+   mobile:m,
+   district:document.getElementById("district").value.trim(),
+   taluka:document.getElementById("taluka").value.trim(),
+   village:document.getElementById("village").value.trim(),
+   service:serviceName,
+   serviceType:t,
+   provider:p,
+   consumerNumber:num,
+   amount:amt,
+   status:"काम बाकी",
+   paid:false,
+   source:"प्रत्यक्ष ग्राहक",
+   whatsappConsent:false,
+   createdAt:serverTimestamp()
+  });
+
+  msg.style.color="green";
+  msg.textContent="ग्राहकाची नोंदणी यशस्वी झाली!";
+  document.getElementById("serviceForm").reset();
+  type.value=preset && ["mobile","dth","light"].includes(preset) ? preset : "";
+  updateForm();
+
+ }catch(error){
+  msg.style.color="red";
+  msg.textContent="नोंदणी झाली नाही. Firebase Rules तपासा. "+error.message;
+ }finally{
+  btn.disabled=false;
+  btn.textContent="नोंदणी करा";
+ }
+});
+</script>
+</body>
+</html>
