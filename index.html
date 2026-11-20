@@ -3,209 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0755c9">
+<meta name="theme-color" content="#075985">
 <title>Seva Computer Nerad</title>
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:linear-gradient(140deg,#eaf5ff,#ffffff,#e9f0ff);
- color:#102c62;
-}
-header{
- background:linear-gradient(120deg,#073baf,#087bdf);
- color:white;
- padding:24px 15px;
- text-align:center;
- border-radius:0 0 28px 28px;
- box-shadow:0 8px 22px #164c9b55;
-}
-.logo{
- width:76px;height:76px;
- margin:auto;
- border-radius:22px;
- background:linear-gradient(145deg,#fff,#b9dcff);
- color:#0755c9;
- display:grid;place-items:center;
- font-size:32px;font-weight:900;
- box-shadow:0 7px 15px #001b5866;
-}
-header h1{margin:12px 0 5px;font-size:27px}
-header p{margin:5px;font-weight:bold}
-.tag{
- display:inline-block;
- background:#ffdf35;color:#172b57;
- padding:9px 18px;
- border-radius:30px;
- font-weight:bold;
- margin-top:12px;
-}
-.container{max-width:1000px;margin:auto;padding:18px}
-.section-title{
- text-align:center;
- font-size:22px;
- font-weight:bold;
- margin:18px 0;
-}
-.grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:13px;
-}
-.tile{
- min-height:112px;
- border-radius:20px;
- padding:17px 8px;
- text-align:center;
- text-decoration:none;
- color:white;
- font-weight:bold;
- box-shadow:0 7px 0 #0002,0 10px 18px #153d7540;
- transition:.15s;
-}
-.tile:active{transform:translateY(5px);box-shadow:0 2px 0 #0002}
-.tile .emoji{display:block;font-size:34px;margin-bottom:9px}
-.blue{background:linear-gradient(145deg,#168bff,#0645bd)}
-.green{background:linear-gradient(145deg,#36d878,#078b48)}
-.pink{background:linear-gradient(145deg,#ff62a5,#c51671)}
-.orange{background:linear-gradient(145deg,#ffb32c,#e66a00)}
-.purple{background:linear-gradient(145deg,#a66aff,#6325c7)}
-.cyan{background:linear-gradient(145deg,#31d6e8,#0879b8)}
-.info{
- background:white;
- margin-top:20px;
- padding:18px;
- border-radius:20px;
- box-shadow:0 5px 18px #244d8020;
- text-align:center;
-}
-.info h3{margin-top:0;color:#0755c9}
-.contact{
- display:block;
- text-decoration:none;
- background:#13a957;
- color:white;
- font-weight:bold;
- padding:14px;
- border-radius:14px;
- margin-top:14px;
-}
-footer{
- text-align:center;
- background:#082d72;
- color:white;
- padding:18px;
- margin-top:25px;
-}
-@media(min-width:650px){
- .grid{grid-template-columns:repeat(3,1fr)}
- header h1{font-size:35px}
-}
+body{margin:0;font-family:Arial,sans-serif;background:#eef5ff;color:#172554}
+header{background:linear-gradient(135deg,#075985,#4f46e5,#9333ea);color:white;padding:27px 15px;text-align:center;border-radius:0 0 28px 28px}
+header h1{font-size:27px;margin:5px}
+header p{margin:8px 0}
+main{max-width:950px;margin:auto;padding:15px}
+.welcome{background:white;padding:19px;border-radius:18px;margin:15px 0;text-align:center;box-shadow:0 5px 18px #0001}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tile{padding:20px 10px;text-align:center;border-radius:18px;color:white;text-decoration:none;font-weight:bold;box-shadow:0 5px 12px #0002;min-height:105px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.tile span{font-size:29px}
+.t1{background:linear-gradient(135deg,#0284c7,#2563eb)}
+.t2{background:linear-gradient(135deg,#059669,#0d9488)}
+.t3{background:linear-gradient(135deg,#ea580c,#f59e0b)}
+.t4{background:linear-gradient(135deg,#7c3aed,#a855f7)}
+.t5{background:linear-gradient(135deg,#db2777,#f43f5e)}
+.t6{background:linear-gradient(135deg,#475569,#0f172a)}
+.qr{background:white;border-radius:18px;padding:20px;text-align:center;margin:18px 0;box-shadow:0 4px 15px #0001}
+.qr img{width:230px;max-width:100%;height:auto;border-radius:12px}
+.qr h2{color:#075985}
+.action{display:block;background:#16a34a;color:white;text-decoration:none;padding:14px;border-radius:12px;margin:12px 0;font-weight:bold}
+footer{text-align:center;padding:22px;color:#64748b;font-size:13px}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
-rules_version = '2';
-
-service cloud.firestore {
-  match /databases/{database}/documents {
-
-    function isAdmin() {
-      return request.auth != null
-        && request.auth.token.email == "तुमचा Gmail येथे टाका";
-    }
-
-    match /applications/{id} {
-      allow create: if
-        request.resource.data.keys().hasAll([
-          'name',
-          'mobile',
-          'district',
-          'taluka',
-          'village',
-          'service',
-          'amount',
-          'status',
-          'createdAt'
-        ])
-        && request.resource.data.name is string
-        && request.resource.data.mobile is string
-        && request.resource.data.amount is number;
-
-      allow read, update, delete: if isAdmin();
-    }
-
-    match /expenses/{id} {
-      allow read, create, update, delete: if isAdmin();
-    }
-  }
-}
 <body>
 
 <header>
- <div class="logo">SC</div>
- <h1>सेवा कॉम्पुटर नेरड</h1>
- <p>Digital Service Centre</p>
- <div class="tag">सेवा तुमच्या दारी, विश्वास आमचा</div>
+<h1>सेवा कॉम्पुटर नेरड</h1>
+<p>Digital Services | Xerox | Print | Lamination</p>
+<p>सेवा तुमच्या दारी, विश्वास आमचा</p>
 </header>
 
-<main class="container">
+<main>
+<div class="welcome">
+<h2>आपले स्वागत आहे!</h2>
+<p>शासकीय योजना व डिजिटल सेवा आता एकाच ठिकाणी.</p>
+<a class="action" href="customer.html">📝 ग्राहक नोंदणी करा</a>
+</div>
 
- <div class="section-title">🌟 आमच्या डिजिटल सेवा</div>
+<h3>आमच्या सेवा</h3>
+<div class="grid">
+<a class="tile t1" href="customer.html"><span>🪪</span>महा ID व इतर कार्ड</a>
+<a class="tile t2" href="customer.html"><span>🌾</span>शेतकरी योजना</a>
+<a class="tile t3" href="customer.html"><span>🏛️</span>शासकीय योजना</a>
+<a class="tile t4" href="customer.html"><span>📄</span>ऑनलाइन फॉर्म</a>
+<a class="tile t5" href="customer.html"><span>🖨️</span>Xerox / Print</a>
+<a class="tile t6" href="customer.html"><span>💳</span>इतर डिजिटल सेवा</a>
+</div>
 
- <div class="grid">
+<h3>दुकानातील सेवा</h3>
+<div class="grid">
+<a class="tile t2" href="counter-services.html?type=mobile"><span>📱</span>Mobile Recharge</a>
+<a class="tile t3" href="counter-services.html?type=dth"><span>📺</span>DTH Recharge</a>
+<a class="tile t1" href="counter-services.html?type=light"><span>💡</span>वीज बिल</a>
+</div>
+<p style="text-align:center;color:#64748b;font-size:13px">या सेवांसाठी ग्राहकाने दुकानात प्रत्यक्ष उपस्थित राहावे.</p>
 
-  <a class="tile blue" href="services.html">
-   <span class="emoji">🏛️</span>
-   योजना व सेवा
-  </a>
+<div class="qr">
+<h2>💳 ऑनलाइन पेमेंट</h2>
+<p>Seva Computer Nerad</p>
+<img src="./qr.jpeg" alt="Seva Computer Payment QR">
+<h3>QR Scan करून पेमेंट करा</h3>
+<p>पेमेंट केल्यानंतर पावती Admin ला दाखवा.</p>
+</div>
 
-  <a class="tile green" href="customer.html">
-   <span class="emoji">📝</span>
-   ग्राहक रजिस्ट्रेशन
-  </a>
-
-  <a class="tile pink" href="counter-services.html?type=mobile">
-   <span class="emoji">📱</span>
-   मोबाईल रिचार्ज
-  </a>
-
-  <a class="tile orange" href="counter-services.html?type=dth">
-   <span class="emoji">📡</span>
-   DTH रिचार्ज
-  </a>
-
-  <a class="tile purple" href="counter-services.html?type=light">
-   <span class="emoji">⚡</span>
-   इलेक्ट्रिक बिल
-  </a>
-
-  <a class="tile cyan" href="about.html">
-   <span class="emoji">🏢</span>
-   आमच्याबद्दल
-  </a>
-
-  <a class="tile blue" href="admin.html">
-   <span class="emoji">🔐</span>
-   Admin Login
-  </a>
-
- </div>
-
- <div class="info">
-  <h3>🏠 घरपोच सेवा उपलब्ध</h3>
-  <p>आपल्या गावात डिजिटल सेवा आता आपल्या दारी!</p>
-  <a class="contact"
-     href="https://wa.me/919623557142"
-     target="_blank">
-     WhatsApp संपर्क – 9623557142
-  </a>
- </div>
-
+<a class="action" href="https://wa.me/919623557142">📲 WhatsApp वर संपर्क करा</a>
+<a class="action" style="background:#475569" href="about.html">ℹ️ आमच्याबद्दल</a>
+<a class="action" style="background:#7c3aed" href="admin.html">🔐 Admin Login</a>
 </main>
 
 <footer>
- © Seva Computer Nerad
+सेवा कॉम्पुटर नेरड<br>
+संपर्क: 9623557142
 </footer>
 
 </body>
