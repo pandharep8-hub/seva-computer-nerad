@@ -3,128 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#003b9b">
+<meta name="theme-color" content="#0755c9">
 <title>Seva Computer Nerad</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(140deg,#eaf5ff,#ffffff,#e9f0ff);
+ color:#102c62;
 }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
-  background: #061b58;
-  font-family: Arial, sans-serif;
+header{
+ background:linear-gradient(120deg,#073baf,#087bdf);
+ color:white;
+ padding:24px 15px;
+ text-align:center;
+ border-radius:0 0 28px 28px;
+ box-shadow:0 8px 22px #164c9b55;
 }
-
-.page {
-  width: 100%;
-  max-width: 1170px;
-  margin: auto;
-  position: relative;
+.logo{
+ width:76px;height:76px;
+ margin:auto;
+ border-radius:22px;
+ background:linear-gradient(145deg,#fff,#b9dcff);
+ color:#0755c9;
+ display:grid;place-items:center;
+ font-size:32px;font-weight:900;
+ box-shadow:0 7px 15px #001b5866;
 }
-
-.design {
-  display: block;
-  width: 100%;
-  height: auto;
-  min-height: 200px;
+header h1{margin:12px 0 5px;font-size:27px}
+header p{margin:5px;font-weight:bold}
+.tag{
+ display:inline-block;
+ background:#ffdf35;color:#172b57;
+ padding:9px 18px;
+ border-radius:30px;
+ font-weight:bold;
+ margin-top:12px;
 }
-
-.hotspot {
-  position: absolute;
-  display: block;
-  background: transparent;
-  cursor: pointer;
+.container{max-width:1000px;margin:auto;padding:18px}
+.section-title{
+ text-align:center;
+ font-size:22px;
+ font-weight:bold;
+ margin:18px 0;
 }
-
-.whatsapp {
-  left: 69%;
-  top: 79%;
-  width: 29%;
-  height: 10%;
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:13px;
 }
-
-.home {
-  left: 2%;
-  top: 91%;
-  width: 18%;
-  height: 8%;
+.tile{
+ min-height:112px;
+ border-radius:20px;
+ padding:17px 8px;
+ text-align:center;
+ text-decoration:none;
+ color:white;
+ font-weight:bold;
+ box-shadow:0 7px 0 #0002,0 10px 18px #153d7540;
+ transition:.15s;
 }
-
-.services {
-  left: 22%;
-  top: 91%;
-  width: 18%;
-  height: 8%;
+.tile:active{transform:translateY(5px);box-shadow:0 2px 0 #0002}
+.tile .emoji{display:block;font-size:34px;margin-bottom:9px}
+.blue{background:linear-gradient(145deg,#168bff,#0645bd)}
+.green{background:linear-gradient(145deg,#36d878,#078b48)}
+.pink{background:linear-gradient(145deg,#ff62a5,#c51671)}
+.orange{background:linear-gradient(145deg,#ffb32c,#e66a00)}
+.purple{background:linear-gradient(145deg,#a66aff,#6325c7)}
+.cyan{background:linear-gradient(145deg,#31d6e8,#0879b8)}
+.info{
+ background:white;
+ margin-top:20px;
+ padding:18px;
+ border-radius:20px;
+ box-shadow:0 5px 18px #244d8020;
+ text-align:center;
 }
-
-.about {
-  left: 42%;
-  top: 91%;
-  width: 18%;
-  height: 8%;
+.info h3{margin-top:0;color:#0755c9}
+.contact{
+ display:block;
+ text-decoration:none;
+ background:#13a957;
+ color:white;
+ font-weight:bold;
+ padding:14px;
+ border-radius:14px;
+ margin-top:14px;
 }
-
-.contact {
-  left: 62%;
-  top: 91%;
-  width: 16%;
-  height: 8%;
+footer{
+ text-align:center;
+ background:#082d72;
+ color:white;
+ padding:18px;
+ margin-top:25px;
 }
-
-.admin {
-  left: 78%;
-  top: 91%;
-  width: 21%;
-  height: 8%;
+@media(min-width:650px){
+ .grid{grid-template-columns:repeat(3,1fr)}
+ header h1{font-size:35px}
 }
 </style>
 </head>
 
 <body>
 
-<main class="page">
+<header>
+ <div class="logo">SC</div>
+ <h1>सेवा कॉम्पुटर नेरड</h1>
+ <p>Digital Service Centre</p>
+ <div class="tag">सेवा तुमच्या दारी, विश्वास आमचा</div>
+</header>
 
-<img
-  class="design"
-  src="./home-design.png"
-  alt="Seva Computer Nerad Home Page"
-  onerror="this.alt='home-design.png इमेज सापडली नाही'; this.style.display='none';"
->
+<main class="container">
 
-<a class="hotspot whatsapp"
-href="https://wa.me/919623557142"
-target="_blank"
-rel="noopener"
-aria-label="WhatsApp संपर्क"></a>
+ <div class="section-title">🌟 आमच्या डिजिटल सेवा</div>
 
-<a class="hotspot home"
-href="./index.html"
-aria-label="Home"></a>
+ <div class="grid">
 
-<a class="hotspot services"
-href="./services.html"
-aria-label="Services"></a>
+  <a class="tile blue" href="services.html">
+   <span class="emoji">🏛️</span>
+   योजना व सेवा
+  </a>
 
-<a class="hotspot about"
-href="./about.html"
-aria-label="About"></a>
+  <a class="tile green" href="customer.html">
+   <span class="emoji">📝</span>
+   ग्राहक रजिस्ट्रेशन
+  </a>
 
-<a class="hotspot contact"
-href="https://wa.me/919623557142"
-target="_blank"
-rel="noopener"
-aria-label="Contact"></a>
+  <a class="tile pink" href="counter-services.html?type=mobile">
+   <span class="emoji">📱</span>
+   मोबाईल रिचार्ज
+  </a>
 
-<a class="hotspot admin"
-href="./admin.html"
-aria-label="Admin Login"></a>
+  <a class="tile orange" href="counter-services.html?type=dth">
+   <span class="emoji">📡</span>
+   DTH रिचार्ज
+  </a>
+
+  <a class="tile purple" href="counter-services.html?type=light">
+   <span class="emoji">⚡</span>
+   इलेक्ट्रिक बिल
+  </a>
+
+  <a class="tile cyan" href="about.html">
+   <span class="emoji">🏢</span>
+   आमच्याबद्दल
+  </a>
+
+  <a class="tile blue" href="admin.html">
+   <span class="emoji">🔐</span>
+   Admin Login
+  </a>
+
+ </div>
+
+ <div class="info">
+  <h3>🏠 घरपोच सेवा उपलब्ध</h3>
+  <p>आपल्या गावात डिजिटल सेवा आता आपल्या दारी!</p>
+  <a class="contact"
+     href="https://wa.me/919623557142"
+     target="_blank">
+     WhatsApp संपर्क – 9623557142
+  </a>
+ </div>
 
 </main>
+
+<footer>
+ © Seva Computer Nerad
+</footer>
 
 </body>
 </html>
