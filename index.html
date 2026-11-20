@@ -7,99 +7,80 @@
 <title>Seva Computer Nerad</title>
 
 <style>
-*{
-  box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
 
-html,body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  background:#061b58;
-  font-family:Arial,sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  background: #061b58;
+  font-family: Arial, sans-serif;
 }
 
-.page{
-  width:100%;
-  max-width:1170px;
-  margin:0 auto;
-  position:relative;
-  overflow:hidden;
+.page {
+  width: 100%;
+  max-width: 1170px;
+  margin: auto;
+  position: relative;
 }
 
-.design{
-  display:block;
-  width:100%;
-  height:auto;
+.design {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
 }
 
-.hotspot{
-  position:absolute;
-  display:block;
-  border:0;
-  background:transparent;
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
+.hotspot {
+  position: absolute;
+  display: block;
+  background: transparent;
+  cursor: pointer;
 }
 
-/* WhatsApp contact */
-.whatsapp{
-  left:69%;
-  top:79%;
-  width:29%;
-  height:10%;
+.whatsapp {
+  left: 69%;
+  top: 79%;
+  width: 29%;
+  height: 10%;
 }
 
-/* Home button */
-.home{
-  left:2%;
-  top:91%;
-  width:18%;
-  height:8%;
+.home {
+  left: 2%;
+  top: 91%;
+  width: 18%;
+  height: 8%;
 }
 
-/* Service list */
-.services{
-  left:22%;
-  top:91%;
-  width:18%;
-  height:8%;
+.services {
+  left: 22%;
+  top: 91%;
+  width: 18%;
+  height: 8%;
 }
 
-/* About */
-.about{
-  left:42%;
-  top:91%;
-  width:18%;
-  height:8%;
+.about {
+  left: 42%;
+  top: 91%;
+  width: 18%;
+  height: 8%;
 }
 
-/* Contact */
-.contact{
-  left:62%;
-  top:91%;
-  width:16%;
-  height:8%;
+.contact {
+  left: 62%;
+  top: 91%;
+  width: 16%;
+  height: 8%;
 }
 
-/* Admin Login */
-.admin{
-  left:78%;
-  top:91%;
-  width:21%;
-  height:8%;
-}
-
-.hotspot:focus-visible{
-  outline:3px solid white;
-  outline-offset:-4px;
-}
-
-@media(min-width:1171px){
-  .page{
-    box-shadow:0 0 30px #0008;
-  }
+.admin {
+  left: 78%;
+  top: 91%;
+  width: 21%;
+  height: 8%;
 }
 </style>
 </head>
@@ -108,51 +89,40 @@ html,body{
 
 <main class="page">
 
-  <img
-    class="design"
-    src="./home-design.jpeg"
-    alt="Seva Computer Nerad Digital Service Centre"
-  >
+<img
+  class="design"
+  src="./home-design.png"
+  alt="Seva Computer Nerad Home Page"
+  onerror="this.alt='home-design.png इमेज सापडली नाही'; this.style.display='none';"
+>
 
-  <a
-    class="hotspot whatsapp"
-    href="https://wa.me/919623557142"
-    target="_blank"
-    rel="noopener"
-    aria-label="WhatsApp संपर्क"
-  ></a>
+<a class="hotspot whatsapp"
+href="https://wa.me/919623557142"
+target="_blank"
+rel="noopener"
+aria-label="WhatsApp संपर्क"></a>
 
-  <a
-    class="hotspot home"
-    href="./index.html"
-    aria-label="होम"
-  ></a>
+<a class="hotspot home"
+href="./index.html"
+aria-label="Home"></a>
 
-  <a
-    class="hotspot services"
-    href="./services.html"
-    aria-label="सेवा सूची"
-  ></a>
+<a class="hotspot services"
+href="./services.html"
+aria-label="Services"></a>
 
-  <a
-    class="hotspot about"
-    href="./about.html"
-    aria-label="आमच्याबद्दल"
-  ></a>
+<a class="hotspot about"
+href="./about.html"
+aria-label="About"></a>
 
-  <a
-    class="hotspot contact"
-    href="https://wa.me/919623557142"
-    target="_blank"
-    rel="noopener"
-    aria-label="संपर्क"
-  ></a>
+<a class="hotspot contact"
+href="https://wa.me/919623557142"
+target="_blank"
+rel="noopener"
+aria-label="Contact"></a>
 
-  <a
-    class="hotspot admin"
-    href="./admin.html"
-    aria-label="Admin Login"
-  ></a>
+<a class="hotspot admin"
+href="./admin.html"
+aria-label="Admin Login"></a>
 
 </main>
 
