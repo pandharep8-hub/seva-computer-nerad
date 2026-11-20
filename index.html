@@ -2,338 +2,159 @@
 <html lang="mr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#075985">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Seva Computer">
-<link rel="manifest" href="./manifest.json">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#003b9b">
 <title>Seva Computer Nerad</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:Arial,"Noto Sans Devanagari",sans-serif;
-  background:linear-gradient(135deg,#06152e,#075985,#0e7490);
-  color:white;min-height:100vh;
+*{
+  box-sizing:border-box;
 }
-header{
-  text-align:center;padding:25px 12px;
-  background:linear-gradient(145deg,#082f49,#0284c7);
-  box-shadow:0 8px 25px #0008;
-  border-bottom:2px solid #38bdf8;
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  min-height:100%;
+  background:#061b58;
+  font-family:Arial,sans-serif;
 }
-.logo{font-size:29px;font-weight:900;text-shadow:3px 4px 5px #0009}
-header p{margin-top:8px;color:#e0f2fe}
-nav{
-  display:flex;justify-content:center;flex-wrap:wrap;gap:9px;
-  padding:13px 8px;background:#06152eee;
-  position:sticky;top:0;z-index:10;
+
+.page{
+  width:100%;
+  max-width:1170px;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
 }
-nav a{
-  color:white;text-decoration:none;padding:10px 13px;
-  border-radius:12px;
-  background:linear-gradient(145deg,#0ea5e9,#075985);
-  box-shadow:3px 4px 7px #0008;font-size:13px;font-weight:bold;
+
+.design{
+  display:block;
+  width:100%;
+  height:auto;
 }
-.container{max-width:1150px;margin:auto;padding:18px 13px}
-.hero{
-  text-align:center;padding:32px 15px;
-  background:linear-gradient(145deg,#ffffff28,#ffffff08);
-  border:1px solid #ffffff45;border-radius:25px;
-  box-shadow:0 15px 35px #0007;
+
+.hotspot{
+  position:absolute;
+  display:block;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
-.hero h1{font-size:29px;color:#fef08a;text-shadow:2px 3px 5px #000}
-.hero p{margin:12px 0;line-height:1.7}
-.btn{
-  display:inline-block;margin:8px 4px;padding:12px 18px;
-  border-radius:13px;border:0;cursor:pointer;
-  background:linear-gradient(145deg,#facc15,#f97316);
-  color:#172554;text-decoration:none;font-weight:900;
-  box-shadow:4px 5px 8px #0008;
+
+/* WhatsApp contact */
+.whatsapp{
+  left:69%;
+  top:79%;
+  width:29%;
+  height:10%;
 }
-.btn-blue{background:linear-gradient(145deg,#38bdf8,#0369a1);color:white}
-.btn-green{background:linear-gradient(145deg,#4ade80,#15803d);color:white}
-.section-title{
-  text-align:center;margin:30px 0 18px;
-  font-size:23px;color:#fef08a;text-shadow:2px 3px 5px #000;
+
+/* Home button */
+.home{
+  left:2%;
+  top:91%;
+  width:18%;
+  height:8%;
 }
-.grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:17px;
-}
-.card{
-  background:linear-gradient(145deg,#ffffff28,#ffffff0b);
-  border:1px solid #ffffff45;border-radius:22px;
-  padding:20px 14px;text-align:center;
-  box-shadow:7px 9px 18px #0007;transition:.25s;
-}
-.card:hover{transform:translateY(-5px)}
-.emoji{font-size:42px;margin-bottom:10px}
-.card h3{font-size:18px;margin-bottom:9px;color:#fef08a}
-.card p{font-size:14px;line-height:1.6;color:#e0f2fe}
-.search{
-  width:100%;padding:13px;border-radius:12px;
-  border:1px solid #bae6fd;font-size:16px;margin-bottom:15px;
-  outline:none;
-}
+
+/* Service list */
 .services{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
+  left:22%;
+  top:91%;
+  width:18%;
+  height:8%;
 }
-.service{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:8px;padding:14px 12px;border-radius:14px;
-  background:linear-gradient(145deg,#ffffff25,#ffffff0c);
-  border:1px solid #ffffff40;box-shadow:3px 5px 10px #0005;
+
+/* About */
+.about{
+  left:42%;
+  top:91%;
+  width:18%;
+  height:8%;
 }
-.service-name{font-size:14px;line-height:1.5}
-.price{
-  white-space:nowrap;color:#fef08a;font-weight:900;
-  background:#082f49;padding:7px 10px;border-radius:9px;
+
+/* Contact */
+.contact{
+  left:62%;
+  top:91%;
+  width:16%;
+  height:8%;
 }
-.notice{
-  text-align:center;padding:22px;margin-top:28px;
-  background:linear-gradient(145deg,#164e63,#0c4a6e);
-  border-radius:20px;box-shadow:5px 7px 15px #0007;
+
+/* Admin Login */
+.admin{
+  left:78%;
+  top:91%;
+  width:21%;
+  height:8%;
 }
-footer{
-  text-align:center;padding:25px 12px;
-  background:#06152e;margin-top:30px;
-  line-height:1.8;color:#bae6fd;
+
+.hotspot:focus-visible{
+  outline:3px solid white;
+  outline-offset:-4px;
 }
-.modal{
-  display:none;position:fixed;inset:0;background:#000c;
-  z-index:99;justify-content:center;align-items:center;padding:15px;
-}
-.modal-box{
-  background:white;color:#123;padding:22px;border-radius:20px;
-  width:100%;max-width:350px;text-align:center;
-}
-.modal-box img{width:220px;max-width:100%;margin:15px auto}
-.close{
-  float:right;border:0;background:#dc2626;color:white;
-  padding:7px 12px;border-radius:8px;cursor:pointer;
-}
-@media(max-width:480px){
-  .logo{font-size:23px}
-  .hero h1{font-size:24px}
-  nav a{font-size:12px;padding:9px 10px}
+
+@media(min-width:1171px){
+  .page{
+    box-shadow:0 0 30px #0008;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">🌐 सेवा कॉम्प्युटर नेरड</div>
-  <p>आपली डिजिटल सेवा केंद्र</p>
-  <p>📞 संपर्क: 9623557142</p>
-</header>
+<main class="page">
 
-<nav>
-  <a href="#home">🏠 Home</a>
-  <a href="#services">📋 योजना व दर</a>
-  <a href="register.html">📝 ग्राहक नोंदणी</a>
-  <a href="recharge.html">📱 Recharge</a>
-  <a href="admin.html">🔐 Admin Login</a>
-</nav>
+  <img
+    class="design"
+    src="./home-design.png"
+    alt="Seva Computer Nerad Digital Service Centre"
+  >
 
-<main class="container">
+  <a
+    class="hotspot whatsapp"
+    href="https://wa.me/919623557142"
+    target="_blank"
+    rel="noopener"
+    aria-label="WhatsApp संपर्क"
+  ></a>
 
-<section class="hero" id="home">
-  <h1>सेवा तुमच्या दारी!</h1>
-  <p style="color:#fef08a;font-weight:bold">विश्वास आमचा • सेवा तुमची</p>
-  <p>
-    सरकारी योजना, डिजिटल सेवा, कार्ड, eKYC आणि
-    विविध शासकीय फॉर्मसाठी संपर्क करा.
-  </p>
-  <a class="btn" href="register.html">📝 ग्राहक नोंदणी करा</a>
-  <a class="btn btn-blue" href="#services">सर्व योजना व दर पहा</a>
-</section>
+  <a
+    class="hotspot home"
+    href="./index.html"
+    aria-label="होम"
+  ></a>
 
-<h2 class="section-title">⭐ आमच्या सुविधा</h2>
+  <a
+    class="hotspot services"
+    href="./services.html"
+    aria-label="सेवा सूची"
+  ></a>
 
-<section class="grid">
+  <a
+    class="hotspot about"
+    href="./about.html"
+    aria-label="आमच्याबद्दल"
+  ></a>
 
-  <div class="card">
-    <div class="emoji">📝</div>
-    <h3>ग्राहक नोंदणी</h3>
-    <p>आपली माहिती भरून आवश्यक सेवेची नोंदणी करा.</p>
-    <a class="btn" href="register.html">नोंदणी करा</a>
-  </div>
+  <a
+    class="hotspot contact"
+    href="https://wa.me/919623557142"
+    target="_blank"
+    rel="noopener"
+    aria-label="संपर्क"
+  ></a>
 
-  <div class="card">
-    <div class="emoji">🔐</div>
-    <h3>Admin Login</h3>
-    <p>Admin साठी स्वतंत्र लॉगिन आणि व्यवस्थापन.</p>
-    <a class="btn btn-blue" href="admin.html">Admin Login</a>
-  </div>
-
-  <div class="card">
-    <div class="emoji">🏡</div>
-    <h3>घरपोच सेवा</h3>
-    <p>नेरड व परिसरातील नागरिकांसाठी घरपोच डिजिटल सेवा.</p>
-    <a class="btn btn-green"
-       href="https://wa.me/919623557142?text=मला%20घरपोच%20सेवा%20हवी%20आहे">
-       घरपोच सेवा मागवा
-    </a>
-  </div>
-
-  <div class="card">
-    <div class="emoji">📱</div>
-    <h3>Recharge & Bills</h3>
-    <p>Recharge आणि इतर बिल सेवांसाठी संपर्क करा.</p>
-    <a class="btn btn-blue" href="recharge.html">Recharge</a>
-  </div>
-
-  <div class="card">
-    <div class="emoji">💳</div>
-    <h3>QR Code Payment</h3>
-    <p>QR Code द्वारे पेमेंट करण्याची सुविधा.</p>
-    <button class="btn" onclick="openQR()">QR Code पहा</button>
-  </div>
-
-  <div class="card">
-    <div class="emoji">💬</div>
-    <h3>WhatsApp संपर्क</h3>
-    <p>सेवेची माहिती आणि चौकशीसाठी संपर्क करा.</p>
-    <a class="btn btn-green" href="https://wa.me/919623557142">
-      WhatsApp करा
-    </a>
-  </div>
-
-</section>
-
-<h2 class="section-title" id="services">📋 सर्व 29 योजना, सेवा व दर</h2>
-
-<input class="search" id="serviceSearch"
-       type="search" placeholder="🔍 योजना किंवा सेवा शोधा..."
-       oninput="showServices()">
-
-<div class="services" id="serviceList"></div>
-
-<div class="notice">
-  <h2>🏡 सेवा तुमच्या दारी, विश्वास आमचा!</h2>
-  <p style="margin-top:10px">नेरड व परिसरातील नागरिकांसाठी डिजिटल सेवा.</p>
-  <a class="btn btn-green" href="https://wa.me/919623557142">
-    आत्ताच संपर्क करा
-  </a>
-</div>
+  <a
+    class="hotspot admin"
+    href="./admin.html"
+    aria-label="Admin Login"
+  ></a>
 
 </main>
-
-<footer>
-  <h3>🌐 Seva Computer Nerad</h3>
-  <p>📞 9623557142</p>
-  <p>नेरड | ता. वणी | जि. यवतमाळ</p>
-  <p>© 2026 Seva Computer Nerad</p>
-</footer>
-
-<!-- QR PAYMENT POPUP -->
-<div class="modal" id="qrModal">
-  <div class="modal-box">
-    <button class="close" onclick="closeQR()">✖ बंद</button>
-    <h2>QR Code Payment</h2>
-    <p>पेमेंट करण्यासाठी QR Code Scan करा.</p>
-    <img src="qr.jpeg" alt="Payment QR Code"
-      onerror="this.style.display='none';document.getElementById('qrError').style.display='block'">
-    <p id="qrError" style="display:none;color:red">
-      qr.jpeg फाईल सापडली नाही. ती index.html सोबत ठेवा.
-    </p>
-    <p>पेमेंट केल्यानंतर WhatsApp वर कळवा.</p>
-    <a class="btn btn-green"
-       href="https://wa.me/919623557142?text=मी%20QR%20द्वारे%20पेमेंट%20केले%20आहे">
-       WhatsApp वर कळवा
-    </a>
-  </div>
-</div>
-
-<script>
-const services = [
-  ["महा ID कार्ड",70],
-  ["ABHA कार्ड",50],
-  ["आयुष्मान कार्ड",50],
-  ["आयुष्मान कार्ड दुरुस्ती",50],
-  ["मतदान कार्ड",100],
-  ["ई-श्रम कार्ड",100],
-  ["PAN कार्ड",250],
-  ["PAN कार्ड दुरुस्ती / हरवलेले",300],
-  ["पीक पाहणी",100],
-  ["खरीप पीक विमा",100],
-  ["रब्बी पीक विमा",100],
-  ["PM किसान नोंदणी",250],
-  ["महिला शेतकरी प्रमाणपत्र",50],
-  ["महिला शेतकरी प्रमाणपत्र + लॅमिनेशन",80],
-  ["Farmer ID",50],
-  ["MahaDBT Farmer योजना",70],
-  ["लाडकी बहीण योजना फॉर्म",50],
-  ["सरकारी / निमसरकारी नोकरी फॉर्म",100],
-  ["शिष्यवृत्ती फॉर्म",100],
-  ["प्रोत्साहन / अनुदान / कोणतीही eKYC",50],
-  ["झेरॉक्स B&W",5],
-  ["झेरॉक्स Colour",10],
-  ["प्रिंट B&W",10],
-  ["Colour Print",20],
-  ["A4 लॅमिनेशन",30],
-  ["ID कार्ड लॅमिनेशन",10],
-  ["बांधकाम कामगार योजना",100],
-  ["लाडकी बहीण eKYC",50],
-  ["MPSC / रेल्वे / पोलीस / तलाठी / आरोग्य व सर्व शासकीय फॉर्म",100]
-];
-
-function showServices(){
-  const search = document.getElementById("serviceSearch").value.toLowerCase();
-  const list = document.getElementById("serviceList");
-  const filtered = services.filter(item =>
-    item[0].toLowerCase().includes(search)
-  );
-
-  list.innerHTML = "";
-
-  if(filtered.length === 0){
-    list.innerHTML = "<p>सेवा सापडली नाही.</p>";
-    return;
-  }
-
-  filtered.forEach((item,index)=>{
-    const div = document.createElement("div");
-    div.className = "service";
-
-    const name = document.createElement("span");
-    name.className = "service-name";
-    name.textContent = (index+1) + ". " + item[0];
-
-    const price = document.createElement("span");
-    price.className = "price";
-    price.textContent = "₹" + item[1];
-
-    div.appendChild(name);
-    div.appendChild(price);
-    list.appendChild(div);
-  });
-}
-
-function openQR(){
-  document.getElementById("qrModal").style.display="flex";
-}
-function closeQR(){
-  document.getElementById("qrModal").style.display="none";
-}
-document.getElementById("qrModal").addEventListener("click",function(e){
-  if(e.target===this) closeQR();
-});
-
-showServices();
-
-if("serviceWorker" in navigator){
-  window.addEventListener("load",function(){
-    navigator.serviceWorker.register("./sw.js").catch(function(error){
-      console.log("Service Worker:",error);
-    });
-  });
-}
-</script>
 
 </body>
 </html>
