@@ -480,33 +480,40 @@ return "नमस्कार "+(c.name||"ग्राहक")+" जी 🙏"+
 "\nWhatsApp: 9623557142";
 }
 
-function sendQRToCustomer(c){
+function customerPaymentMessage(c){
 
-  const mobile = cleanMobile(c.mobile);
+  const paid = customerPaid(c);
 
-  if(mobile.length !== 10){
-    alert("ग्राहकाचा मोबाईल नंबर योग्य नाही.");
-    return;
+  let message =
+    "नमस्कार " + (c.name || "ग्राहक") + " जी 🙏\n\n" +
+    "आपली सेवा: " + (c.service || "-") + "\n\n";
+
+  if(paid){
+
+    message +=
+      "✅ आपले पेमेंट यशस्वीरीत्या मिळाले आहे.\n";
+
+  }else{
+
+    message +=
+      "⏳ आपले पेमेंट बाकी आहे.\n\n" +
+      "💳 पेमेंट QR कोड:\n" +
+      QR_IMAGE_URL + "\n";
+
   }
 
-  const message =
-    "नमस्कार " + (c.name || "ग्राहक") + " जी 🙏\n\n" +
-    "सेवा: " + (c.service || "-") + "\n" +
-    "सेवा शुल्क: " + money(c.serviceAmount ?? c.amount ?? 0) + "\n" +
-    "घरपोच शुल्क: " + money(c.deliveryCharge || 0) + "\n" +
-    "एकूण पेमेंट: " + money(customerTotal(c)) + "\n\n" +
-    "पेमेंट QR कोड:\n" + QR_IMAGE_URL + "\n\n" +
-    "आमचे Seva Computer App:\n" + APP_LINK + "\n\n" +
-    "सेवा कॉम्पुटर नेरड\nWhatsApp: 9623557142";
+  message +=
+    "\nआमचे Seva Computer App:\n" +
+    APP_LINK +
+    "\n\nसेवा कॉम्पुटर नेरड\n" +
+    "WhatsApp: 9623557142";
 
-  const whatsappURL =
-    "https://wa.me/91" + mobile +
-    "?text=" + encodeURIComponent(message);
-
-  window.open(whatsappURL, "_blank");
+  return message;
 }
+
   
-     
+
+      
 
 
 
