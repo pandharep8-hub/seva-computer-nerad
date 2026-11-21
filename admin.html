@@ -480,48 +480,62 @@ return "नमस्कार "+(c.name||"ग्राहक")+" जी 🙏"+
 "\nWhatsApp: 9623557142";
 }
 
-// SEND QR TO SELECTED CUSTOMER
 function sendQRToCustomer(c){
-const mobile=cleanMobile(c.mobile);
 
-if(mobile.length!==10){
-alert("या ग्राहकाचा मोबाईल नंबर योग्य नाही.");
-return;
+  const mobile = cleanMobile(c.mobile);
+
+  if(mobile.length !== 10){
+    alert("या ग्राहकाचा मोबाईल नंबर योग्य नाही.");
+    return;
+  }
+
+  const message = customerPaymentMessage(c);
+
+  const whatsappURL =
+    "https://wa.me/91" + mobile +
+    "?text=" + encodeURIComponent(message);
+
+  if(
+    qrFile &&
+    navigator.share &&
+    navigator.canShare &&
+    navigator.canShare({files:[qrFile]})
+  ){
+
+    try{
+
+      const sharePromise = navigator.share({
+        title:"Seva Computer Payment QR",
+        text:message,
+        files:[qrFile]
+      });
+
+      sharePromise.then(()=>{
+        console.log("Share प्रक्रिया पूर्ण झाली.");
+      }).catch(error=>{
+
+        if(error.name !== "AbortError"){
+          alert("QR Share झाले नाही. WhatsApp चॅट उघडत आहे.");
+          window.location.href = whatsappURL;
+        }
+
+      });
+
+    }catch(error){
+      window.location.href = whatsappURL;
+    }
+
+    return;
+  }
+
+  window.open(whatsappURL,"_blank");
 }
 
-const message=customerPaymentMessage(c);
 
-if(!confirm(
-(c.name||"ग्राहक")+" ("+mobile+") यांना QR आणि पेमेंट संदेश पाठवायचा आहे का?"
-)){
-return;
-}
 
-// Share image file and message through Android share sheet.
-// Admin must select the correct WhatsApp contact.
-if(qrFile&&navigator.share&&navigator.canShare&&navigator.canShare({files:[qrFile]})){
-try{
-const shareData={
-title:"Seva Computer - Payment QR",
-text:message,
-files:[qrFile]
-};
-const sharePromise=navigator.share(shareData);
-sharePromise.then(()=>{
-alert("Share प्रक्रिया पूर्ण झाली. WhatsApp मध्ये योग्य ग्राहक निवडून Send करा.");
-}).catch(e=>{
-if(e.name!=="AbortError")alert("QR Share अयशस्वी: "+e.message);
-});
-return;
-}catch(e){
-console.warn("File share error:",e);
-}
-}
 
-// Fallback: opens the exact customer's WhatsApp chat with payment details and QR link.
-const url="https://wa.me/91"+mobile+"?text="+encodeURIComponent(message);
-window.open(url,"_blank");
-}
+
+
 
 // CUSTOMER LIST
 function renderCustomers(){
