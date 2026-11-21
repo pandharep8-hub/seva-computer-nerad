@@ -485,51 +485,29 @@ function sendQRToCustomer(c){
   const mobile = cleanMobile(c.mobile);
 
   if(mobile.length !== 10){
-    alert("या ग्राहकाचा मोबाईल नंबर योग्य नाही.");
+    alert("ग्राहकाचा मोबाईल नंबर योग्य नाही.");
     return;
   }
 
-  const message = customerPaymentMessage(c);
+  const message =
+    "नमस्कार " + (c.name || "ग्राहक") + " जी 🙏\n\n" +
+    "सेवा: " + (c.service || "-") + "\n" +
+    "सेवा शुल्क: " + money(c.serviceAmount ?? c.amount ?? 0) + "\n" +
+    "घरपोच शुल्क: " + money(c.deliveryCharge || 0) + "\n" +
+    "एकूण पेमेंट: " + money(customerTotal(c)) + "\n\n" +
+    "पेमेंट QR कोड:\n" + QR_IMAGE_URL + "\n\n" +
+    "आमचे Seva Computer App:\n" + APP_LINK + "\n\n" +
+    "सेवा कॉम्पुटर नेरड\nWhatsApp: 9623557142";
 
   const whatsappURL =
     "https://wa.me/91" + mobile +
     "?text=" + encodeURIComponent(message);
 
-  if(
-    qrFile &&
-    navigator.share &&
-    navigator.canShare &&
-    navigator.canShare({files:[qrFile]})
-  ){
-
-    try{
-
-      const sharePromise = navigator.share({
-        title:"Seva Computer Payment QR",
-        text:message,
-        files:[qrFile]
-      });
-
-      sharePromise.then(()=>{
-        console.log("Share प्रक्रिया पूर्ण झाली.");
-      }).catch(error=>{
-
-        if(error.name !== "AbortError"){
-          alert("QR Share झाले नाही. WhatsApp चॅट उघडत आहे.");
-          window.location.href = whatsappURL;
-        }
-
-      });
-
-    }catch(error){
-      window.location.href = whatsappURL;
-    }
-
-    return;
-  }
-
-  window.open(whatsappURL,"_blank");
+  window.open(whatsappURL, "_blank");
 }
+  
+     
+
 
 
 
