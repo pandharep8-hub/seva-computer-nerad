@@ -7,78 +7,83 @@
 <title>Seva Computer Nerad</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef5ff;color:#172554}
-header{background:linear-gradient(135deg,#075985,#4f46e5,#9333ea);color:white;padding:27px 15px;text-align:center;border-radius:0 0 28px 28px}
-header h1{font-size:27px;margin:5px}
-header p{margin:8px 0}
-main{max-width:950px;margin:auto;padding:15px}
-.welcome{background:white;padding:19px;border-radius:18px;margin:15px 0;text-align:center;box-shadow:0 5px 18px #0001}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.tile{padding:20px 10px;text-align:center;border-radius:18px;color:white;text-decoration:none;font-weight:bold;box-shadow:0 5px 12px #0002;min-height:105px;display:flex;flex-direction:column;justify-content:center;gap:8px}
-.tile span{font-size:29px}
-.t1{background:linear-gradient(135deg,#0284c7,#2563eb)}
-.t2{background:linear-gradient(135deg,#059669,#0d9488)}
-.t3{background:linear-gradient(135deg,#ea580c,#f59e0b)}
-.t4{background:linear-gradient(135deg,#7c3aed,#a855f7)}
-.t5{background:linear-gradient(135deg,#db2777,#f43f5e)}
-.t6{background:linear-gradient(135deg,#475569,#0f172a)}
-.qr{background:white;border-radius:18px;padding:20px;text-align:center;margin:18px 0;box-shadow:0 4px 15px #0001}
-.qr img{width:230px;max-width:100%;height:auto;border-radius:12px}
-.qr h2{color:#075985}
-.action{display:block;background:#16a34a;color:white;text-decoration:none;padding:14px;border-radius:12px;margin:12px 0;font-weight:bold}
-footer{text-align:center;padding:22px;color:#64748b;font-size:13px}
-@media(min-width:650px){.grid{grid-template-columns:repeat(3,1fr)}}
+body{margin:0;font-family:Arial,sans-serif;background:#eef6ff;color:#123}
+header{background:linear-gradient(135deg,#075985,#0e7490);color:white;text-align:center;padding:25px 12px;border-radius:0 0 25px 25px}
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0}
+.container{max-width:650px;margin:20px auto;padding:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.card{display:block;text-decoration:none;color:#123;background:white;border-radius:18px;padding:22px 10px;text-align:center;box-shadow:0 4px 14px #00000012;border:1px solid #dce9f5}
+.card .emoji{font-size:35px}
+.card h3{margin:10px 0 5px;font-size:17px}
+.card p{font-size:12px;color:#567;margin:0}
+.card:active{transform:scale(.97)}
+.delivery{margin-top:18px;background:#dcfce7;color:#166534;padding:17px;border-radius:16px;text-align:center}
+.delivery a{display:inline-block;margin-top:10px;background:#16a34a;color:white;padding:11px 18px;border-radius:10px;text-decoration:none}
+footer{text-align:center;padding:22px;color:#567;font-size:13px}
+.admin{display:block;text-align:center;margin-top:16px;color:#075985}
 </style>
 </head>
 <body>
 
 <header>
 <h1>सेवा कॉम्पुटर नेरड</h1>
-<p>Digital Services | Xerox | Print | Lamination</p>
-<p>सेवा तुमच्या दारी, विश्वास आमचा</p>
+<p>आपली सेवा, आपल्या गावात!</p>
+<p>📞 9623557142</p>
 </header>
 
-<main>
-<div class="welcome">
-<h2>आपले स्वागत आहे!</h2>
-<p>शासकीय योजना व डिजिटल सेवा आता एकाच ठिकाणी.</p>
-<a class="action" href="customer.html">📝 ग्राहक नोंदणी करा</a>
-</div>
-
-<h3>आमच्या सेवा</h3>
+<div class="container">
 <div class="grid">
-<a class="tile t1" href="customer.html"><span>🪪</span>महा ID व इतर कार्ड</a>
-<a class="tile t2" href="customer.html"><span>🌾</span>शेतकरी योजना</a>
-<a class="tile t3" href="customer.html"><span>🏛️</span>शासकीय योजना</a>
-<a class="tile t4" href="customer.html"><span>📄</span>ऑनलाइन फॉर्म</a>
-<a class="tile t5" href="customer.html"><span>🖨️</span>Xerox / Print</a>
-<a class="tile t6" href="customer.html"><span>💳</span>इतर डिजिटल सेवा</a>
+
+<a class="card" href="./customer.html?category=student">
+<div class="emoji">🎓</div>
+<h3>विद्यार्थी / विद्यार्थिनी</h3>
+<p>फक्त विद्यार्थी योजना व अर्ज</p>
+</a>
+
+<a class="card" href="./customer.html?category=farmer">
+<div class="emoji">🌾</div>
+<h3>शेतकरी</h3>
+<p>फक्त शेतकरी योजना व सेवा</p>
+</a>
+
+<a class="card" href="./customer.html?category=women">
+<div class="emoji">👩</div>
+<h3>महिला</h3>
+<p>फक्त महिला योजना</p>
+</a>
+
+<a class="card" href="./counter-services.html">
+<div class="emoji">📱</div>
+<h3>रिचार्ज सुविधा</h3>
+<p>मोबाईल, DTH आणि लाईट बिल</p>
+</a>
+
+<a class="card" href="./customer.html?category=cards">
+<div class="emoji">🪪</div>
+<h3>कार्ड सेवा</h3>
+<p>सर्व प्रकारची कार्ड सेवा</p>
+</a>
+
+<a class="card" href="./customer.html?category=print">
+<div class="emoji">🖨️</div>
+<h3>झेरॉक्स / प्रिंट</h3>
+<p>झेरॉक्स, प्रिंट, लॅमिनेशन, फोटो</p>
+</a>
+
 </div>
 
-<h3>दुकानातील सेवा</h3>
-<div class="grid">
-<a class="tile t2" href="counter-services.html?type=mobile"><span>📱</span>Mobile Recharge</a>
-<a class="tile t3" href="counter-services.html?type=dth"><span>📺</span>DTH Recharge</a>
-<a class="tile t1" href="counter-services.html?type=light"><span>💡</span>वीज बिल</a>
-</div>
-<p style="text-align:center;color:#64748b;font-size:13px">या सेवांसाठी ग्राहकाने दुकानात प्रत्यक्ष उपस्थित राहावे.</p>
-
-<div class="qr">
-<h2>💳 ऑनलाइन पेमेंट</h2>
-<p>Seva Computer Nerad</p>
-<img src="./qr.jpeg" alt="Seva Computer Payment QR">
-<h3>QR Scan करून पेमेंट करा</h3>
-<p>पेमेंट केल्यानंतर पावती Admin ला दाखवा.</p>
+<div class="delivery">
+<h3>🏠 घरपोच सेवा उपलब्ध</h3>
+<p>सेवा तुमच्या दारी, विश्वास आमचा!</p>
+<a href="https://wa.me/919623557142?text=मला%20घरपोच%20सेवा%20पाहिजे" target="_blank">WhatsApp वर संपर्क करा</a>
 </div>
 
-<a class="action" href="https://wa.me/919623557142">📲 WhatsApp वर संपर्क करा</a>
-<a class="action" style="background:#475569" href="about.html">ℹ️ आमच्याबद्दल</a>
-<a class="action" style="background:#7c3aed" href="admin.html">🔐 Admin Login</a>
-</main>
+<a class="admin" href="./admin.html">Admin Login</a>
+</div>
 
 <footer>
-सेवा कॉम्पुटर नेरड<br>
-संपर्क: 9623557142
+सेवा कॉम्पुटर नेरड | नेरड, ता. वणी, जि. यवतमाळ
 </footer>
 
 </body>
