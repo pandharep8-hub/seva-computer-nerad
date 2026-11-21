@@ -5,321 +5,653 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#075985">
 <title>Seva Computer - Admin Panel</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#172554}
-header{background:linear-gradient(120deg,#075985,#4f46e5);color:white;padding:22px 15px;text-align:center}
-header h2{margin:0 0 7px}
-main{max-width:1000px;margin:auto;padding:14px}
-.card{background:white;border-radius:15px;padding:16px;margin:13px 0;box-shadow:0 3px 14px #0001}
-input,select,button{width:100%;padding:12px;margin:6px 0;border:1px solid #cbd5e1;border-radius:9px;font-size:15px}
-button{background:#075985;color:white;border:0;font-weight:bold;cursor:pointer}
-button.green{background:#15803d}
-button.red{background:#dc2626}
-button.orange{background:#ea580c}
-.small{font-size:12px;color:#64748b}
-.hidden{display:none}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.stat{background:#e0f2fe;padding:13px;border-radius:12px}
-.stat b{display:block;font-size:20px;margin-top:5px}
-.item{border:1px solid #dbeafe;border-radius:12px;padding:12px;margin:10px 0}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-@media(min-width:650px){.stats{grid-template-columns:repeat(4,1fr)}}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#071b3b,#075985,#0ea5e9);
+  color:#fff;min-height:100vh;padding:15px
+}
+.container{max-width:1100px;margin:auto}
+.header{text-align:center;padding:18px}
+.header h1{margin:5px;font-size:27px}
+.header p{color:#dbeafe}
+.card{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:18px;padding:18px;margin:15px 0;
+  box-shadow:0 8px 25px rgba(0,0,0,.18);
+  backdrop-filter:blur(12px)
+}
+h2{font-size:20px;margin-top:0}
+input,select,textarea{
+  width:100%;padding:12px;margin:7px 0;
+  border:0;border-radius:10px;background:#fff;
+  color:#123;font-size:15px
+}
+textarea{min-height:100px;resize:vertical}
+button{
+  border:0;border-radius:10px;padding:12px 16px;
+  margin:5px 3px;background:#fbbf24;color:#172554;
+  font-weight:bold;font-size:14px;cursor:pointer
+}
+button.blue{background:#38bdf8;color:#082f49}
+button.green{background:#4ade80;color:#052e16}
+button.red{background:#f87171;color:#450a0a}
+button.white{background:#fff;color:#075985}
+button:disabled{opacity:.5;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.stat{
+  background:rgba(255,255,255,.14);padding:17px;
+  border-radius:14px;text-align:center
+}
+.stat strong{display:block;font-size:24px;margin-top:8px}
+.hidden{display:none!important}
+.small{font-size:13px;color:#dbeafe}
+.customer{
+  background:rgba(255,255,255,.1);
+  padding:13px;border-radius:12px;margin:10px 0;
+  border:1px solid rgba(255,255,255,.2)
+}
+.customer p{margin:5px 0}
+.actions{display:flex;flex-wrap:wrap;gap:5px}
+#imagePreview{
+  display:none;max-width:220px;max-height:220px;
+  object-fit:contain;border-radius:12px;margin-top:10px;
+  border:2px solid white
+}
+label{display:block;margin-top:8px}
+hr{border:0;border-top:1px solid #ffffff44;margin:15px 0}
+@media(max-width:600px){
+  body{padding:8px}
+  .card{padding:13px}
+  .header h1{font-size:23px}
+}
 </style>
 </head>
+
 <body>
-<header>
-<h2>सेवा कॉम्पुटर नेरड</h2>
-<div>Admin Dashboard</div>
-</header>
-<main>
+<div class="container">
 
-<section id="loginBox" class="card">
-<h3>Admin Login</h3>
-<input id="email" type="email" placeholder="Admin Gmail">
-<input id="password" type="password" placeholder="Password">
-<button id="loginBtn">Login करा</button>
-<p id="loginMsg"></p>
-</section>
+<div class="header">
+  <h1>सेवा कॉम्पुटर नेरड</h1>
+  <p>Admin Dashboard</p>
+</div>
 
-<section id="dashboard" class="hidden">
+<!-- LOGIN -->
+<div class="card" id="loginBox">
+  <h2>🔐 Admin Login</h2>
+  <input type="email" id="email" placeholder="Admin Gmail">
+  <input type="password" id="password" placeholder="Password">
+  <button class="white" id="loginBtn">Login करा</button>
+  <p id="loginMsg"></p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
 
 <div class="card">
-<button id="logoutBtn" class="red">Logout</button>
-<h3>Dashboard</h3>
-<div class="stats">
-<div class="stat">आजचे उत्पन्न<b id="todayIncome">₹0</b></div>
-<div class="stat">आजचा खर्च<b id="todayExpense">₹0</b></div>
-<div class="stat">महिन्याचे उत्पन्न<b id="monthIncome">₹0</b></div>
-<div class="stat">महिन्याचा नफा<b id="monthProfit">₹0</b></div>
+  <div class="actions">
+    <h2 style="flex:1">Admin Dashboard</h2>
+    <button class="red" id="logoutBtn">Logout</button>
+  </div>
+  <p class="small">सेवा कॉम्पुटर नेरड - व्यवस्थापन पॅनल</p>
 </div>
+
+<!-- STATS -->
+<div class="grid">
+  <div class="stat">आजचे उत्पन्न<strong id="todayIncome">₹0</strong></div>
+  <div class="stat">आजचा खर्च<strong id="todayExpense">₹0</strong></div>
+  <div class="stat">महिन्याचे उत्पन्न<strong id="monthIncome">₹0</strong></div>
+  <div class="stat">महिन्याचा नफा<strong id="monthProfit">₹0</strong></div>
+</div>
+
+<!-- CUSTOMER ENTRY -->
+<div class="card">
+  <h2>📝 नवीन ग्राहक नोंदणी</h2>
+
+  <input id="cName" placeholder="ग्राहकाचे पूर्ण नाव">
+  <input id="cMobile" type="tel" maxlength="10" placeholder="मोबाईल नंबर">
+
+  <input id="cDistrict" placeholder="जिल्हा">
+  <input id="cTaluka" placeholder="तालुका">
+  <input id="cVillage" placeholder="गाव">
+
+  <input id="cService" placeholder="सेवेचे नाव">
+  <input id="cAmount" type="number" min="0" placeholder="सेवा शुल्क ₹">
+
+  <label>
+    <input type="checkbox" id="cConsent" style="width:auto">
+    ग्राहकाने WhatsApp संदेशासाठी संमती दिली आहे
+  </label>
+
+  <button class="green" id="addCustomer">ग्राहक नोंदणी करा</button>
+  <p id="customerMsg"></p>
+</div>
+
+<!-- EXPENSE -->
+<div class="card">
+  <h2>💰 खर्च नोंदणी</h2>
+  <input id="expenseName" placeholder="खर्चाचे कारण">
+  <input id="expenseAmount" type="number" min="1" placeholder="रक्कम ₹">
+  <input id="expenseDate" type="date">
+  <button class="green" id="addExpense">खर्च सेव्ह करा</button>
+  <p id="expenseMsg"></p>
+</div>
+
+<!-- WHATSAPP ANNOUNCEMENT -->
+<div class="card">
+  <h2>📢 ग्राहकांना फोटो + संदेश</h2>
+
+  <p class="small">
+    WhatsApp संमती दिलेल्या ग्राहकांनाच या Share सुविधेसाठी मोजले जाईल.
+  </p>
+
+  <textarea id="announcement"
+    placeholder="सर्व ग्राहकांसाठी संदेश लिहा..."></textarea>
+
+  <label>फोटो निवडा</label>
+  <input type="file" id="announcementImage" accept="image/*">
+
+  <img id="imagePreview" alt="निवडलेल्या फोटोचे Preview">
+
+  <p id="consentCount" class="small">संमती दिलेले ग्राहक: मोजणी बाकी</p>
+
+  <button class="white" id="shareAllBtn">
+    📲 फोटो + संदेश Share करा
+  </button>
+
+  <p class="small">
+    Share केल्यानंतर WhatsApp किंवा उपलब्ध Share पर्याय निवडा.
+    प्राप्तकर्ते तुम्हाला स्वतः निवडावे लागतील.
+  </p>
+  <p id="shareInfo"></p>
+</div>
+
+<!-- CUSTOMER LIST -->
+<div class="card">
+  <h2>👥 ग्राहक यादी</h2>
+
+  <input id="searchCustomer" placeholder="नाव / मोबाईल / गाव शोधा">
+
+  <div class="actions">
+    <button class="blue" id="refreshBtn">यादी Refresh</button>
+    <button class="white" id="csvBtn">CSV डाउनलोड</button>
+  </div>
+
+  <div id="customerList">ग्राहक यादी लोड होत आहे...</div>
+</div>
+
+<!-- CONSENT LIST -->
+<div class="card">
+  <h2>📱 WhatsApp संमती दिलेले ग्राहक</h2>
+  <div id="waList">यादी लोड होत आहे...</div>
 </div>
 
 <div class="card">
-<h3>प्रत्यक्ष ग्राहक नोंदणी</h3>
-<input id="cName" placeholder="ग्राहकाचे नाव">
-<input id="cMobile" maxlength="10" placeholder="मोबाईल नंबर">
-<input id="cDistrict" placeholder="जिल्हा">
-<input id="cTaluka" placeholder="तालुका">
-<input id="cVillage" placeholder="गाव">
-<input id="cService" placeholder="सेवेचे नाव">
-<input id="cAmount" type="number" placeholder="रक्कम">
-<label><input id="cConsent" type="checkbox" style="width:auto"> WhatsApp संदेशासाठी संमती आहे</label>
-<button id="addCustomer" class="green">ग्राहक नोंदवा</button>
-<p id="addMsg"></p>
+  <p style="text-align:center">
+    सेवा कॉम्पुटर नेरड<br>
+    WhatsApp: 9623557142
+  </p>
 </div>
 
-<div class="card">
-<h3>खर्च नोंदणी</h3>
-<input id="expenseName" placeholder="खर्चाचे कारण">
-<input id="expenseAmount" type="number" placeholder="खर्च रक्कम">
-<input id="expenseDate" type="date">
-<button id="addExpense" class="orange">खर्च सेव्ह करा</button>
-<p id="expenseMsg"></p>
 </div>
-
-<div class="card">
-<h3>ग्राहक यादी</h3>
-<input id="search" placeholder="नाव किंवा मोबाईल शोधा">
-<button id="refreshBtn">यादी Refresh करा</button>
-<div id="customerList">लोड होत आहे...</div>
-<button id="csvBtn">CSV रिपोर्ट डाउनलोड</button>
 </div>
-
-<div class="card">
-<h3>WhatsApp संदेश</h3>
-<p class="small">फक्त WhatsApp संदेशासाठी संमती दिलेल्या ग्राहकांची यादी.</p>
-<textarea id="announcement" rows="4" style="width:100%;padding:12px" placeholder="नवीन योजना किंवा सेवेचा संदेश लिहा"></textarea>
-<div id="waList"></div>
-</div>
-
-</section>
-</main>
 
 <script type="module">
 import {auth,db} from "./firebase-config.js";
 
 import {
- signInWithEmailAndPassword,
- onAuthStateChanged,
- signOut
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
- collection,addDoc,getDocs,updateDoc,deleteDoc,doc,
- serverTimestamp
+  collection,addDoc,getDocs,updateDoc,deleteDoc,doc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const ADMIN_EMAIL="pandharep8@gmail.com";
+const ADMIN_EMAIL = "pandharep8@gmail.com";
+const $ = id => document.getElementById(id);
 
-const $=id=>document.getElementById(id);
-let customers=[];
-let expenses=[];
+let customers = [];
+let expenses = [];
+let announcementFile = null;
 
-$("loginBtn").onclick=async()=>{
- $("loginMsg").textContent="Login होत आहे...";
- try{
-  const user=await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
-  if(user.user.email!==ADMIN_EMAIL){
-   await signOut(auth);
-   $("loginMsg").textContent="हा Admin Gmail नाही.";
+const today = () => new Date().toLocaleDateString("en-CA");
+const money = n => "₹" + Number(n || 0).toLocaleString("en-IN");
+
+function showMessage(id,msg){
+  $(id).textContent = msg;
+}
+
+function cleanMobile(mobile){
+  return String(mobile || "").replace(/\D/g,"").slice(-10);
+}
+
+function isToday(value){
+  if(!value) return false;
+  const d = value.toDate ? value.toDate() : new Date(value);
+  return !isNaN(d) && d.toLocaleDateString("en-CA") === today();
+}
+
+function isThisMonth(value){
+  if(!value) return false;
+  const d = value.toDate ? value.toDate() : new Date(value);
+  const now = new Date();
+  return !isNaN(d) &&
+    d.getMonth() === now.getMonth() &&
+    d.getFullYear() === now.getFullYear();
+}
+
+function createdDate(c){
+  if(c.createdAt?.toDate) return c.createdAt.toDate();
+  if(c.createdAt) return new Date(c.createdAt);
+  return null;
+}
+
+function customerPaid(c){
+  return c.paid === true || c.paymentStatus === "paid";
+}
+
+function customerCompleted(c){
+  return c.status === "completed" || c.status === "पूर्ण";
+}
+
+// LOGIN
+$("loginBtn").addEventListener("click", async()=>{
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if(!email || !password){
+    showMessage("loginMsg","Gmail आणि Password भरा.");
+    return;
   }
- }catch(e){
-  $("loginMsg").textContent="Login Error: "+e.message;
- }
-};
 
-onAuthStateChanged(auth,async user=>{
- if(user && user.email===ADMIN_EMAIL){
-  $("loginBox").classList.add("hidden");
-  $("dashboard").classList.remove("hidden");
-  await loadData();
- }else{
-  $("dashboard").classList.add("hidden");
-  $("loginBox").classList.remove("hidden");
- }
+  try{
+    const result = await signInWithEmailAndPassword(auth,email,password);
+
+    if(result.user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()){
+      await signOut(auth);
+      showMessage("loginMsg","हा Admin Gmail नाही.");
+    }
+  }catch(e){
+    showMessage("loginMsg","Login अयशस्वी: " + e.message);
+  }
 });
 
-$("logoutBtn").onclick=()=>signOut(auth);
-$("refreshBtn").onclick=loadData;
+$("logoutBtn").addEventListener("click",()=>signOut(auth));
 
-async function loadData(){
- $("customerList").textContent="लोड होत आहे...";
- try{
-  const [a,e]=await Promise.all([
-   getDocs(collection(db,"applications")),
-   getDocs(collection(db,"expenses"))
-  ]);
-  customers=a.docs.map(d=>({id:d.id,...d.data()}));
-  expenses=e.docs.map(d=>({id:d.id,...d.data()}));
-  showCustomers();
-  calculate();
-  showWhatsApp();
- }catch(err){
-  $("customerList").textContent="डेटा लोड Error: "+err.message;
- }
+onAuthStateChanged(auth,async user=>{
+  if(user && user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()){
+    $("loginBox").classList.add("hidden");
+    $("dashboard").classList.remove("hidden");
+    await loadAll();
+  }else{
+    $("loginBox").classList.remove("hidden");
+    $("dashboard").classList.add("hidden");
+  }
+});
+
+// LOAD DATA
+async function loadAll(){
+  try{
+    const [customerSnap,expenseSnap] = await Promise.all([
+      getDocs(collection(db,"applications")),
+      getDocs(collection(db,"expenses"))
+    ]);
+
+    customers = customerSnap.docs.map(d=>({id:d.id,...d.data()}));
+    expenses = expenseSnap.docs.map(d=>({id:d.id,...d.data()}));
+
+    renderCustomers();
+    renderWhatsApp();
+    calculateStats();
+  }catch(e){
+    alert("डेटा लोड झाला नाही. Firebase Rules तपासा.\n"+e.message);
+  }
 }
 
-$("addCustomer").onclick=async()=>{
- const name=$("cName").value.trim();
- const mobile=$("cMobile").value.trim();
- const district=$("cDistrict").value.trim();
- const taluka=$("cTaluka").value.trim();
- const village=$("cVillage").value.trim();
- const service=$("cService").value.trim();
- const amount=Number($("cAmount").value);
+$("refreshBtn").addEventListener("click",loadAll);
 
- if(!name||!mobile||!district||!taluka||!village||!service||!Number.isFinite(amount)||amount<0){
-  $("addMsg").textContent="सर्व माहिती योग्य भरा.";
-  return;
- }
- if(!/^[6-9][0-9]{9}$/.test(mobile)){
-  $("addMsg").textContent="मोबाईल नंबर तपासा.";
-  return;
- }
- try{
-  await addDoc(collection(db,"applications"),{
-   name,mobile,district,taluka,village,service,amount,
-   status:"काम बाकी",paid:false,
-   source:"प्रत्यक्ष ग्राहक",
-   whatsappConsent:$("cConsent").checked,
-   createdAt:serverTimestamp()
+// ADD CUSTOMER
+$("addCustomer").addEventListener("click",async()=>{
+  const name = $("cName").value.trim();
+  const mobile = cleanMobile($("cMobile").value);
+  const service = $("cService").value.trim();
+  const amount = Number($("cAmount").value);
+
+  if(!name || mobile.length !== 10 || !service || amount < 0 || !Number.isFinite(amount)){
+    alert("नाव, योग्य 10 अंकी मोबाईल, सेवा आणि रक्कम तपासा.");
+    return;
+  }
+
+  try{
+    await addDoc(collection(db,"applications"),{
+      name,
+      mobile,
+      district:$("cDistrict").value.trim(),
+      taluka:$("cTaluka").value.trim(),
+      village:$("cVillage").value.trim(),
+      service,
+      amount,
+      whatsappConsent:$("cConsent").checked,
+      status:"pending",
+      paid:false,
+      createdAt:serverTimestamp()
+    });
+
+    showMessage("customerMsg","ग्राहक नोंदणी यशस्वी!");
+    ["cName","cMobile","cDistrict","cTaluka","cVillage","cService","cAmount"].forEach(id=>$(id).value="");
+    $("cConsent").checked=false;
+    await loadAll();
+  }catch(e){
+    alert("नोंदणी झाली नाही: "+e.message);
+  }
+});
+
+// ADD EXPENSE
+$("addExpense").addEventListener("click",async()=>{
+  const name = $("expenseName").value.trim();
+  const amount = Number($("expenseAmount").value);
+  const date = $("expenseDate").value || today();
+
+  if(!name || !Number.isFinite(amount) || amount <= 0){
+    alert("खर्चाचे कारण आणि योग्य रक्कम भरा.");
+    return;
+  }
+
+  try{
+    await addDoc(collection(db,"expenses"),{
+      name,amount,date,createdAt:serverTimestamp()
+    });
+
+    showMessage("expenseMsg","खर्च सेव्ह झाला.");
+    $("expenseName").value="";
+    $("expenseAmount").value="";
+    $("expenseDate").value="";
+    await loadAll();
+  }catch(e){
+    alert("खर्च सेव्ह झाला नाही: "+e.message);
+  }
+});
+
+// STATS
+function calculateStats(){
+  const todayIncome = customers
+    .filter(c=>customerPaid(c) && isToday(c.paidAt || c.createdAt))
+    .reduce((s,c)=>s+Number(c.amount||0),0);
+
+  const monthIncome = customers
+    .filter(c=>customerPaid(c) && isThisMonth(c.paidAt || c.createdAt))
+    .reduce((s,c)=>s+Number(c.amount||0),0);
+
+  const todayExpense = expenses
+    .filter(e=>e.date===today())
+    .reduce((s,e)=>s+Number(e.amount||0),0);
+
+  const monthExpense = expenses
+    .filter(e=>String(e.date||"").startsWith(today().slice(0,7)))
+    .reduce((s,e)=>s+Number(e.amount||0),0);
+
+  $("todayIncome").textContent=money(todayIncome);
+  $("todayExpense").textContent=money(todayExpense);
+  $("monthIncome").textContent=money(monthIncome);
+  $("monthProfit").textContent=money(monthIncome-monthExpense);
+}
+
+// CUSTOMER LIST
+function renderCustomers(){
+  const query = $("searchCustomer").value.trim().toLowerCase();
+
+  const filtered = customers.filter(c=>
+    [c.name,c.mobile,c.village,c.service]
+      .some(v=>String(v||"").toLowerCase().includes(query))
+  );
+
+  $("customerList").innerHTML = "";
+
+  if(!filtered.length){
+    $("customerList").textContent="ग्राहक उपलब्ध नाहीत.";
+    return;
+  }
+
+  filtered.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="customer";
+
+    const status = customerCompleted(c) ? "काम पूर्ण" : "काम बाकी";
+    const paid = customerPaid(c) ? "पैसे मिळाले" : "पैसे बाकी";
+
+    const info=document.createElement("div");
+    info.innerHTML =
+      `<p><b>${escapeHTML(c.name||"")}</b></p>
+       <p>मोबाईल: ${escapeHTML(c.mobile||"")}</p>
+       <p>गाव: ${escapeHTML(c.village||"-")}</p>
+       <p>सेवा: ${escapeHTML(c.service||"-")}</p>
+       <p>रक्कम: ${money(c.amount)}</p>
+       <p>काम: ${status} | पेमेंट: ${paid}</p>
+       <p>WhatsApp संमती: ${c.whatsappConsent===true?"होय":"नाही"}</p>`;
+
+    const actions=document.createElement("div");
+    actions.className="actions";
+
+    const completeBtn=makeButton(
+      customerCompleted(c)?"काम बाकी करा":"काम पूर्ण",
+      "blue",
+      ()=>changeCustomer(c.id,{
+        status:customerCompleted(c)?"pending":"completed"
+      })
+    );
+
+    const paidBtn=makeButton(
+      customerPaid(c)?"पैसे बाकी करा":"पैसे मिळाले",
+      "green",
+      ()=>changeCustomer(c,{
+        paid:!customerPaid(c),
+        paidAt:!customerPaid(c)?serverTimestamp():null
+      })
+    );
+
+    const waBtn=makeButton("WhatsApp मजकूर","white",()=>{
+      const mobile=cleanMobile(c.mobile);
+      if(mobile.length!==10){alert("मोबाईल नंबर योग्य नाही.");return;}
+      const url="https://wa.me/91"+mobile;
+      window.open(url,"_blank");
+    });
+
+    const deleteBtn=makeButton("Delete","red",async()=>{
+      if(confirm("हा ग्राहक रेकॉर्ड Delete करायचा आहे का?")){
+        try{
+          await deleteDoc(doc(db,"applications",c.id));
+          await loadAll();
+        }catch(e){alert(e.message);}
+      }
+    });
+
+    actions.append(completeBtn,paidBtn,waBtn,deleteBtn);
+    div.append(info,actions);
+    $("customerList").append(div);
   });
-  $("addMsg").textContent="ग्राहक नोंदणी यशस्वी!";
-  ["cName","cMobile","cDistrict","cTaluka","cVillage","cService","cAmount"].forEach(id=>$(id).value="");
-  $("cConsent").checked=false;
-  await loadData();
- }catch(err){
-  $("addMsg").textContent="नोंदणी Error: "+err.message;
- }
-};
-
-$("addExpense").onclick=async()=>{
- const name=$("expenseName").value.trim();
- const amount=Number($("expenseAmount").value);
- const date=$("expenseDate").value;
- if(!name||!date||!Number.isFinite(amount)||amount<=0){
-  $("expenseMsg").textContent="खर्चाची माहिती भरा.";
-  return;
- }
- try{
-  await addDoc(collection(db,"expenses"),{
-   name,amount,date,createdAt:serverTimestamp()
-  });
-  $("expenseMsg").textContent="खर्च सेव्ह झाला.";
-  $("expenseName").value="";
-  $("expenseAmount").value="";
-  await loadData();
- }catch(err){
-  $("expenseMsg").textContent="Error: "+err.message;
- }
-};
-
-function dateString(value){
- if(!value)return "";
- if(value.toDate)return value.toDate().toLocaleDateString("en-CA");
- return String(value).slice(0,10);
 }
 
-function showCustomers(){
- const q=$("search").value.toLowerCase();
- const list=customers.filter(c=>
-  (c.name||"").toLowerCase().includes(q)||(c.mobile||"").includes(q)
- );
- $("customerList").innerHTML="";
- if(!list.length){
-  $("customerList").textContent="ग्राहक नोंद उपलब्ध नाही.";
-  return;
- }
- list.forEach(c=>{
-  const div=document.createElement("div");
-  div.className="item";
-  const title=document.createElement("b");
-  title.textContent=(c.name||"") ;
-  const details=document.createElement("p");
-  details.textContent=(c.mobile||"")+" | "+(c.service||"")+" | ₹"+(c.amount||0);
-  const status=document.createElement("p");
-  status.textContent=(c.status||"काम बाकी")+" | "+(c.paid?"पैसे जमा":"पैसे बाकी");
-  div.append(title,details,status);
-
-  const actions=document.createElement("div");
-  actions.className="actions";
-  const work=document.createElement("button");
-  work.textContent="काम पूर्ण";
-  work.onclick=()=>changeRecord(c.id,{status:"काम पूर्ण"});
-  const paid=document.createElement("button");
-  paid.className="green";
-  paid.textContent="पैसे जमा";
-  paid.onclick=()=>changeRecord(c.id,{paid:true,paidAt:serverTimestamp()});
-  const wa=document.createElement("button");
-  wa.className="orange";
-  wa.textContent="WhatsApp";
-  wa.onclick=()=>window.open("https://wa.me/91"+c.mobile,"_blank");
-  const del=document.createElement("button");
-  del.className="red";
-  del.textContent="Delete";
-  del.onclick=async()=>{
-   if(confirm("हा ग्राहक कायमचा Delete करायचा आहे?")){
-    try{await deleteDoc(doc(db,"applications",c.id));await loadData();}
-    catch(e){alert("Delete Error: "+e.message);}
-   }
-  };
-  actions.append(work,paid,wa,del);
-  div.append(actions);
-  $("customerList").append(div);
- });
-}
-
-async function changeRecord(id,data){
- try{
-  await updateDoc(doc(db,"applications",id),data);
-  await loadData();
- }catch(e){alert("Update Error: "+e.message);}
-}
-
-$("search").oninput=showCustomers;
-
-function calculate(){
- const now=new Date();
- const today=now.toLocaleDateString("en-CA");
- const month=today.slice(0,7);
- const incomeToday=customers.filter(c=>c.paid&&dateString(c.paidAt)===today).reduce((s,c)=>s+Number(c.amount||0),0);
- const incomeMonth=customers.filter(c=>c.paid&&dateString(c.paidAt).startsWith(month)).reduce((s,c)=>s+Number(c.amount||0),0);
- const expenseToday=expenses.filter(e=>e.date===today).reduce((s,e)=>s+Number(e.amount||0),0);
- const expenseMonth=expenses.filter(e=>String(e.date||"").startsWith(month)).reduce((s,e)=>s+Number(e.amount||0),0);
- $("todayIncome").textContent="₹"+incomeToday;
- $("todayExpense").textContent="₹"+expenseToday;
- $("monthIncome").textContent="₹"+incomeMonth;
- $("monthProfit").textContent="₹"+(incomeMonth-expenseMonth);
-}
-
-function showWhatsApp(){
- $("waList").innerHTML="";
- customers.filter(c=>c.whatsappConsent===true).forEach(c=>{
+function makeButton(textValue,cls,callback){
   const b=document.createElement("button");
-  b.className="green";
-  b.textContent="संदेश पाठवा: "+(c.name||"ग्राहक");
-  b.onclick=()=>{
-   const msg=$("announcement").value.trim();
-   if(!msg){alert("आधी संदेश लिहा.");return;}
-   window.open("https://wa.me/91"+c.mobile+"?text="+encodeURIComponent(msg),"_blank");
-  };
-  $("waList").append(b);
- });
+  b.textContent=textValue;
+  b.className=cls;
+  b.addEventListener("click",callback);
+  return b;
 }
 
-$("csvBtn").onclick=()=>{
- const rows=[["ग्राहक नाव","मोबाईल","सेवा","रक्कम","दिनांक","काम स्थिती","पेमेंट"]];
- customers.forEach(c=>rows.push([
-  c.name,c.mobile,c.service,c.amount,dateString(c.createdAt),c.status,c.paid?"जमा":"बाकी"
- ]));
- const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");
- const a=document.createElement("a");
- a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
- a.download="Seva-Customer-Report.csv";
- a.click();
- URL.revokeObjectURL(a.href);
-};
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,ch=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#039;"
+  })[ch]);
+}
+
+async function changeCustomer(id,data){
+  try{
+    await updateDoc(doc(db,"applications",id),data);
+    await loadAll();
+  }catch(e){alert("बदल सेव्ह झाला नाही: "+e.message);}
+}
+
+$("searchCustomer").addEventListener("input",renderCustomers);
+
+// WHATSAPP CONSENT LIST
+function renderWhatsApp(){
+  const allowed=customers.filter(c=>
+    c.whatsappConsent===true && cleanMobile(c.mobile).length===10
+  );
+
+  $("consentCount").textContent =
+    "WhatsApp संमती दिलेले ग्राहक: "+allowed.length;
+
+  $("waList").innerHTML="";
+
+  if(!allowed.length){
+    $("waList").textContent="संमती दिलेले ग्राहक उपलब्ध नाहीत.";
+    return;
+  }
+
+  allowed.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="customer";
+    div.innerHTML =
+      `<b>${escapeHTML(c.name||"")}</b>
+       <p>${escapeHTML(c.mobile||"")}</p>`;
+    $("waList").append(div);
+  });
+}
+
+// IMAGE PICKER + PREVIEW
+$("announcementImage").addEventListener("change",e=>{
+  announcementFile=e.target.files?.[0] || null;
+
+  const preview=$("imagePreview");
+
+  if(announcementFile){
+    if(!announcementFile.type.startsWith("image/")){
+      alert("कृपया Image फाईल निवडा.");
+      announcementFile=null;
+      e.target.value="";
+      preview.style.display="none";
+      return;
+    }
+
+    if(announcementFile.size>10*1024*1024){
+      alert("फोटोचा आकार 10 MB पेक्षा कमी ठेवा.");
+      announcementFile=null;
+      e.target.value="";
+      preview.style.display="none";
+      return;
+    }
+
+    preview.src=URL.createObjectURL(announcementFile);
+    preview.style.display="block";
+  }else{
+    preview.style.display="none";
+  }
+});
+
+// SHARE PHOTO + MESSAGE
+$("shareAllBtn").addEventListener("click",async()=>{
+  const message=$("announcement").value.trim();
+  const allowed=customers.filter(c=>
+    c.whatsappConsent===true && cleanMobile(c.mobile).length===10
+  );
+
+  if(!allowed.length){
+    alert("WhatsApp संमती दिलेले ग्राहक उपलब्ध नाहीत.");
+    return;
+  }
+
+  if(!message && !announcementFile){
+    alert("संदेश लिहा किंवा फोटो निवडा.");
+    return;
+  }
+
+  const shareText=message
+    ? message+"\n\nसेवा कॉम्पुटर नेरड"
+    : "सेवा कॉम्पुटर नेरड";
+
+  try{
+    if(announcementFile){
+      const file=new File(
+        [announcementFile],
+        announcementFile.name,
+        {type:announcementFile.type}
+      );
+
+      if(!navigator.share || !navigator.canShare ||
+         !navigator.canShare({files:[file]})){
+        alert("या ब्राउझरमध्ये फोटो Share समर्थित नाही. फोटो WhatsApp मध्ये स्वतंत्रपणे जोडा.");
+        return;
+      }
+
+      await navigator.share({
+        title:"सेवा कॉम्पुटर नेरड",
+        text:shareText,
+        files:[file]
+      });
+    }else{
+      if(!navigator.share){
+        await navigator.clipboard.writeText(shareText);
+        alert("संदेश Copy झाला. WhatsApp उघडून पाठवा.");
+        return;
+      }
+
+      await navigator.share({
+        title:"सेवा कॉम्पुटर नेरड",
+        text:shareText
+      });
+    }
+
+    $("shareInfo").textContent =
+      "Share शीट उघडली. संमती दिलेले ग्राहक: "+allowed.length+
+      ". WhatsApp मध्ये प्राप्तकर्ते निवडा आणि पाठवण्यापूर्वी तपासा.";
+
+  }catch(e){
+    if(e.name!=="AbortError"){
+      alert("Share करताना अडचण: "+e.message);
+    }
+  }
+});
+
+// CSV DOWNLOAD
+$("csvBtn").addEventListener("click",()=>{
+  if(!customers.length){
+    alert("ग्राहक यादी रिकामी आहे.");
+    return;
+  }
+
+  const rows=[
+    ["ग्राहक नाव","मोबाईल","जिल्हा","तालुका","गाव",
+     "सेवा","रक्कम","काम स्थिती","पेमेंट","WhatsApp संमती"],
+    ...customers.map(c=>[
+      c.name||"",c.mobile||"",c.district||"",c.taluka||"",
+      c.village||"",c.service||"",c.amount||0,
+      customerCompleted(c)?"काम पूर्ण":"काम बाकी",
+      customerPaid(c)?"पैसे मिळाले":"पैसे बाकी",
+      c.whatsappConsent===true?"होय":"नाही"
+    ])
+  ];
+
+  const csv="\uFEFF"+rows.map(row=>
+    row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")
+  ).join("\n");
+
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="Seva-Computer-Customers.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+});
 </script>
 </body>
 </html>
