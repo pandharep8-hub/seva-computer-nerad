@@ -38,7 +38,26 @@ label{display:block;margin-top:8px}
 .deliveryBox{background:rgba(0,0,0,.18);padding:14px;border-radius:12px;margin:12px 0}
 .totalBox{background:#dcfce7;color:#14532d;padding:14px;border-radius:12px;font-weight:bold;margin-top:12px;line-height:2}
 .qrInfo{background:rgba(0,0,0,.2);padding:10px;border-radius:10px;margin-top:10px}
-@media(max-width:600px){body{padding:8px}.card{padding:13px}.header h1{font-size:23px}}
+.folderTitle{
+width:100%;
+padding:18px;
+background:linear-gradient(135deg,#fbbf24,#f97316);
+color:#422006;
+font-size:20px;
+border-radius:14px;
+text-align:left;
+}
+.folderContent{
+border-left:3px solid #fbbf24;
+padding-left:8px;
+margin-top:12px;
+}
+.folderHint{font-size:13px;color:#dbeafe}
+@media(max-width:600px){
+body{padding:8px}
+.card{padding:13px}
+.header h1{font-size:23px}
+}
 </style>
 </head>
 
@@ -68,6 +87,7 @@ label{display:block;margin-top:8px}
 <p class="small">सेवा कॉम्पुटर नेरड - व्यवस्थापन पॅनल</p>
 </div>
 
+<!-- DASHBOARD STATS -->
 <div class="grid">
 <div class="stat">आजचे उत्पन्न<strong id="todayIncome">₹0</strong></div>
 <div class="stat">आजचा खर्च<strong id="todayExpense">₹0</strong></div>
@@ -75,8 +95,20 @@ label{display:block;margin-top:8px}
 <div class="stat">महिन्याचा नफा<strong id="monthProfit">₹0</strong></div>
 </div>
 
+<!-- CUSTOMER FOLDER -->
+<div class="card">
+<button class="folderTitle" id="customerFolderBtn">
+📁 ग्राहक फोल्डर <span id="folderArrow">▼</span>
+</button>
+<p class="folderHint">ग्राहक नोंदणी, ग्राहक यादी, पेमेंट आणि WhatsApp व्यवस्थापन</p>
+</div>
+
+<div id="customerFolderContent" class="folderContent hidden">
+
+<!-- NEW CUSTOMER -->
 <div class="card">
 <h2>📝 नवीन ग्राहक नोंदणी</h2>
+
 <input id="cName" placeholder="ग्राहकाचे पूर्ण नाव">
 <input id="cMobile" type="tel" maxlength="10" placeholder="मोबाईल नंबर">
 <input id="cDistrict" placeholder="जिल्हा">
@@ -128,15 +160,7 @@ label{display:block;margin-top:8px}
 <p id="customerMsg"></p>
 </div>
 
-<div class="card">
-<h2>💰 खर्च नोंदणी</h2>
-<input id="expenseName" placeholder="खर्चाचे कारण">
-<input id="expenseAmount" type="number" min="1" placeholder="रक्कम ₹">
-<input id="expenseDate" type="date">
-<button class="green" id="addExpense">खर्च सेव्ह करा</button>
-<p id="expenseMsg"></p>
-</div>
-
+<!-- CUSTOMER ANNOUNCEMENT -->
 <div class="card">
 <h2>📢 ग्राहकांना फोटो + संदेश</h2>
 <p class="small">WhatsApp संमती दिलेल्या ग्राहकांसाठी Share सुविधा.</p>
@@ -149,6 +173,7 @@ label{display:block;margin-top:8px}
 <p id="shareInfo"></p>
 </div>
 
+<!-- CUSTOMER LIST -->
 <div class="card">
 <h2>👥 ग्राहक यादी</h2>
 <input id="searchCustomer" placeholder="नाव / मोबाईल / गाव शोधा">
@@ -159,9 +184,23 @@ label{display:block;margin-top:8px}
 <div id="customerList">ग्राहक यादी लोड होत आहे...</div>
 </div>
 
+<!-- WHATSAPP CONSENT LIST -->
 <div class="card">
 <h2>📱 WhatsApp संमती दिलेले ग्राहक</h2>
 <div id="waList">यादी लोड होत आहे...</div>
+</div>
+
+</div>
+<!-- CUSTOMER FOLDER END -->
+
+<!-- EXPENSE OUTSIDE CUSTOMER FOLDER -->
+<div class="card">
+<h2>💰 खर्च नोंदणी</h2>
+<input id="expenseName" placeholder="खर्चाचे कारण">
+<input id="expenseAmount" type="number" min="1" placeholder="रक्कम ₹">
+<input id="expenseDate" type="date">
+<button class="green" id="addExpense">खर्च सेव्ह करा</button>
+<p id="expenseMsg"></p>
 </div>
 
 <div class="card">
@@ -221,13 +260,26 @@ return String(value??"").replace(/[&<>"']/g,ch=>({
 })[ch]);
 }
 
+// CUSTOMER FOLDER OPEN/CLOSE
+$("customerFolderBtn").addEventListener("click",()=>{
+const folder=$("customerFolderContent");
+folder.classList.toggle("hidden");
+
+$("folderArrow").textContent=
+folder.classList.contains("hidden")?"▼":"▲";
+});
+
 // QR IMAGE LOAD
 async function prepareQRFile(){
 try{
 const response=await fetch("./qr.jpeg",{cache:"no-store"});
 if(!response.ok)throw new Error("qr.jpeg सापडली नाही");
+
 const blob=await response.blob();
-qrFile=new File([blob],"qr.jpeg",{type:blob.type||"image/jpeg"});
+qrFile=new File([blob],"qr.jpeg",{
+type:blob.type||"image/jpeg"
+});
+
 console.log("QR image तयार आहे");
 }catch(e){
 qrFile=null;
@@ -237,34 +289,52 @@ console.warn("QR image load झाली नाही:",e);
 
 // VILLAGE SELECTION
 $("cVillageType").addEventListener("change",()=>{
-$("otherVillageBox").classList.toggle("hidden",$("cVillageType").value!=="इतर गाव");
+$("otherVillageBox").classList.toggle(
+"hidden",
+$("cVillageType").value!=="इतर गाव"
+);
 calculateDelivery();
 });
 
 // DELIVERY CALCULATION
 function calculateDelivery(){
+
 const village=$("cVillageType").value;
 const delivery=$("homeDelivery").value;
 const distance=Number($("distanceKm").value||0);
+
 let charge=0;
 
 if(delivery==="yes"){
-if(village==="नेरड"||village==="पुरड")charge=20;
-else charge=distance*10;
+if(village==="नेरड"||village==="पुरड"){
+charge=20;
+}else{
+charge=distance*10;
+}
 }
 
 const serviceAmount=Number($("cAmount").value||0);
 const total=serviceAmount+charge;
 
-$("distanceBox").classList.toggle("hidden",!(delivery==="yes"&&village==="इतर गाव"));
+$("distanceBox").classList.toggle(
+"hidden",
+!(delivery==="yes"&&village==="इतर गाव")
+);
+
 $("showService").textContent=money(serviceAmount);
 $("showDelivery").textContent=money(charge);
 $("showTotal").textContent=money(total);
 
-if(delivery==="no")$("deliveryInfo").textContent="घरपोच सेवा नाही. शुल्क ₹0";
-else if(village==="नेरड")$("deliveryInfo").textContent="नेरड घरपोच शुल्क ₹20";
-else if(village==="पुरड")$("deliveryInfo").textContent="पुरड घरपोच शुल्क ₹20";
-else $("deliveryInfo").textContent="इतर गाव: "+distance+" KM × ₹10 = "+money(charge);
+if(delivery==="no"){
+$("deliveryInfo").textContent="घरपोच सेवा नाही. शुल्क ₹0";
+}else if(village==="नेरड"){
+$("deliveryInfo").textContent="नेरड घरपोच शुल्क ₹20";
+}else if(village==="पुरड"){
+$("deliveryInfo").textContent="पुरड घरपोच शुल्क ₹20";
+}else{
+$("deliveryInfo").textContent=
+"इतर गाव: "+distance+" KM × ₹10 = "+money(charge);
+}
 
 return {village,delivery:delivery==="yes",distance,charge,total};
 }
@@ -276,37 +346,54 @@ $(id).addEventListener("change",calculateDelivery);
 
 // LOGIN
 $("loginBtn").addEventListener("click",async()=>{
+
 const email=$("email").value.trim();
 const password=$("password").value;
 
-if(!email||!password){msg("loginMsg","Gmail आणि Password भरा.");return;}
+if(!email||!password){
+msg("loginMsg","Gmail आणि Password भरा.");
+return;
+}
 
 try{
-const result=await signInWithEmailAndPassword(auth,email,password);
+const result=await signInWithEmailAndPassword(
+auth,email,password
+);
+
 if(result.user.email?.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
 await signOut(auth);
 msg("loginMsg","हा Admin Gmail नाही.");
 }
-}catch(e){msg("loginMsg","Login अयशस्वी: "+e.message);}
+}catch(e){
+msg("loginMsg","Login अयशस्वी: "+e.message);
+}
 });
 
 $("logoutBtn").addEventListener("click",()=>signOut(auth));
 
 onAuthStateChanged(auth,async user=>{
+
 if(user&&user.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
+
 $("loginBox").classList.add("hidden");
 $("dashboard").classList.remove("hidden");
+
 await prepareQRFile();
 await loadAll();
+
 }else{
+
 $("loginBox").classList.remove("hidden");
 $("dashboard").classList.add("hidden");
+
 }
 });
 
 // LOAD DATA
 async function loadAll(){
+
 try{
+
 const [cs,es]=await Promise.all([
 getDocs(collection(db,"applications")),
 getDocs(collection(db,"expenses"))
@@ -318,9 +405,12 @@ expenses=es.docs.map(d=>({id:d.id,...d.data()}));
 renderCustomers();
 renderWhatsApp();
 calculateStats();
+
 }catch(e){
+
 console.error(e);
 alert("डेटा लोड झाला नाही: "+e.message);
+
 }
 }
 
@@ -328,34 +418,55 @@ $("refreshBtn").addEventListener("click",loadAll);
 
 // ADD CUSTOMER
 $("addCustomer").addEventListener("click",async()=>{
+
 const name=$("cName").value.trim();
 const mobile=cleanMobile($("cMobile").value);
 const service=$("cService").value.trim();
 const amount=Number($("cAmount").value);
 const villageType=$("cVillageType").value;
 
-const village=villageType==="इतर गाव"?$("cOtherVillage").value.trim():villageType;
+const village=villageType==="इतर गाव"
+?$("cOtherVillage").value.trim()
+:villageType;
+
 const delivery=calculateDelivery();
 
-if(!name||mobile.length!==10||!service||!Number.isFinite(amount)||amount<0){
-alert("नाव, योग्य मोबाईल, सेवा आणि रक्कम तपासा.");return;
+if(!name||mobile.length!==10||!service||
+!Number.isFinite(amount)||amount<0){
+
+alert("नाव, योग्य मोबाईल, सेवा आणि रक्कम तपासा.");
+return;
+
 }
-if(!village){alert("गावाचे नाव भरा.");return;}
+
+if(!village){
+alert("गावाचे नाव भरा.");
+return;
+}
+
 if(villageType==="इतर गाव"&&$("cOtherVillage").value.trim()===""){
-alert("इतर गावाचे नाव भरा.");return;
+alert("इतर गावाचे नाव भरा.");
+return;
 }
+
 if(delivery.delivery&&villageType==="इतर गाव"&&delivery.distance<=0){
-alert("इतर गावासाठी अंतर KM मध्ये भरा.");return;
+alert("इतर गावासाठी अंतर KM मध्ये भरा.");
+return;
 }
 
 try{
+
 await addDoc(collection(db,"applications"),{
-name,mobile,
+
+name,
+mobile,
 district:$("cDistrict").value.trim(),
 taluka:$("cTaluka").value.trim(),
-village,villageType,
+village,
+villageType,
 service,
-amount,serviceAmount:amount,
+amount,
+serviceAmount:amount,
 homeDelivery:delivery.delivery,
 deliveryVillage:villageType,
 distanceKm:delivery.distance,
@@ -366,11 +477,15 @@ status:"pending",
 paid:false,
 paymentStatus:"pending",
 createdAt:serverTimestamp()
+
 });
 
 msg("customerMsg","ग्राहक नोंदणी यशस्वी!");
 
-["cName","cMobile","cDistrict","cTaluka","cOtherVillage","cService","cAmount","distanceKm"].forEach(id=>$(id).value="");
+[
+"cName","cMobile","cDistrict","cTaluka",
+"cOtherVillage","cService","cAmount","distanceKm"
+].forEach(id=>$(id).value="");
 
 $("cVillageType").value="नेरड";
 $("homeDelivery").value="no";
@@ -379,41 +494,66 @@ $("otherVillageBox").classList.add("hidden");
 
 calculateDelivery();
 await loadAll();
-}catch(e){alert("नोंदणी झाली नाही: "+e.message);}
+
+}catch(e){
+alert("नोंदणी झाली नाही: "+e.message);
+}
+
 });
 
 // EXPENSE
 $("addExpense").addEventListener("click",async()=>{
+
 const name=$("expenseName").value.trim();
 const amount=Number($("expenseAmount").value);
 const date=$("expenseDate").value||today();
 
 if(!name||!Number.isFinite(amount)||amount<=0){
-alert("खर्चाचे कारण आणि योग्य रक्कम भरा.");return;
+alert("खर्चाचे कारण आणि योग्य रक्कम भरा.");
+return;
 }
 
 try{
-await addDoc(collection(db,"expenses"),{name,amount,date,createdAt:serverTimestamp()});
+
+await addDoc(collection(db,"expenses"),{
+name,amount,date,createdAt:serverTimestamp()
+});
+
 msg("expenseMsg","खर्च सेव्ह झाला.");
+
 $("expenseName").value="";
 $("expenseAmount").value="";
 $("expenseDate").value="";
+
 await loadAll();
-}catch(e){alert("खर्च सेव्ह झाला नाही: "+e.message);}
+
+}catch(e){
+alert("खर्च सेव्ह झाला नाही: "+e.message);
+}
+
 });
 
 // DATE FUNCTIONS
 function validDate(value){
+
 if(!value)return null;
+
 try{
+
 if(typeof value.toDate==="function")return value.toDate();
 if(value instanceof Date)return value;
+
 if(typeof value==="string"||typeof value==="number"){
 const d=new Date(value);
 return isNaN(d.getTime())?null:d;
 }
+
 return null;
-}catch(e){return null;}
+
+}catch(e){
+return null;
+}
+
 }
 
 function isToday(value){
@@ -424,11 +564,15 @@ return d&&d.toLocaleDateString("en-CA")===today();
 function isThisMonth(value){
 const d=validDate(value);
 const now=new Date();
-return d&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
+
+return d&&
+d.getMonth()===now.getMonth()&&
+d.getFullYear()===now.getFullYear();
 }
 
 function customerPaid(c){
-return c.paid===true||String(c.paymentStatus||"").toLowerCase()==="paid";
+return c.paid===true||
+String(c.paymentStatus||"").toLowerCase()==="paid";
 }
 
 function customerCompleted(c){
@@ -441,78 +585,92 @@ return Number(c.totalAmount??c.amount??0);
 
 // STATS
 function calculateStats(){
-const todayIncome=customers.filter(c=>customerPaid(c)&&isToday(c.paidAt||c.createdAt)).reduce((s,c)=>s+customerTotal(c),0);
-const monthIncome=customers.filter(c=>customerPaid(c)&&isThisMonth(c.paidAt||c.createdAt)).reduce((s,c)=>s+customerTotal(c),0);
-const todayExpense=expenses.filter(e=>e.date===today()).reduce((s,e)=>s+Number(e.amount||0),0);
-const monthExpense=expenses.filter(e=>String(e.date||"").startsWith(today().slice(0,7))).reduce((s,e)=>s+Number(e.amount||0),0);
+
+const todayIncome=customers
+.filter(c=>customerPaid(c)&&isToday(c.paidAt||c.createdAt))
+.reduce((s,c)=>s+customerTotal(c),0);
+
+const monthIncome=customers
+.filter(c=>customerPaid(c)&&isThisMonth(c.paidAt||c.createdAt))
+.reduce((s,c)=>s+customerTotal(c),0);
+
+const todayExpense=expenses
+.filter(e=>e.date===today())
+.reduce((s,e)=>s+Number(e.amount||0),0);
+
+const monthExpense=expenses
+.filter(e=>String(e.date||"").startsWith(today().slice(0,7)))
+.reduce((s,e)=>s+Number(e.amount||0),0);
 
 $("todayIncome").textContent=money(todayIncome);
 $("todayExpense").textContent=money(todayExpense);
 $("monthIncome").textContent=money(monthIncome);
 $("monthProfit").textContent=money(monthIncome-monthExpense);
+
 }
 
 // BUTTON CREATOR
 function makeButton(textValue,cls,callback){
+
 const b=document.createElement("button");
 b.textContent=textValue;
 b.className=cls;
 b.addEventListener("click",callback);
+
 return b;
+
 }
 
-// CUSTOMER WHATSAPP MESSAGE
+// CUSTOMER PAYMENT MESSAGE
 function customerPaymentMessage(c){
-const serviceAmount=Number(c.serviceAmount??c.amount??0);
-const deliveryCharge=Number(c.deliveryCharge||0);
-const total=customerTotal(c);
 
-return "नमस्कार "+(c.name||"ग्राहक")+" जी 🙏"+
-"\n\nआपल्या सेवेचा पेमेंट तपशील:"+
-"\nसेवा: "+(c.service||"-")+
-"\nसेवा शुल्क: "+money(serviceAmount)+
-"\nघरपोच शुल्क: "+money(deliveryCharge)+
-"\nएकूण पेमेंट: "+money(total)+
-"\n\nपेमेंट QR फोटो: "+QR_IMAGE_URL+
-"\n\nआमचे Seva Computer App येथे उघडा:"+
-"\n"+APP_LINK+
+const paid=customerPaid(c);
+const completed=customerCompleted(c);
+
+let message=
+"नमस्कार "+(c.name||"ग्राहक")+" जी 🙏"+
+"\n\nआपली सेवा: "+(c.service||"-")+"\n";
+
+message+=completed
+?"\n✅ आपले काम पूर्ण झाले आहे.\n"
+:"\n⏳ आपले काम बाकी आहे.\n";
+
+message+=paid
+?"\n✅ आपले पेमेंट यशस्वीरीत्या मिळाले आहे.\n"
+:"\n⏳ आपले पेमेंट बाकी आहे.\n\n💳 पेमेंट QR कोड:\n"+QR_IMAGE_URL+"\n";
+
+message+=
+"\nआमचे Seva Computer App येथे उघडा:\n"+
+APP_LINK+
 "\n\nसेवा कॉम्पुटर नेरड"+
 "\nWhatsApp: 9623557142";
+
+return message;
+
 }
 
-function customerPaymentMessage(c){
+// SEND QR TO SPECIFIC CUSTOMER
+function sendQRToCustomer(c){
 
-  const paid = customerPaid(c);
+const mobile=cleanMobile(c.mobile);
 
-  let message =
-    "नमस्कार " + (c.name || "ग्राहक") + " जी 🙏\n\n" +
-    "आपली सेवा: " + (c.service || "-") + "\n\n";
+if(mobile.length!==10){
+alert("मोबाईल नंबर योग्य नाही.");
+return;
+}
 
-  if(paid){
+const message=encodeURIComponent(customerPaymentMessage(c));
 
-    message +=
-      "✅ आपले पेमेंट यशस्वीरीत्या मिळाले आहे.\n";
+window.open(
+"https://wa.me/91"+mobile+"?text="+message,
+"_blank"
+);
 
-  }else{
-
-    message +=
-      "⏳ आपले पेमेंट बाकी आहे.\n\n" +
-      "💳 पेमेंट QR कोड:\n" +
-      QR_IMAGE_URL + "\n";
-
-  }
-
-  message +=
-    "\nआमचे Seva Computer App:\n" +
-    APP_LINK +
-    "\n\nसेवा कॉम्पुटर नेरड\n" +
-    "WhatsApp: 9623557142";
-
-  return message;
 }
 
 // CUSTOMER LIST
 function renderCustomers(){
+
 const query=$("searchCustomer").value.trim().toLowerCase();
 
 const filtered=customers.filter(c=>[
@@ -527,15 +685,18 @@ return;
 }
 
 filtered.forEach(c=>{
+
 const div=document.createElement("div");
 div.className="customer";
 
 const status=customerCompleted(c)?"काम पूर्ण":"काम बाकी";
 const paid=customerPaid(c)?"पैसे मिळाले":"पैसे बाकी";
+
 const serviceAmount=Number(c.serviceAmount??c.amount??0);
 const deliveryCharge=Number(c.deliveryCharge||0);
 
 const info=document.createElement("div");
+
 info.innerHTML=`
 <p><b>${escapeHTML(c.name||"")}</b></p>
 <p>मोबाईल: ${escapeHTML(c.mobile||"")}</p>
@@ -550,7 +711,7 @@ info.innerHTML=`
 <p><b>एकूण रक्कम: ${money(customerTotal(c))}</b></p>
 <p>काम: ${status} | पेमेंट: ${paid}</p>
 <p>WhatsApp संमती: ${c.whatsappConsent===true?"होय":"नाही"}</p>
-<div class="qrInfo">📲 या ग्राहकाने QR मागितल्यास खालील QR बटण दाबा.</div>
+<div class="qrInfo">📲 या ग्राहकाला पेमेंट QR लिंक पाठवण्यासाठी खालील बटण वापरा.</div>
 `;
 
 const actions=document.createElement("div");
@@ -559,7 +720,9 @@ actions.className="actions";
 const completeBtn=makeButton(
 customerCompleted(c)?"काम बाकी करा":"काम पूर्ण",
 "blue",
-()=>changeCustomer(c.id,{status:customerCompleted(c)?"pending":"completed"})
+()=>changeCustomer(c.id,{
+status:customerCompleted(c)?"pending":"completed"
+})
 );
 
 const paidBtn=makeButton(
@@ -569,13 +732,23 @@ customerPaid(c)?"पैसे बाकी करा":"पैसे मिळा
 );
 
 const waBtn=makeButton("WhatsApp मजकूर","white",()=>{
+
 const mobile=cleanMobile(c.mobile);
-if(mobile.length!==10){alert("मोबाईल नंबर योग्य नाही.");return;}
+
+if(mobile.length!==10){
+alert("मोबाईल नंबर योग्य नाही.");
+return;
+}
+
 const text=encodeURIComponent(customerPaymentMessage(c));
-window.open("https://wa.me/91"+mobile+"?text="+text,"_blank");
+
+window.open(
+"https://wa.me/91"+mobile+"?text="+text,
+"_blank"
+);
+
 });
 
-// QR BUTTON EVERY CUSTOMER
 const qrBtn=makeButton(
 "📤 QR + पेमेंट WhatsApp",
 "purple",
@@ -583,48 +756,88 @@ const qrBtn=makeButton(
 );
 
 const deleteBtn=makeButton("Delete","red",async()=>{
+
 if(confirm("हा ग्राहक रेकॉर्ड Delete करायचा आहे का?")){
+
 try{
 await deleteDoc(doc(db,"applications",String(c.id)));
 await loadAll();
-}catch(e){alert("Delete अयशस्वी: "+e.message);}
+}catch(e){
+alert("Delete अयशस्वी: "+e.message);
 }
+
+}
+
 });
 
-actions.append(completeBtn,paidBtn,waBtn,qrBtn,deleteBtn);
+actions.append(
+completeBtn,
+paidBtn,
+waBtn,
+qrBtn,
+deleteBtn
+);
+
 div.append(info,actions);
 $("customerList").append(div);
+
 });
+
 }
 
 // PAYMENT UPDATE
 async function togglePayment(c){
+
 const isPaid=!customerPaid(c);
+
 try{
+
 await updateDoc(doc(db,"applications",String(c.id)),{
 paid:isPaid,
 paymentStatus:isPaid?"paid":"pending",
 paidAt:isPaid?serverTimestamp():null
 });
+
 await loadAll();
-alert(isPaid?"पैसे मिळाले! Payment Status अपडेट झाला.":"Payment पुन्हा बाकी दाखवले.");
-}catch(e){alert("पेमेंट बदल सेव्ह झाला नाही.\n"+e.message);}
+
+alert(isPaid
+?"पैसे मिळाले! Payment Status अपडेट झाला."
+:"Payment पुन्हा बाकी दाखवले."
+);
+
+}catch(e){
+alert("पेमेंट बदल सेव्ह झाला नाही.\n"+e.message);
+}
+
 }
 
 // CHANGE CUSTOMER
 async function changeCustomer(id,data){
+
 try{
+
 await updateDoc(doc(db,"applications",String(id)),data);
 await loadAll();
-}catch(e){alert("बदल सेव्ह झाला नाही: "+e.message);}
+
+}catch(e){
+alert("बदल सेव्ह झाला नाही: "+e.message);
+}
+
 }
 
 $("searchCustomer").addEventListener("input",renderCustomers);
 
 // WHATSAPP LIST
 function renderWhatsApp(){
-const allowed=customers.filter(c=>c.whatsappConsent===true&&cleanMobile(c.mobile).length===10);
-$("consentCount").textContent="WhatsApp संमती दिलेले ग्राहक: "+allowed.length;
+
+const allowed=customers.filter(c=>
+c.whatsappConsent===true&&
+cleanMobile(c.mobile).length===10
+);
+
+$("consentCount").textContent=
+"WhatsApp संमती दिलेले ग्राहक: "+allowed.length;
+
 $("waList").innerHTML="";
 
 if(!allowed.length){
@@ -633,92 +846,190 @@ return;
 }
 
 allowed.forEach(c=>{
+
 const div=document.createElement("div");
 div.className="customer";
+
 const name=document.createElement("b");
 name.textContent=c.name||"";
+
 const p=document.createElement("p");
 p.textContent=c.mobile||"";
+
 div.append(name,p);
 $("waList").append(div);
+
 });
+
 }
 
 // IMAGE PREVIEW
 $("announcementImage").addEventListener("change",e=>{
+
 announcementFile=e.target.files?.[0]||null;
+
 const preview=$("imagePreview");
 
 if(announcementFile){
-if(!announcementFile.type.startsWith("image/")||announcementFile.size>10*1024*1024){
+
+if(!announcementFile.type.startsWith("image/")||
+announcementFile.size>10*1024*1024){
+
 alert("योग्य Image निवडा. फोटो 10 MB पेक्षा कमी असावा.");
+
 announcementFile=null;
 e.target.value="";
 preview.style.display="none";
 return;
+
 }
+
 preview.src=URL.createObjectURL(announcementFile);
 preview.style.display="block";
+
 }else{
+
 preview.style.display="none";
+
 }
+
 });
 
 // SHARE MESSAGE + IMAGE
 $("shareAllBtn").addEventListener("click",async()=>{
+
 const message=$("announcement").value.trim();
-const allowed=customers.filter(c=>c.whatsappConsent===true&&cleanMobile(c.mobile).length===10);
 
-if(!allowed.length){alert("WhatsApp संमती दिलेले ग्राहक उपलब्ध नाहीत.");return;}
-if(!message&&!announcementFile){alert("संदेश लिहा किंवा फोटो निवडा.");return;}
+const allowed=customers.filter(c=>
+c.whatsappConsent===true&&
+cleanMobile(c.mobile).length===10
+);
 
-const shareText=(message?message+"\n\n":"")+"सेवा कॉम्पुटर नेरड";
-
-try{
-if(announcementFile){
-const file=new File([announcementFile],announcementFile.name,{type:announcementFile.type});
-if(!navigator.share||!navigator.canShare||!navigator.canShare({files:[file]})){
-alert("या ब्राउझरमध्ये फोटो Share समर्थित नाही.");return;
-}
-await navigator.share({title:"सेवा कॉम्पुटर नेरड",text:shareText,files:[file]});
-}else if(navigator.share){
-await navigator.share({title:"सेवा कॉम्पुटर नेरड",text:shareText});
-}else{
-await navigator.clipboard.writeText(shareText);
-alert("संदेश Copy झाला. WhatsApp मध्ये पाठवा.");
+if(!allowed.length){
+alert("WhatsApp संमती दिलेले ग्राहक उपलब्ध नाहीत.");
 return;
 }
 
-$("shareInfo").textContent="Share शीट उघडली. संमती दिलेले ग्राहक: "+allowed.length+". प्राप्तकर्ते स्वतः निवडा.";
-}catch(e){
-if(e.name!=="AbortError")alert("Share अडचण: "+e.message);
+if(!message&&!announcementFile){
+alert("संदेश लिहा किंवा फोटो निवडा.");
+return;
 }
+
+const shareText=
+(message?message+"\n\n":"")+
+"सेवा कॉम्पुटर नेरड";
+
+try{
+
+if(announcementFile){
+
+const file=new File(
+[announcementFile],
+announcementFile.name,
+{type:announcementFile.type}
+);
+
+if(!navigator.share||
+!navigator.canShare||
+!navigator.canShare({files:[file]})){
+
+alert("या ब्राउझरमध्ये फोटो Share समर्थित नाही.");
+return;
+
+}
+
+await navigator.share({
+title:"सेवा कॉम्पुटर नेरड",
+text:shareText,
+files:[file]
+});
+
+}else if(navigator.share){
+
+await navigator.share({
+title:"सेवा कॉम्पुटर नेरड",
+text:shareText
+});
+
+}else{
+
+await navigator.clipboard.writeText(shareText);
+alert("संदेश Copy झाला. WhatsApp मध्ये पाठवा.");
+return;
+
+}
+
+$("shareInfo").textContent=
+"Share शीट उघडली. संमती दिलेले ग्राहक: "+
+allowed.length+
+". प्राप्तकर्ते स्वतः निवडा.";
+
+}catch(e){
+
+if(e.name!=="AbortError"){
+alert("Share अडचण: "+e.message);
+}
+
+}
+
 });
 
 // CSV DOWNLOAD
 $("csvBtn").addEventListener("click",()=>{
-if(!customers.length){alert("ग्राहक यादी रिकामी आहे.");return;}
+
+if(!customers.length){
+alert("ग्राहक यादी रिकामी आहे.");
+return;
+}
 
 const rows=[
-["ग्राहक नाव","मोबाईल","जिल्हा","तालुका","गाव","सेवा","सेवा शुल्क","घरपोच सेवा","घरपोच गाव","अंतर KM","घरपोच शुल्क","एकूण रक्कम","काम स्थिती","पेमेंट","WhatsApp संमती"],
+
+[
+"ग्राहक नाव","मोबाईल","जिल्हा","तालुका","गाव",
+"सेवा","सेवा शुल्क","घरपोच सेवा","घरपोच गाव",
+"अंतर KM","घरपोच शुल्क","एकूण रक्कम",
+"काम स्थिती","पेमेंट","WhatsApp संमती"
+],
+
 ...customers.map(c=>[
-c.name||"",c.mobile||"",c.district||"",c.taluka||"",c.village||"",c.service||"",
-c.serviceAmount??c.amount??0,c.homeDelivery===true?"होय":"नाही",
-c.deliveryVillage||"",c.distanceKm||0,c.deliveryCharge||0,customerTotal(c),
+
+c.name||"",
+c.mobile||"",
+c.district||"",
+c.taluka||"",
+c.village||"",
+c.service||"",
+c.serviceAmount??c.amount??0,
+c.homeDelivery===true?"होय":"नाही",
+c.deliveryVillage||"",
+c.distanceKm||0,
+c.deliveryCharge||0,
+customerTotal(c),
 customerCompleted(c)?"काम पूर्ण":"काम बाकी",
 customerPaid(c)?"पैसे मिळाले":"पैसे बाकी",
 c.whatsappConsent===true?"होय":"नाही"
+
 ])
+
 ];
 
-const csv="\uFEFF"+rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n");
-const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+const csv="\uFEFF"+rows.map(row=>
+row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")
+).join("\n");
+
+const blob=new Blob([csv],{
+type:"text/csv;charset=utf-8;"
+});
+
 const url=URL.createObjectURL(blob);
+
 const a=document.createElement("a");
 a.href=url;
 a.download="Seva-Computer-Customers.csv";
 a.click();
+
 URL.revokeObjectURL(url);
+
 });
 
 // INITIAL CALCULATION
