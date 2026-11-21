@@ -430,18 +430,35 @@ customerPaid(c)?"पैसे बाकी करा":"पैसे मिळा
 ()=>togglePayment(c)
 );
 
-const waBtn=makeButton("WhatsApp मजकूर","white",()=>{
-const mobile=cleanMobile(c.mobile);
-if(mobile.length!==10){
-alert("मोबाईल नंबर योग्य नाही.");
-return;
-}
-const text=encodeURIComponent(
-"नमस्कार "+(c.name||"ग्राहक")+
-", सेवा: "+(c.service||"")+
-". सेवा कॉम्पुटर नेरड."
-);
-window.open("https://wa.me/91"+mobile+"?text="+text,"_blank");
+const APP_URL = "https://pandharep8-hub-github.io/";
+
+const waBtn = makeButton("WhatsApp काम पूर्ण संदेश","white",()=>{
+  const mobile = cleanMobile(c.mobile);
+
+  if(mobile.length !== 10){
+    alert("मोबाईल नंबर योग्य नाही.");
+    return;
+  }
+
+  const message =
+`नमस्कार ${c.name || "ग्राहक"} 🙏
+
+आपले ${c.service || "सेवेचे"} हे काम यशस्वीरीत्या पूर्ण झाले आहे. ✅
+
+आणखी शासकीय योजना व डिजिटल सेवा मिळवण्यासाठी आमचे Seva Computer Nerad App ओपन करा.
+
+📲 आमचे अॅप येथे ओपन करा:
+${APP_URL}
+
+सेवा कॉम्पुटर नेरड
+📞 9623557142
+
+सेवा तुमच्या दारी, विश्वास आमचा!`;
+
+  const url = "https://wa.me/91" + mobile +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url,"_blank");
 });
 
 const deleteBtn=makeButton("Delete","red",async()=>{
