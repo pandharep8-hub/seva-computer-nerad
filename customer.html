@@ -4,119 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#075985">
-<title>Seva Computer Nerad - ग्राहक सेवा</title>
-
+<title>ग्राहक नोंदणी - Seva Computer</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:linear-gradient(135deg,#dbeafe,#eff6ff);
- color:#172554;
-}
-header{
- background:linear-gradient(135deg,#075985,#1d4ed8);
- color:white;
- text-align:center;
- padding:25px 12px;
- border-radius:0 0 25px 25px;
-}
-header h2{margin:5px}
-header p{margin:5px}
-.container{max-width:650px;margin:18px auto;padding:12px}
-.card{
- background:white;
- border-radius:17px;
- padding:18px;
- margin-bottom:16px;
- box-shadow:0 5px 20px #0001;
-}
-h3{color:#075985;margin-top:0}
-label{display:block;font-weight:bold;margin:12px 0 5px}
-input,select{
- width:100%;
- padding:13px;
- border:1px solid #cbd5e1;
- border-radius:10px;
- font-size:16px;
- background:white;
-}
-button{
- width:100%;
- padding:14px;
- border:0;
- border-radius:12px;
- background:#075985;
- color:white;
- font-size:17px;
- font-weight:bold;
- margin-top:12px;
-}
-.service{
- border:1px solid #dbeafe;
- border-radius:12px;
- padding:13px;
- margin:9px 0;
- cursor:pointer;
- display:flex;
- justify-content:space-between;
- gap:10px;
- align-items:center;
-}
-.service:active{background:#eff6ff}
-.price{color:#075985;font-weight:bold;white-space:nowrap}
-#details{display:none}
-.docs{
- background:#eff6ff;
- border-radius:12px;
- padding:13px;
- line-height:1.8;
-}
-.qr{text-align:center}
-.qr img{width:220px;max-width:100%;border-radius:12px}
-.small{font-size:13px;color:#64748b}
-#message{text-align:center;font-weight:bold}
-.check{display:flex;gap:10px;align-items:center}
-.check input{width:20px}
+body{margin:0;font-family:Arial,sans-serif;background:#eff6ff;color:#123}
+header{background:linear-gradient(135deg,#075985,#0e7490);color:white;text-align:center;padding:20px}
+header h2{margin:0}
+.container{max-width:600px;margin:18px auto;padding:12px}
+.panel{background:white;padding:18px;border-radius:17px;box-shadow:0 4px 15px #00000012;margin-bottom:15px}
+label{display:block;font-weight:bold;margin:12px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}
+button{width:100%;padding:14px;border:0;border-radius:10px;background:#075985;color:white;font-size:17px;margin-top:15px}
+.service{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f1f5f9;margin:8px 0;padding:12px;border-radius:10px}
+.service label{margin:0;font-weight:normal}
+.service input{width:20px;height:20px}
+.price{font-weight:bold;color:#075985;white-space:nowrap}
+.note{background:#eff6ff;padding:12px;border-radius:10px;font-size:14px}
+#qr{width:180px;max-width:100%;display:block;margin:12px auto}
+.back{display:block;text-align:center;color:#075985;margin:12px}
 </style>
 </head>
-
 <body>
 
 <header>
 <h2>सेवा कॉम्पुटर नेरड</h2>
-<p>आपली सेवा • आपला विश्वास</p>
-<p>मोबाईल: 9623557142</p>
+<p id="pageTitle">ग्राहक सेवा नोंदणी</p>
 </header>
 
 <div class="container">
 
-<div class="card">
-<h3>आमच्या सेवा निवडा</h3>
-<input id="search" placeholder="सेवा शोधा..." oninput="filterServices()">
+<div class="panel">
+<h3>उपलब्ध सेवा निवडा</h3>
 <div id="serviceList"></div>
 </div>
 
-<div class="card" id="details">
-<h3 id="serviceName"></h3>
-<p>सेवा शुल्क: <strong id="servicePrice" class="price"></strong></p>
-<h3>आवश्यक कागदपत्रे</h3>
-<div class="docs" id="documents"></div>
-<p class="small">टीप: ही प्राथमिक कागदपत्रांची यादी आहे. योजनेच्या नियमांनुसार अतिरिक्त कागदपत्रे लागू शकतात.</p>
-<button type="button" onclick="showForm()">या सेवेसाठी अर्ज करा</button>
-</div>
-
-<div class="card" id="application" style="display:none">
-<h3>ग्राहक नोंदणी फॉर्म</h3>
+<div class="panel">
+<h3>ग्राहक माहिती</h3>
 
 <form id="customerForm">
-
-<label>ग्राहकाचे नाव</label>
-<input id="name" required placeholder="पूर्ण नाव">
+<label>ग्राहकाचे पूर्ण नाव</label>
+<input id="name" required>
 
 <label>मोबाईल नंबर</label>
-<input id="mobile" required maxlength="10"
-inputmode="numeric" placeholder="10 अंकी नंबर">
+<input id="mobile" type="tel" pattern="[0-9]{10}" maxlength="10" required>
 
 <label>जिल्हा</label>
 <input id="district" value="यवतमाळ" required>
@@ -127,156 +57,151 @@ inputmode="numeric" placeholder="10 अंकी नंबर">
 <label>गाव</label>
 <input id="village" value="नेरड" required>
 
-<label>निवडलेली सेवा</label>
-<input id="selectedService" readonly>
+<div class="note" id="selectedInfo">कृपया वरील यादीतून सेवा निवडा.</div>
 
-<label>सेवा शुल्क (₹)</label>
-<input id="amount" readonly>
-
-<div class="check">
-<input type="checkbox" id="consent" required>
-<label for="consent">माझ्या अर्जाबाबत WhatsApp वर संपर्क करण्यास संमती आहे.</label>
-</div>
-
-<button type="submit" id="submitBtn">अर्ज नोंदणी करा</button>
+<button type="submit" id="submitBtn">नोंदणी करा</button>
 </form>
-<p id="message"></p>
 </div>
 
-<div class="card qr">
-<h3>ऑनलाइन पेमेंट QR</h3>
-<img src="./qr.jpeg" alt="Seva Computer Payment QR">
-<p>पेमेंट करण्यासाठी QR कोड स्कॅन करा.</p>
+<div class="panel">
+<h3 style="text-align:center">💳 QR कोडद्वारे पेमेंट</h3>
+<img id="qr" src="./qr.jpeg" alt="Payment QR Code">
+<p style="text-align:center">पेमेंट करण्यासाठी QR कोड स्कॅन करा.</p>
 </div>
 
-<div class="card">
-<h3>संपर्क</h3>
-<p>सेवा कॉम्पुटर नेरड</p>
-<p>मोबाईल: 9623557142</p>
-</div>
-
+<a class="back" href="./index.html">← मुख्य पेजवर परत जा</a>
 </div>
 
 <script type="module">
-import {db} from "./firebase-config.js";
+import { db } from "./firebase-config.js";
 import {
- collection,addDoc,serverTimestamp
+ addDoc, collection, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const services=[
-["Maha ID",70,["आधार कार्ड","आधारशी जोडलेला मोबाईल नंबर","पासपोर्ट आकाराचा फोटो (लागल्यास)"]],
-["ABHA कार्ड",50,["आधार कार्ड किंवा मान्य ओळखपत्र","मोबाईल नंबर"]],
-["आयुष्मान कार्ड",50,["आधार कार्ड","रेशन कार्ड किंवा पात्रतेचा पुरावा","मोबाईल नंबर"]],
-["आयुष्मान कार्ड दुरुस्ती",50,["आधार कार्ड","जुन्या आयुष्मान कार्डची माहिती","दुरुस्तीचा पुरावा"]],
-["मतदार कार्ड",100,["पासपोर्ट आकाराचा फोटो","वयाचा पुरावा","पत्त्याचा पुरावा","मोबाईल नंबर"]],
-["ई-श्रम कार्ड",100,["आधार कार्ड","आधारशी जोडलेला मोबाईल नंबर","बँक खाते तपशील"]],
-["PAN कार्ड",250,["आधार कार्ड","आधारशी जोडलेला मोबाईल नंबर","ई-मेल (असल्यास)"]],
-["PAN दुरुस्ती / हरवलेले कार्ड",300,["PAN क्रमांक किंवा जुन्या कार्डची प्रत","आधार कार्ड","दुरुस्तीचा पुरावा"]],
-["पीक पाहणी",100,["आधार कार्ड","शेतजमिनीचा गट / सर्वे क्रमांक","7/12 उतारा"]],
-["खरीप पीक विमा",100,["आधार कार्ड","7/12 उतारा","बँक पासबुक","पीक व क्षेत्राची माहिती"]],
-["रब्बी पीक विमा",100,["आधार कार्ड","7/12 उतारा","बँक पासबुक","पीक व क्षेत्राची माहिती"]],
-["PM किसान नोंदणी",250,["आधार कार्ड","7/12 उतारा","बँक पासबुक","मोबाईल नंबर"]],
-["महिला शेतकरी प्रमाणपत्र",50,["आधार कार्ड","7/12 उतारा","रेशन कार्ड किंवा नातेसंबंधाचा पुरावा"]],
-["महिला शेतकरी प्रमाणपत्र + लॅमिनेशन",80,["आधार कार्ड","7/12 उतारा","रेशन कार्ड किंवा नातेसंबंधाचा पुरावा"]],
-["Farmer ID",50,["आधार कार्ड","7/12 उतारा","आधारशी जोडलेला मोबाईल नंबर"]],
-["Maha DBT शेतकरी योजना",70,["आधार कार्ड","7/12 व 8A उतारा","बँक पासबुक","योजनेनुसार आवश्यक कागदपत्रे"]],
-["लाडकी बहीण योजना फॉर्म",50,["आधार कार्ड","बँक पासबुक","रेशन कार्ड किंवा पात्रतेचा पुरावा","मोबाईल नंबर"]],
-["सरकारी / निमसरकारी नोकरी फॉर्म",100,["आधार कार्ड","शैक्षणिक प्रमाणपत्रे","फोटो व सही","जात प्रमाणपत्र (लागल्यास)"]],
-["शिष्यवृत्ती फॉर्म",100,["आधार कार्ड","शाळा / कॉलेज प्रवेश पुरावा","मागील वर्षाची गुणपत्रिका","बँक पासबुक","जात प्रमाणपत्र (लागल्यास)"]],
-["eKYC / प्रोत्साहन / अनुदान",50,["आधार कार्ड","आधारशी जोडलेला मोबाईल नंबर","योजनेचा अर्ज किंवा नोंदणी क्रमांक"]],
-["झेरॉक्स B&W",5,["झेरॉक्ससाठी मूळ कागदपत्र किंवा प्रत"]],
-["झेरॉक्स Colour",10,["झेरॉक्ससाठी मूळ कागदपत्र किंवा प्रत"]],
-["प्रिंट",10,["प्रिंटसाठी PDF किंवा कागदपत्र"]],
-["कलर प्रिंट",20,["प्रिंटसाठी PDF किंवा कागदपत्र"]],
-["A4 लॅमिनेशन",30,["लॅमिनेशनसाठी कागदपत्र"]],
-["ID कार्ड लॅमिनेशन",10,["लॅमिनेशनसाठी ID कार्ड"]]
-["7/12 उतारा",50,["गट क्रमांक किंवा सर्वे क्रमांक","गावाचे नाव"]],
-["8A उतारा",50,["गट क्रमांक किंवा खाते क्रमांक","गावाचे नाव"]],
-["बांधकाम कामगार योजना",100,["आधार कार्ड","बँक पासबुक","फोटो","मोबाईल नंबर","कामगार असल्याचा पुरावा"]],
-["पासपोर्ट फोटो 12 प्रती",70,["ग्राहकाचा फोटो किंवा प्रत्यक्ष उपस्थिती"]],
-["सरकारी योजना अर्ज",100,["आधार कार्ड","बँक पासबुक","योजनेनुसार आवश्यक कागदपत्रे"]]
+const services = [
+ // विद्यार्थी
+ {name:"शिष्यवृत्ती अर्ज",price:100,category:"student"},
+ {name:"विद्यार्थी योजना अर्ज",price:100,category:"student"},
+ {name:"सरकारी / निमसरकारी नोकरी अर्ज",price:100,category:"student"},
+
+ // शेतकरी
+ {name:"PM किसान नोंदणी",price:250,category:"farmer"},
+ {name:"Maha DBT शेतकरी योजना",price:70,category:"farmer"},
+ {name:"Farmer ID",price:50,category:"farmer"},
+ {name:"पीक पाहणी",price:100,category:"farmer"},
+ {name:"खरीप पीक विमा",price:100,category:"farmer"},
+ {name:"रब्बी पीक विमा",price:100,category:"farmer"},
+ {name:"महिला शेतकरी प्रमाणपत्र",price:50,category:"farmer"},
+ {name:"महिला शेतकरी प्रमाणपत्र + लॅमिनेशन",price:80,category:"farmer"},
+ {name:"7/12 उतारा",price:50,category:"farmer"},
+ {name:"8A उतारा",price:50,category:"farmer"},
+
+ // महिला
+ {name:"लाडकी बहीण योजना अर्ज",price:50,category:"women"},
+ {name:"महिला शेतकरी प्रमाणपत्र",price:50,category:"women"},
+ {name:"महिला शेतकरी प्रमाणपत्र + लॅमिनेशन",price:80,category:"women"},
+
+ // कार्ड सेवा
+ {name:"Maha ID",price:70,category:"cards"},
+ {name:"ABHA कार्ड",price:50,category:"cards"},
+ {name:"आयुष्मान कार्ड",price:50,category:"cards"},
+ {name:"आयुष्मान कार्ड दुरुस्ती",price:50,category:"cards"},
+ {name:"मतदान कार्ड",price:100,category:"cards"},
+ {name:"e-Shram कार्ड",price:100,category:"cards"},
+ {name:"PAN कार्ड",price:250,category:"cards"},
+ {name:"PAN कार्ड दुरुस्ती / हरवलेले",price:300,category:"cards"},
+
+ // झेरॉक्स / प्रिंट
+ {name:"झेरॉक्स ब्लॅक अँड व्हाइट",price:5,category:"print"},
+ {name:"झेरॉक्स कलर",price:10,category:"print"},
+ {name:"प्रिंट",price:10,category:"print"},
+ {name:"कलर प्रिंट",price:20,category:"print"},
+ {name:"A4 लॅमिनेशन",price:30,category:"print"},
+ {name:"ID कार्ड लॅमिनेशन",price:10,category:"print"},
+ {name:"पासपोर्ट फोटो 12 प्रती",price:70,category:"print"}
 ];
 
-let selected=null;
+const category = new URLSearchParams(location.search).get("category");
 
-function renderServices(list){
- const area=document.getElementById("serviceList");
- area.innerHTML="";
- list.forEach(s=>{
-  const div=document.createElement("div");
-  div.className="service";
-  const name=document.createElement("span");
-  name.textContent=s[0];
-  const price=document.createElement("span");
-  price.className="price";
-  price.textContent="₹"+s[1];
-  div.append(name,price);
-  div.onclick=()=>chooseService(s);
-  area.appendChild(div);
+const categoryNames = {
+ student:"विद्यार्थी / विद्यार्थिनी सेवा",
+ farmer:"शेतकरी योजना व सेवा",
+ women:"महिला योजना",
+ cards:"कार्ड सेवा",
+ print:"झेरॉक्स / लॅमिनेशन / प्रिंट"
+};
+
+const allowedServices = services.filter(s => s.category === category);
+const serviceList = document.getElementById("serviceList");
+const selectedInfo = document.getElementById("selectedInfo");
+
+document.getElementById("pageTitle").textContent =
+ categoryNames[category] || "सेवा निवडा";
+
+if (!categoryNames[category]) {
+ serviceList.innerHTML = "<p>विभाग सापडला नाही. मुख्य पेजवर परत जा.</p>";
+ document.getElementById("submitBtn").disabled = true;
+} else {
+ allowedServices.forEach((service,index) => {
+  const div = document.createElement("div");
+  div.className = "service";
+  const label = document.createElement("label");
+  const checkbox = document.createElement("input");
+  checkbox.type = "radio";
+  checkbox.name = "service";
+  checkbox.value = index;
+  checkbox.addEventListener("change", updateSelected);
+  label.append(checkbox, document.createTextNode(" " + service.name));
+  const price = document.createElement("span");
+  price.className = "price";
+  price.textContent = "₹" + service.price;
+  div.append(label,price);
+  serviceList.appendChild(div);
  });
 }
 
-window.filterServices=function(){
- const q=document.getElementById("search").value.toLowerCase();
- renderServices(services.filter(s=>s[0].toLowerCase().includes(q)));
-};
+let selectedService = null;
 
-function chooseService(s){
- selected=s;
- document.getElementById("details").style.display="block";
- document.getElementById("application").style.display="none";
- document.getElementById("serviceName").textContent=s[0];
- document.getElementById("servicePrice").textContent="₹"+s[1];
- document.getElementById("selectedService").value=s[0];
- document.getElementById("amount").value=s[1];
-
- const ul=document.createElement("ul");
- s[2].forEach(d=>{
-  const li=document.createElement("li");
-  li.textContent=d;
-  ul.appendChild(li);
- });
- const docs=document.getElementById("documents");
- docs.replaceChildren(ul);
-
- document.getElementById("details").scrollIntoView({behavior:"smooth"});
+function updateSelected() {
+ const selected = document.querySelector('input[name="service"]:checked');
+ selectedService = selected ? allowedServices[Number(selected.value)] : null;
+ selectedInfo.textContent = selectedService
+  ? "निवडलेली सेवा: " + selectedService.name + " | शुल्क: ₹" + selectedService.price
+  : "कृपया सेवा निवडा.";
 }
 
-window.showForm=function(){
- if(!selected)return;
- document.getElementById("application").style.display="block";
- document.getElementById("application").scrollIntoView({behavior:"smooth"});
-};
-
-renderServices(services);
-
-document.getElementById("customerForm").addEventListener("submit",async e=>{
+document.getElementById("customerForm").addEventListener("submit", async (e) => {
  e.preventDefault();
- if(!selected)return;
 
- const name=document.getElementById("name").value.trim();
- const mobile=document.getElementById("mobile").value.trim();
-
- if(!/^[0-9]{10}$/.test(mobile)){
-  document.getElementById("message").textContent="योग्य 10 अंकी मोबाईल नंबर टाका.";
+ if (!selectedService) {
+  alert("कृपया सेवा निवडा.");
   return;
  }
 
- const btn=document.getElementById("submitBtn");
- const msg=document.getElementById("message");
- btn.disabled=true;
- btn.textContent="नोंदणी सुरू आहे...";
- msg.textContent="";
+ const name = document.getElementById("name").value.trim();
+ const mobile = document.getElementById("mobile").value.trim();
+ const district = document.getElementById("district").value.trim();
+ const taluka = document.getElementById("taluka").value.trim();
+ const village = document.getElementById("village").value.trim();
 
- try{
+ if (!/^[0-9]{10}$/.test(mobile)) {
+  alert("10 अंकी मोबाईल नंबर टाका.");
+  return;
+ }
+
+ const btn = document.getElementById("submitBtn");
+ btn.disabled = true;
+ btn.textContent = "नोंदणी होत आहे...";
+
+ try {
   await addDoc(collection(db,"applications"),{
    name,
    mobile,
-   district:document.getElementById("district").value.trim(),
-   taluka:document.getElementById("taluka").value.trim(),
-   village:document.getElementById("village").value.trim(),
-   service:selected[0],
-   amount:Number(selected[1]),
+   district,
+   taluka,
+   village,
+   service:selectedService.name,
+   amount:selectedService.price,
    status:"काम बाकी",
    paid:false,
    whatsappConsent:true,
@@ -284,18 +209,16 @@ document.getElementById("customerForm").addEventListener("submit",async e=>{
    createdAt:serverTimestamp()
   });
 
-  msg.style.color="green";
-  msg.textContent="अर्जाची नोंदणी यशस्वी झाली!";
+  alert("ग्राहक नोंदणी यशस्वी झाली!");
   document.getElementById("customerForm").reset();
-  document.getElementById("district").value="यवतमाळ";
-  document.getElementById("taluka").value="वणी";
-  document.getElementById("village").value="नेरड";
- }catch(err){
-  msg.style.color="red";
-  msg.textContent="नोंदणी झाली नाही. Firebase Rules तपासा. "+err.message;
- }finally{
-  btn.disabled=false;
-  btn.textContent="अर्ज नोंदणी करा";
+  selectedService = null;
+  selectedInfo.textContent = "कृपया वरील यादीतून सेवा निवडा.";
+ } catch(error) {
+  console.error(error);
+  alert("नोंदणी झाली नाही. इंटरनेट आणि Firebase सेटिंग तपासा.");
+ } finally {
+  btn.disabled = false;
+  btn.textContent = "नोंदणी करा";
  }
 });
 </script>
