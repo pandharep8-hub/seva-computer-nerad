@@ -41,7 +41,6 @@ button.blue{background:#38bdf8;color:#082f49}
 button.green{background:#4ade80;color:#052e16}
 button.red{background:#f87171;color:#450a0a}
 button.white{background:white;color:#075985}
-button:disabled{opacity:.5}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
 .stat{
 background:rgba(255,255,255,.14);padding:17px;
@@ -63,6 +62,15 @@ object-fit:contain;border-radius:12px;margin-top:10px;
 border:2px solid white
 }
 label{display:block;margin-top:8px}
+.deliveryBox{
+background:rgba(0,0,0,.18);
+padding:12px;border-radius:12px;margin:12px 0
+}
+.totalBox{
+background:#dcfce7;color:#14532d;
+padding:14px;border-radius:12px;
+font-weight:bold;margin-top:12px
+}
 @media(max-width:600px){
 body{padding:8px}
 .card{padding:13px}
@@ -106,6 +114,7 @@ body{padding:8px}
 
 <div class="card">
 <h2>📝 नवीन ग्राहक नोंदणी</h2>
+
 <input id="cName" placeholder="ग्राहकाचे पूर्ण नाव">
 <input id="cMobile" type="tel" maxlength="10" placeholder="मोबाईल नंबर">
 <input id="cDistrict" placeholder="जिल्हा">
@@ -113,10 +122,39 @@ body{padding:8px}
 <input id="cVillage" placeholder="गाव">
 <input id="cService" placeholder="सेवेचे नाव">
 <input id="cAmount" type="number" min="0" placeholder="सेवा शुल्क ₹">
+
+<div class="deliveryBox">
+<h3>🏠 घरपोच सेवा</h3>
+
+<label>
+<input type="checkbox" id="homeDelivery">
+ग्राहकाला घरपोच सेवा पाहिजे
+</label>
+
+<div id="deliveryFields" class="hidden">
+<p class="small">
+नेरड आणि पुरड ₹20 निश्चित.
+इतर गावांसाठी ₹10 प्रति किलोमीटर.
+</p>
+
+<input id="distanceKm" type="number" min="0" step="0.1"
+placeholder="इतर गावाचे अंतर KM मध्ये">
+
+<p id="deliveryInfo">घरपोच शुल्क: ₹0</p>
+</div>
+
+<div class="totalBox">
+सेवा शुल्क: <span id="showService">₹0</span><br>
+घरपोच शुल्क: <span id="showDelivery">₹0</span><br>
+एकूण रक्कम: <span id="showTotal">₹0</span>
+</div>
+</div>
+
 <label>
 <input type="checkbox" id="cConsent">
 ग्राहकाने WhatsApp संदेशासाठी संमती दिली आहे
 </label>
+
 <button class="green" id="addCustomer">ग्राहक नोंदणी करा</button>
 <p id="customerMsg"></p>
 </div>
@@ -163,6 +201,7 @@ body{padding:8px}
 WhatsApp: 9623557142
 </p>
 </div>
+
 </div>
 </div>
 
@@ -198,48 +237,58 @@ function cleanMobile(m){
 return String(m||"").replace(/\D/g,"").slice(-10);
 }
 
-function validDate(value){
-if(!value)return null;
-try{
-if(typeof value.toDate==="function")return value.toDate();
-if(value instanceof Date)return value;
-if(typeof value==="string" || typeof value==="number"){
-const d=new Date(value);
-return isNaN(d.getTime())?null:d;
+// घरपोच शुल्क मोजणे
+function calculateDelivery(){
+
+const village=$("cVillage").value.trim().toLowerCase();
+const delivery=$("homeDelivery").checked;
+const distance=Number($("distanceKm").value||0);
+
+let charge=0;
+
+if(delivery){
+
+if(village==="नेरड" || village==="nerad" ||
+village==="पुरड" || village==="purad"){
+charge=20;
+}else{
+charge=distance*10;
 }
-return null;
-}catch(e){return null;}
 }
 
-function isToday(value){
-const d=validDate(value);
-return d && d.toLocaleDateString("en-CA")===today();
+const serviceAmount=Number($("cAmount").value||0);
+const total=serviceAmount+charge;
+
+$("showService").textContent=money(serviceAmount);
+$("showDelivery").textContent=money(charge);
+$("showTotal").textContent=money(total);
+
+if(!delivery){
+$("deliveryInfo").textContent="घरपोच सेवा निवडलेली नाही.";
+}else if(village==="नेरड" || village==="nerad" ||
+village==="पुरड" || village==="purad"){
+$("deliveryInfo").textContent="निश्चित घरपोच शुल्क: ₹20";
+}else if(distance>0){
+$("deliveryInfo").textContent=
+"घरपोच शुल्क: "+money(charge)+" ("+distance+" KM × ₹10)";
+}else{
+$("deliveryInfo").textContent="इतर गावासाठी अंतर KM मध्ये भरा.";
 }
 
-function isThisMonth(value){
-const d=validDate(value);
-const now=new Date();
-return d && d.getMonth()===now.getMonth()
-&& d.getFullYear()===now.getFullYear();
+return {charge,total,distance};
 }
 
-function customerPaid(c){
-return c.paid===true ||
-String(c.paymentStatus||"").toLowerCase()==="paid";
-}
+["cVillage","cAmount","distanceKm","homeDelivery"].forEach(id=>{
+$(id).addEventListener("input",()=>{
+$("deliveryFields").classList.toggle(
+"hidden",!$("homeDelivery").checked
+);
+calculateDelivery();
+});
+$(id).addEventListener("change",calculateDelivery);
+});
 
-function customerCompleted(c){
-return c.status==="completed"||c.status==="पूर्ण";
-}
-
-function escapeHTML(value){
-return String(value??"").replace(/[&<>"']/g,ch=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",
-'"':"&quot;","'":"&#039;"
-})[ch]);
-}
-
-// LOGIN
+// Login
 $("loginBtn").addEventListener("click",async()=>{
 const email=$("email").value.trim();
 const password=$("password").value;
@@ -251,6 +300,7 @@ return;
 
 try{
 const result=await signInWithEmailAndPassword(auth,email,password);
+
 if(result.user.email?.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
 await signOut(auth);
 msg("loginMsg","हा Admin Gmail नाही.");
@@ -273,7 +323,7 @@ $("dashboard").classList.add("hidden");
 }
 });
 
-// LOAD DATA
+// Load data
 async function loadAll(){
 try{
 const [cs,es]=await Promise.all([
@@ -295,16 +345,29 @@ alert("डेटा लोड झाला नाही: "+e.message);
 
 $("refreshBtn").addEventListener("click",loadAll);
 
-// ADD CUSTOMER
+// Add customer
 $("addCustomer").addEventListener("click",async()=>{
+
 const name=$("cName").value.trim();
 const mobile=cleanMobile($("cMobile").value);
 const service=$("cService").value.trim();
 const amount=Number($("cAmount").value);
+const village=$("cVillage").value.trim();
+const delivery=calculateDelivery();
 
 if(!name||mobile.length!==10||!service||
 !Number.isFinite(amount)||amount<0){
 alert("नाव, योग्य मोबाईल, सेवा आणि रक्कम तपासा.");
+return;
+}
+
+if($("homeDelivery").checked &&
+village.toLowerCase()!=="नेरड" &&
+village.toLowerCase()!=="nerad" &&
+village.toLowerCase()!=="पुरड" &&
+village.toLowerCase()!=="purad" &&
+delivery.distance<=0){
+alert("इतर गावासाठी किलोमीटरमध्ये अंतर भरा.");
 return;
 }
 
@@ -313,8 +376,16 @@ await addDoc(collection(db,"applications"),{
 name,mobile,
 district:$("cDistrict").value.trim(),
 taluka:$("cTaluka").value.trim(),
-village:$("cVillage").value.trim(),
-service,amount,
+village,
+service,
+
+amount,
+serviceAmount:amount,
+homeDelivery:$("homeDelivery").checked,
+distanceKm:delivery.distance,
+deliveryCharge:delivery.charge,
+totalAmount:delivery.total,
+
 whatsappConsent:$("cConsent").checked,
 status:"pending",
 paid:false,
@@ -323,15 +394,25 @@ createdAt:serverTimestamp()
 });
 
 msg("customerMsg","ग्राहक नोंदणी यशस्वी!");
-["cName","cMobile","cDistrict","cTaluka","cVillage","cService","cAmount"].forEach(id=>$(id).value="");
+
+[
+"cName","cMobile","cDistrict","cTaluka",
+"cVillage","cService","cAmount","distanceKm"
+].forEach(id=>$(id).value="");
+
 $("cConsent").checked=false;
+$("homeDelivery").checked=false;
+$("deliveryFields").classList.add("hidden");
+calculateDelivery();
+
 await loadAll();
+
 }catch(e){
 alert("नोंदणी झाली नाही: "+e.message);
 }
 });
 
-// ADD EXPENSE
+// Add expense
 $("addExpense").addEventListener("click",async()=>{
 const name=$("expenseName").value.trim();
 const amount=Number($("expenseAmount").value);
@@ -356,15 +437,54 @@ alert("खर्च सेव्ह झाला नाही: "+e.message);
 }
 });
 
-// STATS
+function validDate(value){
+if(!value)return null;
+try{
+if(typeof value.toDate==="function")return value.toDate();
+if(value instanceof Date)return value;
+if(typeof value==="string"||typeof value==="number"){
+const d=new Date(value);
+return isNaN(d.getTime())?null:d;
+}
+return null;
+}catch(e){return null;}
+}
+
+function isToday(value){
+const d=validDate(value);
+return d&&d.toLocaleDateString("en-CA")===today();
+}
+
+function isThisMonth(value){
+const d=validDate(value);
+const now=new Date();
+return d&&d.getMonth()===now.getMonth()&&
+d.getFullYear()===now.getFullYear();
+}
+
+function customerPaid(c){
+return c.paid===true||
+String(c.paymentStatus||"").toLowerCase()==="paid";
+}
+
+function customerCompleted(c){
+return c.status==="completed"||c.status==="पूर्ण";
+}
+
+function customerTotal(c){
+return Number(c.totalAmount??c.amount??0);
+}
+
+// Stats
 function calculateStats(){
+
 const todayIncome=customers
 .filter(c=>customerPaid(c)&&isToday(c.paidAt||c.createdAt))
-.reduce((s,c)=>s+Number(c.amount||0),0);
+.reduce((s,c)=>s+customerTotal(c),0);
 
 const monthIncome=customers
 .filter(c=>customerPaid(c)&&isThisMonth(c.paidAt||c.createdAt))
-.reduce((s,c)=>s+Number(c.amount||0),0);
+.reduce((s,c)=>s+customerTotal(c),0);
 
 const todayExpense=expenses
 .filter(e=>e.date===today())
@@ -380,8 +500,24 @@ $("monthIncome").textContent=money(monthIncome);
 $("monthProfit").textContent=money(monthIncome-monthExpense);
 }
 
-// CUSTOMER LIST
+function escapeHTML(value){
+return String(value??"").replace(/[&<>"']/g,ch=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",
+'"':"&quot;","'":"&#039;"
+})[ch]);
+}
+
+function makeButton(textValue,cls,callback){
+const b=document.createElement("button");
+b.textContent=textValue;
+b.className=cls;
+b.addEventListener("click",callback);
+return b;
+}
+
+// Customer list
 function renderCustomers(){
+
 const query=$("searchCustomer").value.trim().toLowerCase();
 
 const filtered=customers.filter(c=>
@@ -397,19 +533,28 @@ return;
 }
 
 filtered.forEach(c=>{
+
 const div=document.createElement("div");
 div.className="customer";
 
 const status=customerCompleted(c)?"काम पूर्ण":"काम बाकी";
 const paid=customerPaid(c)?"पैसे मिळाले":"पैसे बाकी";
 
+const serviceAmount=Number(c.serviceAmount??c.amount??0);
+const deliveryCharge=Number(c.deliveryCharge||0);
+
 const info=document.createElement("div");
+
 info.innerHTML=`
 <p><b>${escapeHTML(c.name||"")}</b></p>
 <p>मोबाईल: ${escapeHTML(c.mobile||"")}</p>
 <p>गाव: ${escapeHTML(c.village||"-")}</p>
 <p>सेवा: ${escapeHTML(c.service||"-")}</p>
-<p>रक्कम: ${money(c.amount)}</p>
+<p>सेवा शुल्क: ${money(serviceAmount)}</p>
+<p>घरपोच सेवा: ${c.homeDelivery===true?"होय":"नाही"}</p>
+<p>अंतर: ${c.distanceKm?escapeHTML(c.distanceKm)+" KM":"-"}</p>
+<p>घरपोच शुल्क: ${money(deliveryCharge)}</p>
+<p><b>एकूण रक्कम: ${money(customerTotal(c))}</b></p>
 <p>काम: ${status} | पेमेंट: ${paid}</p>
 <p>WhatsApp संमती: ${c.whatsappConsent===true?"होय":"नाही"}</p>`;
 
@@ -430,35 +575,21 @@ customerPaid(c)?"पैसे बाकी करा":"पैसे मिळा
 ()=>togglePayment(c)
 );
 
-const APP_URL = "https://pandharep8-hub-github.io/";
+const waBtn=makeButton("WhatsApp मजकूर","white",()=>{
+const mobile=cleanMobile(c.mobile);
+if(mobile.length!==10){
+alert("मोबाईल नंबर योग्य नाही.");
+return;
+}
 
-const waBtn = makeButton("WhatsApp काम पूर्ण संदेश","white",()=>{
-  const mobile = cleanMobile(c.mobile);
+const text=encodeURIComponent(
+"नमस्कार "+(c.name||"ग्राहक")+
+", सेवा: "+(c.service||"")+
+". एकूण रक्कम: "+money(customerTotal(c))+
+". सेवा कॉम्पुटर नेरड."
+);
 
-  if(mobile.length !== 10){
-    alert("मोबाईल नंबर योग्य नाही.");
-    return;
-  }
-
-  const message =
-`नमस्कार ${c.name || "ग्राहक"} 🙏
-
-आपले ${c.service || "सेवेचे"} हे काम यशस्वीरीत्या पूर्ण झाले आहे. ✅
-
-आणखी शासकीय योजना व डिजिटल सेवा मिळवण्यासाठी आमचे Seva Computer Nerad App ओपन करा.
-
-📲 आमचे अॅप येथे ओपन करा:
-${APP_URL}
-
-सेवा कॉम्पुटर नेरड
-📞 9623557142
-
-सेवा तुमच्या दारी, विश्वास आमचा!`;
-
-  const url = "https://wa.me/91" + mobile +
-    "?text=" + encodeURIComponent(message);
-
-  window.open(url,"_blank");
+window.open("https://wa.me/91"+mobile+"?text="+text,"_blank");
 });
 
 const deleteBtn=makeButton("Delete","red",async()=>{
@@ -476,15 +607,6 @@ $("customerList").append(div);
 });
 }
 
-function makeButton(textValue,cls,callback){
-const b=document.createElement("button");
-b.textContent=textValue;
-b.className=cls;
-b.addEventListener("click",callback);
-return b;
-}
-
-// PAYMENT UPDATE
 async function togglePayment(c){
 const isPaid=!customerPaid(c);
 
@@ -498,7 +620,6 @@ paidAt:isPaid?serverTimestamp():null
 await loadAll();
 alert(isPaid?"पैसे मिळाले! Payment Status अपडेट झाला.":"Payment पुन्हा बाकी दाखवले.");
 }catch(e){
-console.error("Payment update error:",e);
 alert("पेमेंट बदल सेव्ह झाला नाही.\n"+e.message);
 }
 }
@@ -508,15 +629,15 @@ try{
 await updateDoc(doc(db,"applications",String(id)),data);
 await loadAll();
 }catch(e){
-console.error(e);
 alert("बदल सेव्ह झाला नाही: "+e.message);
 }
 }
 
 $("searchCustomer").addEventListener("input",renderCustomers);
 
-// WHATSAPP LIST
+// WhatsApp list
 function renderWhatsApp(){
+
 const allowed=customers.filter(c=>
 c.whatsappConsent===true&&cleanMobile(c.mobile).length===10
 );
@@ -543,7 +664,7 @@ $("waList").append(div);
 });
 }
 
-// IMAGE PREVIEW
+// Image preview
 $("announcementImage").addEventListener("change",e=>{
 announcementFile=e.target.files?.[0]||null;
 const preview=$("imagePreview");
@@ -564,9 +685,11 @@ preview.style.display="none";
 }
 });
 
-// SHARE
+// Share
 $("shareAllBtn").addEventListener("click",async()=>{
+
 const message=$("announcement").value.trim();
+
 const allowed=customers.filter(c=>
 c.whatsappConsent===true&&cleanMobile(c.mobile).length===10
 );
@@ -585,7 +708,9 @@ const shareText=(message?message+"\n\n":"")+
 "सेवा कॉम्पुटर नेरड";
 
 try{
+
 if(announcementFile){
+
 const file=new File(
 [announcementFile],
 announcementFile.name,
@@ -603,15 +728,20 @@ title:"सेवा कॉम्पुटर नेरड",
 text:shareText,
 files:[file]
 });
+
 }else if(navigator.share){
+
 await navigator.share({
 title:"सेवा कॉम्पुटर नेरड",
 text:shareText
 });
+
 }else{
+
 await navigator.clipboard.writeText(shareText);
 alert("संदेश Copy झाला. WhatsApp मध्ये पाठवा.");
 return;
+
 }
 
 $("shareInfo").textContent=
@@ -625,17 +755,26 @@ if(e.name!=="AbortError")alert("Share अडचण: "+e.message);
 
 // CSV
 $("csvBtn").addEventListener("click",()=>{
+
 if(!customers.length){
 alert("ग्राहक यादी रिकामी आहे.");
 return;
 }
 
 const rows=[
-["ग्राहक नाव","मोबाईल","जिल्हा","तालुका","गाव",
-"सेवा","रक्कम","काम स्थिती","पेमेंट","WhatsApp संमती"],
+[
+"ग्राहक नाव","मोबाईल","जिल्हा","तालुका","गाव",
+"सेवा","सेवा शुल्क","घरपोच सेवा","अंतर KM",
+"घरपोच शुल्क","एकूण रक्कम","काम स्थिती",
+"पेमेंट","WhatsApp संमती"
+],
 ...customers.map(c=>[
-c.name||"",c.mobile||"",c.district||"",c.taluka||"",
-c.village||"",c.service||"",c.amount||0,
+c.name||"",c.mobile||"",c.district||"",
+c.taluka||"",c.village||"",c.service||"",
+c.serviceAmount??c.amount??0,
+c.homeDelivery===true?"होय":"नाही",
+c.distanceKm||0,c.deliveryCharge||0,
+customerTotal(c),
 customerCompleted(c)?"काम पूर्ण":"काम बाकी",
 customerPaid(c)?"पैसे मिळाले":"पैसे बाकी",
 c.whatsappConsent===true?"होय":"नाही"
@@ -653,6 +792,7 @@ a.href=url;
 a.download="Seva-Computer-Customers.csv";
 a.click();
 URL.revokeObjectURL(url);
+
 });
 
 </script>
